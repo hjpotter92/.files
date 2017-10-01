@@ -1,0 +1,18 @@
+#alias ls='ls --color=always -a'
+alias lh='ls -lh'
+#alias ...='cd ../..'
+#alias agi='sudo apt-get install'
+alias cls='clear && ls'
+alias pyhttp='python -m SimpleHTTPServer'
+
+for p (r w x)
+do
+    for o (+ -)
+    do
+        for d (a g o u)
+        do
+            alias "s$d$o$p"="sudo chmod $d$o$p"
+            alias "$d$o$p"="chmod $d$o$p"
+        done
+    done
+done
