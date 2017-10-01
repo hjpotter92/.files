@@ -1,0 +1,29 @@
+pane	niki	1	:..ts/Niki.ai/ci	1	:*	0	:/home/hjpotter92/Documents/Niki.ai/ci	1	zsh	:
+pane	niki	2	:...ai/gallifrey	0	:-	0	:/home/hjpotter92/Documents/Niki.ai/gallifrey	1	zsh	:
+pane	niki	3	:../niki_website	0	:	0	:/home/hjpotter92/Documents/Niki.ai/niki_website	1	zsh	:
+pane	niki	4	:..iki.ai/pubnub	0	:	0	:/home/hjpotter92/Documents/Niki.ai/pubnub	1	zsh	:
+pane	niki	5	:..iki.ai/cg_nlu	0	:	0	:/home/hjpotter92/Documents/Niki.ai/cg_nlu	1	zsh	:
+pane	self	1	:~	0	:	0	:/home/hjpotter92	0	zsh	:
+pane	self	1	:~	0	:	1	:/home/hjpotter92/.oh-my-zsh	1	zsh	:
+pane	self	2	:~/Downloads	0	:	0	:/home/hjpotter92/Downloads	1	zsh	:
+pane	self	3	:..es/Bio Menace	0	:	0	:/home/hjpotter92/GOG Games/Bio Menace	1	zsh	:
+pane	self	4	:..ra/homeyantra	0	:	0	:/home/hjpotter92/Documents/homeyantra/homeyantra	1	zsh	:
+pane	self	5	:..rubyshit/shit	1	:*	0	:/home/hjpotter92/Documents/rubyshit/some_new_shit	0	zsh	:
+pane	self	5	:..rubyshit/shit	1	:*	1	:/home/hjpotter92/Documents/rubyshit/shit	1	zsh	:
+pane	self	6	:/tmp/git/work	0	:-Z	0	:/tmp/git/test/hooks	0	zsh	:
+pane	self	6	:/tmp/git/work	0	:-Z	1	:/tmp/git/new	0	zsh	:
+pane	self	6	:/tmp/git/work	0	:-Z	2	:/tmp/git/work	1	zsh	:
+pane	ssh	1	:~	1	:*	0	:/home/hjpotter92	1	zsh	:
+window	niki	1	1	:*	d810,192x50,0,0,21
+window	niki	2	0	:-	afc0,192x50,0,0,3
+window	niki	3	0	:	afc1,192x50,0,0,4
+window	niki	4	0	:	5815,192x50,0,0,16
+window	niki	5	0	:	afc3,192x50,0,0,6
+window	self	1	0	:	8aa2,192x50,0,0{80x50,0,0,10,111x50,81,0,8}
+window	self	2	0	:	5810,192x50,0,0,11
+window	self	3	0	:	d818,192x50,0,0,29
+window	self	4	0	:	5812,192x50,0,0,13
+window	self	5	1	:*	6e05,192x50,0,0{96x50,0,0,22,95x50,97,0,31}
+window	self	6	0	:-Z	20e3,192x50,0,0{96x50,0,0,33,95x50,97,0[95x25,97,0,34,95x24,97,26,35]}
+window	ssh	1	1	:*	5813,192x50,0,0,14
+state	niki	ssh

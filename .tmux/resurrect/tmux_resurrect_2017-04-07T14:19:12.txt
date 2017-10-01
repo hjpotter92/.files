@@ -1,0 +1,26 @@
+pane	niki	1	:..ts/Niki.ai/ci	0	:-Z	0	:/home/hjpotter92/Documents/Niki.ai/ci	1	zsh	:
+pane	niki	1	:..ts/Niki.ai/ci	0	:-Z	1	:/home/hjpotter92/Documents/Niki.ai/InviteCodeService	0	zsh	:
+pane	niki	2	:...ai/gallifrey	0	:	0	:/home/hjpotter92/Documents/Niki.ai/gallifrey	1	zsh	:
+pane	niki	3	:../niki_website	0	:	0	:/home/hjpotter92/Documents/Niki.ai/niki_website	1	zsh	:
+pane	niki	4	:..iki.ai/pubnub	1	:*	0	:/home/hjpotter92/Documents/Niki.ai/pubnub	1	zsh	:
+pane	niki	5	:..iki.ai/cg_nlu	0	:	0	:/home/hjpotter92/Documents/Niki.ai/cg_nlu	1	zsh	:
+pane	niki	6	:..iki.ai/dm-dsm	0	:	0	:/home/hjpotter92/Documents/Niki.ai/dm-dsm	1	zsh	:
+pane	self	1	:~	1	:*Z	0	:/home/hjpotter92/.oh-my-zsh	0	zsh	:
+pane	self	1	:~	1	:*Z	1	:/home/hjpotter92/.ssh	0	zsh	:
+pane	self	1	:~	1	:*Z	2	:/home/hjpotter92	1	zsh	:
+pane	self	2	:~/Downloads	0	:-	0	:/home/hjpotter92/Downloads	1	zsh	:
+pane	self	3	:~/Pictures	0	:	0	:/home/hjpotter92/Pictures	1	zsh	:
+pane	self	4	:..ra/homeyantra	0	:	0	:/home/hjpotter92/Documents/homeyantra/homeyantra	1	zsh	:
+pane	ssh	1	:~	1	:*	0	:/home/hjpotter92	1	zsh	:
+window	niki	1	0	:-Z	da79,192x50,0,0[192x25,0,0,2,192x24,0,26,16]
+window	niki	2	0	:	cdc0,192x48,0,0,3
+window	niki	3	0	:	cdc1,192x48,0,0,4
+window	niki	4	1	:*	5811,192x50,0,0,12
+window	niki	5	0	:	5816,192x50,0,0,17
+window	niki	6	0	:	5818,192x50,0,0,19
+window	self	1	1	:*Z	8680,192x50,0,0{96x50,0,0,0,95x50,97,0[95x25,97,0,6,95x24,97,26,7]}
+window	self	2	0	:-	afc2,192x50,0,0,5
+window	self	3	0	:	afc5,192x50,0,0,8
+window	self	4	0	:	afc6,192x50,0,0,9
+window	ssh	1	1	:*	afbe,192x50,0,0,1
+state	self	ssh

@@ -1,0 +1,13 @@
+pane	niki	1	:..ts/Niki.ai/ci	0	:	0	:/home/hjpotter92/Documents/Niki.ai/ci	1	zsh	:
+pane	niki	2	:...ai/gallifrey	0	:-	0	:/home/hjpotter92/Documents/Niki.ai/gallifrey	1	zsh	:
+pane	niki	3	:..ments/Niki.ai	1	:*	0	:/home/hjpotter92/Documents/Niki.ai	1	zsh	:
+pane	self	1	:~/.oh-my-zsh	0	:-	0	:/home/hjpotter92/.oh-my-zsh	1	zsh	:
+pane	self	2	:~/Downloads	1	:*	0	:/home/hjpotter92/Downloads	1	zsh	:
+pane	ssh	1	:~	1	:*	0	:/home/hjpotter92	1	zsh	:
+window	niki	1	0	:	afbf,192x50,0,0,2
+window	niki	2	0	:-	afc0,192x50,0,0,3
+window	niki	3	1	:*	afc1,192x50,0,0,4
+window	self	1	0	:-	afbd,192x50,0,0,0
+window	self	2	1	:*	afc2,192x50,0,0,5
+window	ssh	1	1	:*	afbe,192x50,0,0,1
+state	niki	ssh

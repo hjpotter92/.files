@@ -1,0 +1,34 @@
+pane	niki	1	:..ts/Niki.ai/ci	0	:	0	:/home/hjpotter92/Documents/Niki.ai/ci	1	zsh	:
+pane	niki	2	:...ai/gallifrey	0	:	0	:/home/hjpotter92/Documents/Niki.ai/gallifrey	1	zsh	:
+pane	niki	3	:../niki_website	0	:-	0	:/home/hjpotter92/Documents/Niki.ai/niki_website	1	zsh	:
+pane	niki	4	:..iki.ai/pubnub	1	:*	0	:/home/hjpotter92/Documents/Niki.ai/pubnub	0	zsh	:
+pane	niki	4	:..iki.ai/pubnub	1	:*	1	:/home/hjpotter92/Documents/Niki.ai/pubnub	1	zsh	:
+pane	niki	5	:less	0	:	0	:/home/hjpotter92/Documents/Niki.ai/cg_nlu	0	zsh	:
+pane	niki	5	:less	0	:	1	:/home/hjpotter92/Documents/Niki.ai/dm-dsm	1	less	:less ci/start.sh
+pane	niki	6	:..ambda-scripts	0	:	0	:/home/hjpotter92/Documents/Niki.ai/lambda-scripts	1	zsh	:
+pane	self	1	:../Android shit	0	:	0	:/home/hjpotter92	0	zsh	:
+pane	self	1	:../Android shit	0	:	1	:/home/hjpotter92/Documents/Android shit	0	zsh	:
+pane	self	1	:../Android shit	0	:	2	:/home/hjpotter92/.oh-my-zsh	1	zsh	:
+pane	self	2	:.. 800MB [DiCT]	0	:-	0	:/home/hjpotter92/Downloads/Lie With Me (2005) 720p UNRATED Bluray x264 800MB [DiCT]	1	zsh	:
+pane	self	3	:..h A Steel Sky	0	:	0	:/home/hjpotter92/GOG Games/Beneath A Steel Sky	1	zsh	:
+pane	self	4	:..ra/homeyantra	0	:	0	:/home/hjpotter92/Documents/homeyantra/homeyantra	1	zsh	:
+pane	self	5	:..mp/ivycamp.in	0	:	0	:/home/hjpotter92/Documents/IvyCamp/ivycamp.in	1	zsh	:
+pane	self	5	:..mp/ivycamp.in	0	:	1	:/home/hjpotter92/Documents/IvyCamp/Parsers	0	zsh	:
+pane	self	6	:~/Documents	1	:*	0	:/home/hjpotter92/Documents	1	zsh	:
+pane	self	7	:..uments/gipher	0	:	0	:/home/hjpotter92/Documents/gipher	1	zsh	:
+pane	ssh	1	:~	1	:*	0	:/home/hjpotter92	1	zsh	:
+window	niki	1	0	:	afbe,192x50,0,0,1
+window	niki	2	0	:	afbf,192x50,0,0,2
+window	niki	3	0	:-	afc0,192x50,0,0,3
+window	niki	4	1	:*	1a79,192x50,0,0[192x25,0,0,4,192x24,0,26,20]
+window	niki	5	0	:	9a7a,192x50,0,0[192x25,0,0,5,192x24,0,26,21]
+window	niki	6	0	:	5818,192x50,0,0,19
+window	self	1	0	:	2c1a,192x50,0,0{114x50,0,0[114x25,0,0,6,114x24,0,26,7],77x50,115,0,8}
+window	self	2	0	:-	afc6,192x50,0,0,9
+window	self	3	0	:	580f,192x50,0,0,10
+window	self	4	0	:	5810,192x50,0,0,11
+window	self	5	0	:	ee04,192x50,0,0{96x50,0,0,12,95x50,97,0,13}
+window	self	6	1	:*	5813,192x50,0,0,14
+window	self	7	0	:	5816,192x50,0,0,17
+window	ssh	1	1	:*	5817,192x50,0,0,18
+state	niki	self
