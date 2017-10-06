@@ -1,0 +1,51 @@
+order += "online_status"
+order += "group internet"
+order += "group diskspace"
+order += "group information"
+
+group information {
+      cycle = 7
+      clock {
+            format_time = "{icon} %Y-%m-%d %H:%M:%S"
+      }
+      frame nested {
+            format = "{output}"
+            format_separator = "|"
+            load {
+                 format = "%5min"
+            }
+            volume_status {
+            }
+            backlight {
+            }
+            battery_level {
+                  notification = true
+                  threshold_full = 80
+                  threshold_degraded = 50
+                  threshold_bad = 30
+            }
+      }
+}
+
+group internet {
+    cycle = 7
+
+    wireless "wlp6s0" {
+        format_up = "%ip {%essid (%quality)}"
+    }
+
+    ethernet "enp7s0" {
+    }
+}
+
+group diskspace {
+    cycle = 5
+    format = "{output}"
+
+    disk "/home" {
+        format = "/h %free (of %total)"
+    }
+    disk "/" {
+        format = "/ %free (of %total)"
+    }
+}
