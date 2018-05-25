@@ -1,3 +1,6 @@
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/hjpotter92/.oh-my-zsh
 
@@ -6,6 +9,13 @@ export ZSH=/home/hjpotter92/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="hjpotter92"
+
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,11 +59,22 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast git-extras git-prompt gitignore common-aliases dirhistory sudo rsync extract cp debian command-not-found mvn python pip aws colorize fabric httpie virtualenv virtualenvwrapper battery colored-man-pages tmux emacs emoji emoji-clock node npm bundler rbenv rake-fast rails ruby web-search history-substring-search zsh-syntax-highlighting)
+plugins=(
+    gitfast git-extras git-prompt gitignore
+    common-aliases cp debian dirhistory sudo rsync extract command-not-found
+    python pip aws colorize fabric httpie virtualenv virtualenvwrapper
+    battery
+    colored-man-pages tmux
+    emoji emoji-clock
+    node npm bundler
+    rbenv rake-fast rails ruby
+    web-search history-substring-search
+    zsh-syntax-highlighting
+)
 
 # User configuration
 
-export PATH="/home/hjpotter92/.cask/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH="/home/hjpotter92/.cask/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -72,7 +93,7 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -85,7 +106,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Plugin configurations
 ZSH_TMUX_AUTOSTART="true"
-
+ZSH_TMUX_AUTOCONNECT="true"
 # User defined shit
 source ~/.aliases
 setopt autocd notify
