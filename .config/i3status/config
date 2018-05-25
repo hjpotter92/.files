@@ -30,16 +30,16 @@ group information {
 group internet {
     cycle = 7
 
-    wireless "wlp6s0" {
+    wireless "wlp1s0" {
         format_up = "%ip {%essid (%quality)}"
     }
 
-    ethernet "enp7s0" {
+    ethernet "enp2s0" {
     }
 }
 
 group diskspace {
-    cycle = 5
+    cycle = 3
     format = "{output}"
 
     disk "/home" {
@@ -47,5 +47,11 @@ group diskspace {
     }
     disk "/" {
         format = "/ %free (of %total)"
+    }
+    disk "/usr" {
+        format = "/u %free (of %total)"
+    }
+    disk "/var" {
+        format = "/v %free (of %total)"
     }
 }
