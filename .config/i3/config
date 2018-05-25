@@ -100,7 +100,7 @@ set $shit 2:<span fgcolor="chocolate" weight="heavy">shit</span>
 set $media 3:<span fgcolor="olive">media</span>
 set $slack 4:<span fgcolor="purple" weight="heavy">#Slack</span>
 set $emacs 5:<span fgcolor="orchid">emacs</span>
-set $term 9:<span fgcolor="grey" weight="heavy">term</span> >_
+set $term 9:<span fgcolor="grey">>_</span>
 
 # switch to workspace
 bindsym $mod+1 workspace $www
