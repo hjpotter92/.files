@@ -185,9 +185,9 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c1 set Master 8%+ #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c1 set Master 8%- #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id amixer -c1 set Master toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 8%+ #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 8%- #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle # mute sound
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness

@@ -115,11 +115,13 @@
   :init (setq markdown-command "multimarkdown"))
 
 (use-package magit
+  :after (ivy)
   :commands magit-get-top-dir
   :bind (("C-c g" . magit-status)
          ("C-c C-g l" . magit-file-log))
   :init
   ;; we no longer need vc-git
+  (setq magit-completing-read-function 'ivy-completing-read)
   (delete 'Git vc-handled-backends))
 
 (use-package focus
@@ -139,9 +141,11 @@
   :ensure t
   :diminish ivy-mode
   :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-extra-directories nil))
   :bind
   (("\C-s" . swiper)
    ("C-c C-r" . ivy-resume)
@@ -152,13 +156,15 @@
   :diminish counsel-mode
   :config (counsel-mode t)
   :bind
-  ("C-x C-f" . counsel-find-file)
-  ("M-x" . counsel-M-x)
-  ("<f1> f" . counsel-describe-function)
-  ("<f1> v" . counsel-describe-variable)
-  ("<f1> b" . counsel-descbinds)
-  ("C-c k" . counsel-rg)
-  ("M-y" . counsel-yank-pop))
+  (("C-x C-f" . counsel-find-file)
+   ("M-x" . counsel-M-x)
+   ("<f1> f" . counsel-describe-function)
+   ("<f1> v" . counsel-describe-variable)
+   ("<f1> l" . counsel-find-library)
+   ("<f1> b" . counsel-descbinds)
+   ("<f2> u" . counsel-unicode-char)
+   ("C-c k" . counsel-rg)
+   ("M-y" . counsel-yank-pop)))
 
 (use-package all-the-icons-ivy
   :after (ivy)
