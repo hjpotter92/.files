@@ -143,9 +143,9 @@
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   :bind
-  ("\C-s" . swiper)
-  ("C-c C-r" . ivy-resume)
-  ([f6] . ivy-resume))
+  (("\C-s" . swiper)
+   ("C-c C-r" . ivy-resume)
+   ([f6] . ivy-resume)))
 
 (use-package counsel
   :ensure t
