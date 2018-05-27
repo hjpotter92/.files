@@ -234,20 +234,6 @@
   :bind
   ("C-x o" . switch-window))
 
-(use-package company-jedi
-  :ensure t
-  :after (company)
-  :config
-  (with-eval-after-load 'company
-    '(push 'company-jedi company-backends)))
-
-(use-package company-flx
-  :ensure t
-  :after (company)
-  :config
-  (with-eval-after-load 'company
-    (company-flx-mode +1)))
-
 (use-package company-statistics
   :ensure t)
 
@@ -262,18 +248,37 @@
   :ensure t
   :diminish company-mode
   :requires company-statistics
+  :bind
+  (:map company-active-map
+        ("M-n" . nil)
+        ("M-p" . nil)
+        ("C-n" . company-select-next)
+        ("C-p" . company-select-previous)
+        ("TAB" . company-complete-common-or-cycle)
+        ("<tab>" . company-complete-common-or-cycle)
+        ("S-TAB" . company-select-previous)
+        ("<backtab>" . company-select-previous))
   :config
   (progn
-    (defun my/python-mode-hook ()
-      "Add jedi backend to company"
-      (with-eval-after-load 'company
-        '(push 'company-jedi company-backends)))
-    (add-hook 'python-mode-hook 'my/python-mode-hook)
     (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0))
+    (setq company-idle-delay 0)
+    (use-package company-web
+      :ensure t
+      :bind
+      (("C-c w" . company-web-html))
+      :config
+      (add-to-list 'company-backends 'company-web-html))
+    (use-package company-jedi
+      :defer t)
+    (use-package company-flx
+      :defer t
+      :config
+      (company-flx-mode +1)))
   :hook
   ((after-init . global-company-mode)
-   (after-init . company-statistics-mode)))
+   (after-init . company-statistics-mode)
+   (python-mode . (lambda ()
+                    (add-to-list 'company-backends 'company-jedi)))))
 
 (use-package ace-jump-mode
   :bind
