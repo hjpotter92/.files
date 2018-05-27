@@ -95,11 +95,11 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Set name for custom workspaces
-set $www 1:<span fgcolor="aquamarine">www</span>
-set $shit 2:<span fgcolor="chocolate" weight="heavy">shit</span>
-set $media 3:<span fgcolor="olive">media</span>
-set $slack 4:<span fgcolor="purple" weight="heavy">#Slack</span>
-set $emacs 5:<span fgcolor="orchid">emacs</span>
+set $www 1:<span fgcolor="aquamarine">⚝</span>
+set $shit 2:<span fgcolor="chocolate" weight="heavy">⚙</span>
+set $media 3:<span fgcolor="white">⏯</span>
+set $slack 4:<span weight="heavy">♯</span>
+set $emacs 5:<span fgcolor="orchid">ℰ</span>
 set $term 9:<span fgcolor="grey">>_</span>
 
 # switch to workspace
