@@ -18,7 +18,6 @@ set $mod Mod4
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
-font pango:FontAwesome Regular 8
 font pango:Ricty Diminished Regular 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
@@ -38,6 +37,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id rofi -show combi
+
 bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu_run -i" --term="i3-sensible-terminal"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -95,21 +96,25 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Set name for custom workspaces
-set $www 1:<span fgcolor="aquamarine">⚝</span>
-set $shit 2:<span fgcolor="chocolate" weight="heavy">⚙</span>
-set $media 3:<span fgcolor="white">⏯</span>
-set $slack 4:<span weight="heavy">♯</span>
-set $emacs 5:<span fgcolor="orchid">ℰ</span>
-set $term 9:<span fgcolor="grey">>_</span>
+set $www 1:<span fgcolor="aquamarine"></span>
+set $shit 2:<span fgcolor="chocolate" weight="heavy"></span>
+set $dir 3:<span fgcolor="brown"></span>
+set $slack 4:
+set $emacs 5:<span fgcolor="orchid"></span>
+set $media 6:<span fgcolor="white"></span>
+set $emacs2 7:<span fgcolor="orchid"></span>
+set $term 9:<span fgcolor="grey"></span>
+
+workspace 7 output DP1
 
 # switch to workspace
 bindsym $mod+1 workspace $www
 bindsym $mod+2 workspace $shit
-bindsym $mod+3 workspace $media
+bindsym $mod+3 workspace $dir
 bindsym $mod+4 workspace $slack
 bindsym $mod+5 workspace $emacs
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
+bindsym $mod+6 workspace $media
+bindsym $mod+7 workspace $emacs2
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace $term
 bindsym $mod+0 workspace 10
@@ -117,11 +122,11 @@ bindsym $mod+0 workspace 10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $www
 bindsym $mod+Shift+2 move container to workspace $shit
-bindsym $mod+Shift+3 move container to workspace $media
+bindsym $mod+Shift+3 move container to workspace $dir
 bindsym $mod+Shift+4 move container to workspace $slack
 bindsym $mod+Shift+5 move container to workspace $emacs
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+6 move container to workspace $media
+bindsym $mod+Shift+7 move container to workspace $emacs2
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace $term
 bindsym $mod+Shift+0 move container to workspace number 10
@@ -162,7 +167,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command py3status # i3status
+    font pango:Hack Nerd Font 8
+    status_command py3status # i3status
 }
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown
@@ -181,7 +187,7 @@ mode "$mode_system" {
 bindsym $mod+Escape mode "$mode_system"
 
 # Cycle through active workspaces
-bindsym $mod+Tab workspace next
+bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab workspace prev
 
 # Pulse Audio controls
@@ -199,22 +205,28 @@ bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
+# screenshots
+bindsym --release Print exec --no-startup-id "maim --hidecursor $HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"
+bindsym --release Shift+Print exec --no-startup-id "maim -s -c 0.96,0.5,0.09 --hidecursor $HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"
+bindsym --release Alt_L+Print exec --no-startup-id 'maim --hidecursor -i "$(xdotool getactivewindow)" "$HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"'
+
 # Start GNOME daemon
 exec_always /usr/bin/gnome-settings-daemon
 
 # Assiging workspaces to applications
-assign [class="Nautilus"] $media
-assign [class="(?i)google-chrome"] $www
-assign [class="(?i)chromium"] $www
+assign [class="Nautilus"] $dir
+assign [class="Google-chrome"] $www
 assign [class="(?i)firefox"] $www
-assign [class="(?i)vlc"] $media
-assign [class="(?i)mplayer"] $media
 assign [class="(?i)gnome-control-center"] $shit
 assign [class="(?i)filebot"] $shit
 assign [class="(?i)emacs"] $emacs
 assign [class="crx_kpjhcddaofpohlbadnmnnaenmmefdbgn"] $slack
 assign [class="(?i)discord"] $slack
 assign [class="slack"] $slack
+assign [class="(?i)vlc"] $media
+assign [class="(?i)mplayer"] $media
+
+for_window [class=".*"] title_format "%title - %class"
 
 # Set wallpaper from feh
 exec --no-startup-id sh ~/.fehbg

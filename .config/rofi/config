@@ -1,0 +1,5 @@
+rofi.combi-modi:        window,drun,ssh,run,keys
+rofi.theme:             /usr/local/share/rofi/themes/arthur.rasi
+rofi.font:              hack nerd regular 8
+rofi.modi:              combi
+rofi.show:              combi
