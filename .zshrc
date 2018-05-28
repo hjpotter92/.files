@@ -109,11 +109,5 @@ ZSH_TMUX_AUTOSTART="true"
 ZSH_TMUX_AUTOCONNECT="true"
 # User defined shit
 source ~/.aliases
+source ~/.exports
 setopt autocd notify
-export PATH="$HOME/.rbenv/bin:$PATH"
-
-# source ~/.exports
-# source /opt/zsh/zshrc.sh
-# PROMPT=$'\u250c%(?.\u2524 %B%F{green}\u2714%f%b \u251c.\u2524 %B%F{red}\u2717%f%b \u251c)\u2500\u2524 %F{blue}%B%n%f%b \u251c\u2500\u2524%U%F{magenta}%1~%f%u\u251c\u2500\u2524 %B%F{yellow}%D{%I:%M %P}%f%b \u2502 $(git_super_status)\n\u2514\u2534 %B%F{cyan}%#%f%b \u2534\u2500%B%F{cyan}\u25b6%f%b '
-#PROMPT=$'\u250c\u2524%B%(?.%F{green}\u2714%f.%F{red}\u2717%f)%b \u251c\u2500\u2524 %F{blue}%B%n%f%b \u251c\u2500\u2524%U%F{magenta}%1~%f%u\u251c\u2500\u2524 %B%F{yellow}$(emoji-clock)  %D{%I:%M %P}%f%b \u2502\t$(virtualenv_prompt_info)\n\u2514\u2524%B%F{cyan}%#%f%b \u2534\u2500$(battery_level_gauge)\u2534\u2500%B%F{cyan}\u25b6%f%b '
-# RPROMPT="$(battery_level_gauge)\n$(git_super_status)"
