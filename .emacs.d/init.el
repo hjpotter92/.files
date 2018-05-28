@@ -25,8 +25,6 @@
 (defvar el-get-recipe-path)
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
-(prefer-coding-system 'utf-8)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,11 +35,14 @@
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(debug-on-error t)
+ '(face-font-family-alternatives
+   (quote
+    (("Hack Nerd Font Regular" "Hack Regular" "Ricty Diminished Regular"))))
  '(global-git-commit-mode t)
  '(global-highlight-parentheses-mode t)
  '(package-selected-packages
    (quote
-    (minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags counsel-gtags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
+    (js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags counsel-gtags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
  '(save-place-mode t nil (saveplace))
  '(send-mail-function (quote smtpmail-send-it))
  '(show-smartparens-global-mode t)
@@ -56,7 +57,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "Ricty Diminished")))))
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 85 :width normal :foundry "unknown" :family "Hack Nerd Font")))))
 
 (defvar highlight-blocks-mode)
 (defvar sml/replacer-regexp-list)
@@ -67,6 +68,9 @@
 
 (setq-default abbrev-mode t)
 (setq-default auto-revert-mode t)
+(prefer-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8-unix)
 (setq-default buffer-file-coding-system 'utf-8-unix)
 
 (setq highlight-blocks-mode t)
@@ -369,14 +373,10 @@
   (progn
     (global-visual-line-mode t)
     (line-number-mode t)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
     (defalias 'yes-or-no-p 'y-or-n-p)
     (display-time-mode t)))
-
-;; (use-package virtualenvwrapper
-;;   :init
-;;   (venv-initialize-interactive-shells)
-;;   (venv-initialize-eshell)
-;;   (setq venv-location "~/.virtualenvs/"))
 
 (provide 'init)
 ;;; init.el ends here
