@@ -110,6 +110,29 @@
   :ensure t
   :config (image-diredx-async-mode 1))
 
+(use-package neotree
+  :ensure t
+  :bind
+  (("<f7>" . neotree-toggle)
+   ("C-x t t" . neotree-toggle)
+   (:map neotree-mode-map
+         ("RET". neotree-enter)
+         ("c" . neotree-create-node)
+         ("r" . neotree-rename-node)
+         ("d" . neotree-delete-node)
+         ("j" . neotree-next-node)
+         ("k" . neotree-previous-node)
+         ("g" . neotree-refresh)
+         ("C" . neotree-change-root)
+         ("I" . neotree-hidden-file-toggle)
+         ("H" . neotree-hidden-file-toggle)
+         ("q" . neotree-hide)
+         ("l" . neotree-enter)))
+  :defer 1
+  :config
+  (progn
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
+
 (use-package markdown-mode
   :ensure t
   :mode
@@ -130,7 +153,9 @@
 
 (use-package focus
   :ensure t
-  :bind ("C-c C-f" . focus-mode))
+  :bind ("C-c C-f" . focus-mode)
+  :hook
+  ((python-mode . focus-mode)))
 
 (use-package flycheck
   :ensure t
