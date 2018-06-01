@@ -6,3 +6,5 @@ rofi.show:              combi
 rofi.lines:             10
 rofi.columns:           2
 rofi.matching:          fuzzy
+rofi.sort:              true
+rofi.levenshtein-sort:  false

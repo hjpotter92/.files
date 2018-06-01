@@ -165,9 +165,7 @@
 
 (use-package focus
   :ensure t
-  :bind ("C-c C-f" . focus-mode)
-  :hook
-  ((python-mode . focus-mode)))
+  :bind ("C-c C-f" . focus-mode))
 
 (use-package flycheck
   :ensure t
@@ -371,6 +369,13 @@
   (progn
     (diminish 'abbrev-mode "Ab")
     (diminish 'outline-mode)))
+
+(use-package python-mode
+  :ensure t
+  :mode "\\.py"
+  :config
+  (progn
+    (setq-default py-split-window-on-execute nil)))
 
 (use-package server
   :if (display-graphic-p)
