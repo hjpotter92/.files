@@ -68,6 +68,7 @@ plugins=(
     emoji emoji-clock
     node npm bundler
     rbenv rake-fast rails ruby
+    postgres
     web-search history-substring-search
     zsh-syntax-highlighting
 )

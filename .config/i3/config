@@ -170,7 +170,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     font pango:Hack Nerd Font 8
-    status_command py3status # i3status
+    status_command py3status -b # i3status
 }
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown

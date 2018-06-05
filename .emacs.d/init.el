@@ -43,7 +43,7 @@
  '(global-highlight-parentheses-mode t)
  '(package-selected-packages
    (quote
-    (dockerfile-mode neotree js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags counsel-gtags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
+    (flycheck-yamllint yaml-mode dockerfile-mode neotree js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags counsel-gtags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
  '(save-place-mode t nil (saveplace))
  '(send-mail-function (quote smtpmail-send-it))
  '(show-smartparens-global-mode t)
@@ -58,13 +58,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t
-             (:inherit nil :stipple nil
-                       :background "#272822" :foreground "#F8F8F2"
-                       :inverse-video nil :box nil :strike-through nil
-                       :overline nil :underline nil :slant normal :weight normal
-                       :height 85 :width normal :foundry "unknown"
-                       :family "Hack Nerd Font")))))
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 85 :width normal :foundry "unknown" :family "Hack Nerd Font")))))
 
 (defvar highlight-blocks-mode)
 (defvar sml/replacer-regexp-list)
@@ -154,14 +148,17 @@
   :init (setq markdown-command "multimarkdown"))
 
 (use-package magit
+  :ensure t
   :after (ivy)
   :commands magit-get-top-dir
-  :bind (("C-c g" . magit-status)
-         ("C-c C-g l" . magit-file-log))
+  :bind
+  (("C-c g" . magit-status)
+   ("C-c C-g l" . magit-file-log))
   :init
-  ;; we no longer need vc-git
-  (setq magit-completing-read-function 'ivy-completing-read)
-  (delete 'Git vc-handled-backends))
+  (progn
+    ;; we no longer need vc-git
+    (setq magit-completing-read-function 'ivy-completing-read)
+    (delete 'Git vc-handled-backends)))
 
 (use-package focus
   :ensure t
@@ -196,6 +193,7 @@
   :config (counsel-mode t)
   :bind
   (("C-x C-f" . counsel-find-file)
+   ("C-x M-f" . counsel-recentf)
    ("M-x" . counsel-M-x)
    ("<f1> f" . counsel-describe-function)
    ("<f1> v" . counsel-describe-variable)
@@ -260,8 +258,8 @@
         ("n" . mc/mark-next-like-this)
         ("P" . mc/unmark-previous-like-this)
         ("N" . mc/unmark-next-like-this)
-        ("[" . mc/cycle-backward)
-        ("]" . mc/cycle-forward)
+        ("j" . mc/cycle-backward)
+        ("k" . mc/cycle-forward)
         ("m" . mc/mark-more-like-this-extended)
         ("h" . mc-hide-unmatched-lines-mode)
         ("\\" . mc/vertical-align-with-space)
