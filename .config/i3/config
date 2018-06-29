@@ -173,6 +173,7 @@ bar {
     status_command py3status -b # i3status
 }
 
+# System control
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit lock, mode "default"
@@ -188,12 +189,13 @@ mode "$mode_system" {
 }
 bindsym $mod+Escape mode "$mode_system"
 
-set $mode_brightness Control brightness: (+) increase, (-) decrease, (0-9) 10x number value
+# Brightness control
+set $mode_brightness Brightness: (+) increase, (-) decrease, (0-9) 10x number value
 mode "$mode_brightness" {
      bindsym KP_Add exec --no-startup-id xbacklight -inc 1
      bindsym KP_Subtract exec --no-startup-id xbacklight -dec 1
 
-     bindsym KP_0 exec --no-startup-id xbacklight -set 0
+     bindsym KP_0 exec --no-startup-id xbacklight -set 1
      bindsym KP_1 exec --no-startup-id xbacklight -set 10
      bindsym KP_2 exec --no-startup-id xbacklight -set 20
      bindsym KP_3 exec --no-startup-id xbacklight -set 30
@@ -204,7 +206,7 @@ mode "$mode_brightness" {
      bindsym KP_8 exec --no-startup-id xbacklight -set 80
      bindsym KP_9 exec --no-startup-id xbacklight -set 90
 
-     bindsym 0 exec --no-startup-id xbacklight -set 0
+     bindsym 0 exec --no-startup-id xbacklight -set 1
      bindsym 1 exec --no-startup-id xbacklight -set 10
      bindsym 2 exec --no-startup-id xbacklight -set 20
      bindsym 3 exec --no-startup-id xbacklight -set 30
@@ -218,8 +220,30 @@ mode "$mode_brightness" {
      bindsym Escape mode "default"
      bindsym Return mode "default"
 }
-
 bindsym $mod+B mode "$mode_brightness"
+
+# Volume control
+set $mode_volume Volume: (+) increase, (-) decrease, (0-9) 10x number value
+mode "$mode_volume" {
+     bindsym KP_Add exec --no-startup-id amixer set Master 1%+
+     bindsym KP_Subtract exec --no-startup-id amixer set Master 1%-
+
+     bindsym 0 exec --no-startup-id amixer set Master 100%
+     bindsym 1 exec --no-startup-id amixer set Master 10%
+     bindsym 2 exec --no-startup-id amixer set Master 20%
+     bindsym 3 exec --no-startup-id amixer set Master 30%
+     bindsym 4 exec --no-startup-id amixer set Master 40%
+     bindsym 5 exec --no-startup-id amixer set Master 50%
+     bindsym 6 exec --no-startup-id amixer set Master 60%
+     bindsym 7 exec --no-startup-id amixer set Master 70%
+     bindsym 8 exec --no-startup-id amixer set Master 80%
+     bindsym 9 exec --no-startup-id amixer set Master 90%
+
+     bindsym Escape mode "default"
+     bindsym Return mode "default"
+}
+bindsym $mod+Shift+v mode "$mode_volume"
+
 
 # Cycle through active workspaces
 bindsym $mod+Tab workspace next
@@ -242,7 +266,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # screenshots
 bindsym --release Print exec --no-startup-id "maim --hidecursor $HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"
-bindsym --release Shift+Print exec --no-startup-id "maim -s -c 0.96,0.5,0.09 --hidecursor $HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"
+bindsym --release Shift+Print exec --no-startup-id "maim -s -c 0.96,0.5,0.09,0.6 --hidecursor $HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"
 bindsym --release Mod1+Print exec --no-startup-id 'maim --hidecursor -i "$(xdotool getactivewindow)" "$HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H_%M_%S).png"'
 
 # Start GNOME daemon

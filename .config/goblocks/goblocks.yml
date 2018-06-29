@@ -59,15 +59,15 @@ blocks:
     # goblocks.
     # E.g. ALL ALL = (root) NOPASSWD: /sbin/zpool
     # Also, the zpool utility must be installed and in your $PATH.
-    - type: zfs
-      label: "Z: "
-      zpool_name: "boot"
-      update_interval: 60
+    # - type: zfs
+    #   label: "Z: "
+    #   zpool_name: "boot"
+    #   update_interval: 60
 
     # Only linux mdraid is supported.
-    - type: raid
-      label: "R: "
-      color: "#00ff00"
+    # - type: raid
+    #   label: "R: "
+    #   color: "#00ff00"
 
     # The disk block is an aggregate status of overall filesystem usage.
     - type: disk
@@ -96,7 +96,7 @@ blocks:
 
     - type: interface
       label: "E: "
-      interface_name: enp3s0
+      interface_name: enp2s0
       # interface_format is a format string that allows you to specify which
       # interface info to display. The syntax for this string is described here:
       # https://golang.org/pkg/text/template/
@@ -113,13 +113,13 @@ blocks:
       # The default value for interface_format is "{{.Status}}"
       interface_format: "{{.Status}}, {{.Ipv4Cidr}}"
 
-    - type: interface
-      label: "W: "
-      interface_name: wlp4s2
+    # - type: interface
+    #   label: "W: "
+    #   interface_name: wlp4s2
 
     - type: wifi
       label: "W: "
-      interface_name: wlp3s0
+      interface_name: wlp1s0
       crit_quality: 30
 
     - type: battery
@@ -157,6 +157,6 @@ blocks:
       # Specify a shell command to display output from.
       # Command flags are supported, complex commands with quotes or pipe
       # characters should be executed from a script file.
-    - type: command
-      label: "$ "
-      command: 'date -u'
+    # - type: command
+    #   label: "$ "
+    #   command: 'date -u'

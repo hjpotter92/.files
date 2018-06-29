@@ -1,7 +1,22 @@
-order += "online_status"
+order += "group status"
 order += "group internet"
 order += "group diskspace"
 order += "group information"
+
+group status {
+      cycle = 5
+
+      frame system {
+            keyboard_locks {}
+            online_status {}
+            apt_updates {}
+      }
+
+      weather_yahoo {
+            woeid = 91168894
+            format_today = "Now:{icon} {temp}°{unit} {text}"
+      }
+}
 
 group information {
       cycle = 7

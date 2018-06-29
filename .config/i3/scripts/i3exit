@@ -2,7 +2,7 @@
 
 case "$1" in
     lock)
-        /opt/i3lock-fancy/lock
+        /opt/i3lock-fancy/lock -pt "Type password to unlock" -- maim
         ;;
     logout)
         i3-msg exit
