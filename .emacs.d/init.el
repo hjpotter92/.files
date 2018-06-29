@@ -43,7 +43,7 @@
  '(global-highlight-parentheses-mode t)
  '(package-selected-packages
    (quote
-    (flycheck-yamllint yaml-mode dockerfile-mode neotree js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags counsel-gtags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
+    (projectile-rails projectile-ripgrep counsel-projectile ivy-xref ctags virtualenvwrapper flycheck-yamllint yaml-mode dockerfile-mode neotree js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
  '(save-place-mode t nil (saveplace))
  '(send-mail-function (quote smtpmail-send-it))
  '(show-smartparens-global-mode t)
@@ -73,6 +73,7 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
 (setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default python-environment-directory "~/.virtualenvs")
 
 (setq highlight-blocks-mode t)
 
@@ -162,7 +163,7 @@
 
 (use-package focus
   :ensure t
-  :bind ("C-c C-f" . focus-mode))
+  :bind ("C-c f" . focus-mode))
 
 (use-package flycheck
   :ensure t
@@ -184,7 +185,7 @@
     (setq ivy-extra-directories nil))
   :bind
   (("\C-s" . swiper)
-   ("C-c C-r" . ivy-resume)
+   ("\C-r" . ivy-resume)
    ([f6] . ivy-resume)))
 
 (use-package counsel
@@ -203,10 +204,31 @@
    ("C-c k" . counsel-rg)
    ("M-y" . counsel-yank-pop)))
 
+(use-package ivy-xref
+  :ensure t
+  :after (ivy)
+  :init
+  (progn
+    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))
+
 (use-package all-the-icons-ivy
   :after (ivy)
   :config
   (all-the-icons-ivy-setup))
+
+(use-package projectile
+  :ensure t
+  :bind
+  (("C-x p" . projectile-switch-project))
+  :config
+  (progn
+    (projectile-mode)
+    (setq projectile-enable-caching t)))
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-mode))
 
 (use-package emmet
   :ensure emmet-mode
@@ -341,6 +363,7 @@
 (use-package minibuffer-line
   :if (display-graphic-p)
   :ensure t
+  :disabled t
   :defer 1
   :init
   (progn
@@ -379,7 +402,7 @@
   :if (display-graphic-p)
   :config
   (progn
-    (or (eq (server-running-p) t)
+    (unless (or (daemonp) (server-running-p))
         (server-start))))
 
 (use-package emacs
