@@ -35,6 +35,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show combi
@@ -195,17 +196,6 @@ mode "$mode_brightness" {
      bindsym KP_Add exec --no-startup-id xbacklight -inc 1
      bindsym KP_Subtract exec --no-startup-id xbacklight -dec 1
 
-     bindsym KP_0 exec --no-startup-id xbacklight -set 1
-     bindsym KP_1 exec --no-startup-id xbacklight -set 10
-     bindsym KP_2 exec --no-startup-id xbacklight -set 20
-     bindsym KP_3 exec --no-startup-id xbacklight -set 30
-     bindsym KP_4 exec --no-startup-id xbacklight -set 40
-     bindsym KP_5 exec --no-startup-id xbacklight -set 50
-     bindsym KP_6 exec --no-startup-id xbacklight -set 60
-     bindsym KP_7 exec --no-startup-id xbacklight -set 70
-     bindsym KP_8 exec --no-startup-id xbacklight -set 80
-     bindsym KP_9 exec --no-startup-id xbacklight -set 90
-
      bindsym 0 exec --no-startup-id xbacklight -set 1
      bindsym 1 exec --no-startup-id xbacklight -set 10
      bindsym 2 exec --no-startup-id xbacklight -set 20
@@ -243,7 +233,6 @@ mode "$mode_volume" {
      bindsym Return mode "default"
 }
 bindsym $mod+Shift+v mode "$mode_volume"
-
 
 # Cycle through active workspaces
 bindsym $mod+Tab workspace next

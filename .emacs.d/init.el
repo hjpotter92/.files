@@ -114,6 +114,7 @@
 
 (use-package neotree
   :ensure t
+  :disabled
   :bind
   (("<f7>" . neotree-toggle)
    ("C-x t t" . neotree-toggle)
@@ -223,12 +224,66 @@
   :config
   (progn
     (projectile-mode)
-    (setq projectile-enable-caching t)))
+    (setq projectile-enable-caching t))
+  :custom
+  (projectile-mode-line '(:eval (format "P[%s]" (projectile-project-name)))))
 
 (use-package counsel-projectile
   :ensure t
   :config
   (counsel-projectile-mode))
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :custom
+  ((treemacs-collapse-dirs              (if (executable-find "python") 3 0))
+   (treemacs-file-event-delay           30000)
+   (treemacs-follow-after-init          t)
+   (treemacs-follow-recenter-distance   0.1)
+   (treemacs-goto-tag-strategy          'refetch-index)
+   (treemacs-indentation                2)
+   (treemacs-indentation-string         " ")
+   (treemacs-is-never-other-window      nil)
+   (treemacs-no-png-images              nil)
+   (treemacs-project-follow-cleanup     nil)
+   (treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory))
+   (treemacs-recenter-after-file-follow nil)
+   (treemacs-recenter-after-tag-follow  nil)
+   (treemacs-show-hidden-files          t)
+   (treemacs-silent-filewatch           t)
+   (treemacs-silent-refresh             t)
+   (treemacs-sorting                    'alphabetic-desc)
+   (treemacs-space-between-root-nodes   t)
+   (treemacs-tag-follow-cleanup         t)
+   (treemacs-tag-follow-delay           1.5)
+   (treemacs-width                      35))
+  :config
+  (progn
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null (executable-find "python3"))))
+      (`(t . t)
+       (treemacs-git-mode 'extended))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (("M-0"       . treemacs-select-window)
+   ("C-x t 1"   . treemacs-delete-other-windows)
+   ([f7]   . treemacs)
+   ("C-x t t"   . treemacs)
+   ("C-x t B"   . treemacs-bookmark)
+   ("C-x t C-t" . treemacs-find-file)
+   ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
 
 (use-package emmet
   :ensure emmet-mode
@@ -314,7 +369,8 @@
   :diminish company-mode
   :requires company-statistics
   :bind
-  (:map company-active-map
+  (("<C-tab>" . company-complete)
+   (:map company-active-map
         ("M-n" . nil)
         ("M-p" . nil)
         ("C-n" . company-select-next)
@@ -322,7 +378,7 @@
         ("TAB" . company-complete-common-or-cycle)
         ("<tab>" . company-complete-common-or-cycle)
         ("S-TAB" . company-select-previous)
-        ("<backtab>" . company-select-previous))
+        ("<backtab>" . company-select-previous)))
   :config
   (progn
     (setq company-dabbrev-downcase 0)
@@ -405,6 +461,39 @@
     (unless (or (daemonp) (server-running-p))
         (server-start))))
 
+(use-package with-editor
+  :config (shell-command-with-editor-mode t))
+
+(use-package which-key
+  :diminish 'which-key-mode
+  :config
+  (progn
+    (which-key-mode t)
+    (which-key-setup-minibuffer)
+    (setq which-key-idle-delay 0.400)))
+
+(use-package highlight-parentheses
+  :ensure t
+  :diminish (highlight-parentheses-mode)
+  :config
+  (progn
+    (global-highlight-parentheses-mode t)))
+
+(use-package helpful
+  :ensure t
+  :bind
+  (("C-h f" . helpful-callable)
+   ("C-h v" . helpful-variable)
+   ("C-h F" . helpful-function)
+   ("C-h k" . helpful-key)
+   ("C-h c" . helpful-key)
+   ("C-c C-d" . helpful-at-point)))
+
+(use-package ggtags
+  :ensure t
+  :custom
+  ((eldoc-documentation-function #'ggtags-eldoc-function)))
+
 (use-package emacs
   :ensure t
   :diminish
@@ -412,33 +501,39 @@
   :bind
   (("C-c m" . menu-bar-mode)
    ("C-c s" . scroll-bar-mode)
+   ("C-x k" . kill-this-buffer)
    ("RET" . newline-and-indent))
-  :init
-  (progn
-    (setq package-archive-priorities
+  :custom
+    ((package-archive-priorities
           '(("melpa" . 20)
             ("marmalade" . 15)
             ("gnu" . 10)))
-    (setq frame-title-format
+    (frame-title-format
           '("["
             (:eval (if (buffer-file-name)
                        (abbreviate-file-name (buffer-file-name))
                      "%b"))
             " (%*%+%z) %F@" emacs-version "]"))
-    (setq x-stretch-cursor t)
-    (setq-default display-time-default-load-average nil)
-    (setq-default display-time-format "%a %d %b, %I:%M %p")
+    (x-stretch-cursor t)
+    (display-time-default-load-average nil)
+    (display-time-format "%a %d %b, %I:%M %p")
+    (custom-file "~/.emacs.d/init-custom.el")
+    (require-final-newline t))
+  :init
+  (progn
     (setq-default inhibit-startup-screen t)
     (setq-default initial-scratch-message nil)
-    (setq-default indent-tabs-mode nil)
-    (setq require-final-newline t))
+    (setq-default indent-tabs-mode nil))
   :config
   (progn
+    (global-subword-mode t)
     (global-visual-line-mode t)
     (line-number-mode t)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (defalias 'yes-or-no-p 'y-or-n-p)
+    (when (file-exists-p custom-file)
+      (load custom-file :noerror :nomessage))
     (display-time-mode t)))
 
 (provide 'init)
