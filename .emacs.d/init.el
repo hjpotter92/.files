@@ -74,6 +74,10 @@
 (set-default-coding-systems 'utf-8-unix)
 (setq-default buffer-file-coding-system 'utf-8-unix)
 (setq-default python-environment-directory "~/.virtualenvs")
+(setq-default custom-file "~/.emacs.d/init-custom.el")
+
+(when (file-exists-p custom-file)
+  (load custom-file :noerror :nomessage))
 
 (setq highlight-blocks-mode t)
 
@@ -203,7 +207,9 @@
    ("<f1> b" . counsel-descbinds)
    ("<f2> u" . counsel-unicode-char)
    ("C-c k" . counsel-rg)
-   ("M-y" . counsel-yank-pop)))
+   ("M-y" . counsel-yank-pop)
+   (:map minibuffer-local-map
+         ("C-r" . counsel-minibuffer-history))))
 
 (use-package ivy-xref
   :ensure t
@@ -428,6 +434,37 @@
   :config
   (minibuffer-line-mode))
 
+(use-package smartparens
+  :ensure t
+  :diminish
+  :init
+  (progn
+    (use-package smartparens-config)
+    (use-package smartparens-ruby)
+    (use-package smartparens-html)
+    (smartparens-global-mode 1))
+  :config
+  (progn
+    (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
+  :bind
+  (("C-M-k" . sp-kill-sexp-with-a-twist-of-lime)
+   ("C-M-f" . sp-forward-sexp)
+   ("C-M-b" . sp-backward-sexp)
+   ("C-M-n" . sp-up-sexp)
+   ("C-M-d" . sp-down-sexp)
+   ("C-M-u" . sp-backward-up-sexp)
+   ("C-M-p" . sp-backward-down-sexp)
+   ("C-M-w" . sp-copy-sexp)
+   ;; ("M-s" . sp-splice-sexp)
+   ;; ("M-r" . sp-splice-sexp-killing-around)
+   ("C-)" . sp-forward-slurp-sexp)
+   ("C-}" . sp-forward-barf-sexp)
+   ("C-(" . sp-backward-slurp-sexp)
+   ("C-{" . sp-backward-barf-sexp)
+   ;; ("M-S" . sp-split-sexp)
+   ;; ("M-J" . sp-join-sexp)
+   ("C-M-t" . sp-transpose-sexp)))
+
 (use-package smart-mode-line
   :ensure t
   :after (monokai-theme)
@@ -465,7 +502,7 @@
   :config (shell-command-with-editor-mode t))
 
 (use-package which-key
-  :diminish 'which-key-mode
+  :diminish
   :config
   (progn
     (which-key-mode t)
@@ -481,18 +518,21 @@
 
 (use-package helpful
   :ensure t
+  :delight
   :bind
-  (("C-h f" . helpful-callable)
-   ("C-h v" . helpful-variable)
-   ("C-h F" . helpful-function)
-   ("C-h k" . helpful-key)
-   ("C-h c" . helpful-key)
-   ("C-c C-d" . helpful-at-point)))
+  (:map help-map
+   ("f" . helpful-callable)
+   ("v" . helpful-variable)
+   ("F" . helpful-function)
+   ("k" . helpful-key)
+   ("c" . helpful-key)
+   ("C-d" . helpful-at-point)))
 
-(use-package ggtags
+(use-package gxref
   :ensure t
-  :custom
-  ((eldoc-documentation-function #'ggtags-eldoc-function)))
+  :config
+  (progn
+    (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
 
 (use-package emacs
   :ensure t
@@ -517,7 +557,7 @@
     (x-stretch-cursor t)
     (display-time-default-load-average nil)
     (display-time-format "%a %d %b, %I:%M %p")
-    (custom-file "~/.emacs.d/init-custom.el")
+    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
     (require-final-newline t))
   :init
   (progn
@@ -529,11 +569,12 @@
     (global-subword-mode t)
     (global-visual-line-mode t)
     (line-number-mode t)
+    (column-number-mode t)
+    (save-place-mode t)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
+    (tool-bar-mode -1)
     (defalias 'yes-or-no-p 'y-or-n-p)
-    (when (file-exists-p custom-file)
-      (load custom-file :noerror :nomessage))
     (display-time-mode t)))
 
 (provide 'init)
