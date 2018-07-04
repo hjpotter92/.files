@@ -182,12 +182,13 @@
 (use-package ivy
   :ensure t
   :diminish ivy-mode
+  :custom
+  ((ivy-use-virtual-buffers t)
+   (enable-recursive-minibuffers t)
+   (ivy-extra-directories nil))
   :config
   (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t)
-    (setq ivy-extra-directories nil))
+    (ivy-mode 1))
   :bind
   (("\C-s" . swiper)
    ("\C-r" . ivy-resume)
@@ -225,19 +226,49 @@
 
 (use-package projectile
   :ensure t
+  :after (ivy magit)
   :bind
   (("C-x p" . projectile-switch-project))
+  :init
+  (progn
+    (projectile-mode t))
+  :custom
+  ((projectile-enable-caching t)
+   (projectile-completion-system 'ivy)
+   (projectile-require-project-root nil)
+   (projectile-mode-line '(:eval
+                           (if (projectile-project-p)
+                               (format "P[%s]" (projectile-project-name))
+                             "")))
+   (projectile-tags-backend "ggtags"))
   :config
   (progn
-    (projectile-mode)
-    (setq projectile-enable-caching t))
-  :custom
-  (projectile-mode-line '(:eval (format "P[%s]" (projectile-project-name)))))
+   (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
+    (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
+      (add-to-list 'projectile-globally-ignored-files item))
+    ;; Git projects should be marked as projects in top-down fashion,
+    ;; so that each git submodule can be a projectile project.
+    (add-to-list 'projectile-project-root-files ".git")
+    (mapc #'projectile-add-known-project
+          (mapcar #'file-name-as-directory (magit-list-repos)))
+    ;; Optionally write to persistent `projectile-known-projects-file'
+    (projectile-save-known-projects)))
 
 (use-package counsel-projectile
   :ensure t
+  :after (counsel projectile)
   :config
   (counsel-projectile-mode))
+
+(use-package ggtags
+  :ensure t
+  :hook
+  ((python-mode ruby-mode js3-mode emacs-lisp-mode) . ggtags-mode))
+
+(use-package counsel-gtags
+  :ensure t
+  :after (ggtags)
+  :hook (ggtags-mode . counsel-gtags-mode))
 
 (use-package treemacs
   :ensure t
@@ -263,7 +294,8 @@
    (treemacs-space-between-root-nodes   t)
    (treemacs-tag-follow-cleanup         t)
    (treemacs-tag-follow-delay           1.5)
-   (treemacs-width                      35))
+   (treemacs-width                      35)
+   (imenu-create-index-function #'ggtags-build-imenu-index))
   :config
   (progn
     ;; The default width and height of the icons is 22 pixels. If you are
@@ -272,6 +304,7 @@
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
+    (treemacs-resize-icons 16)
     (pcase (cons (not (null (executable-find "git")))
                  (not (null (executable-find "python3"))))
       (`(t . t)
@@ -352,6 +385,7 @@
 
 (use-package region-bindings-mode
   :ensure t
+  :diminish
   :config
   (region-bindings-mode-enable))
 
