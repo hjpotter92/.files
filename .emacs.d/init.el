@@ -153,6 +153,10 @@
    ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(use-package python-docstring
+  :ensure t
+  :hook (python-mode . python-docstring-mode))
+
 (use-package magit
   :ensure t
   :after (ivy)
@@ -227,6 +231,7 @@
 (use-package projectile
   :ensure t
   :after (ivy magit)
+  :delight (projectile-mode '(:eval (format " P[%s]" (projectile-project-name))))
   :bind
   (("C-x p" . projectile-switch-project))
   :init
@@ -236,10 +241,10 @@
   ((projectile-enable-caching t)
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
-   (projectile-mode-line '(:eval
-                           (if (projectile-project-p)
-                               (format "P[%s]" (projectile-project-name))
-                             "")))
+   ;; (projectile-mode-line '(:eval
+   ;;                         (if (projectile-project-p)
+   ;;                             (format "P[%s]" (projectile-project-name))
+   ;;                           "")))
    (projectile-tags-backend "ggtags"))
   :config
   (progn
@@ -262,11 +267,15 @@
 
 (use-package ggtags
   :ensure t
+  :delight ggtags-mode
+  :diminish
   :hook
   ((python-mode ruby-mode js3-mode emacs-lisp-mode) . ggtags-mode))
 
 (use-package counsel-gtags
   :ensure t
+  :delight counsel-gtags-mode
+  :diminish
   :after (ggtags)
   :hook (ggtags-mode . counsel-gtags-mode))
 
@@ -415,14 +424,16 @@
         ("M-p" . nil)
         ("C-n" . company-select-next)
         ("C-p" . company-select-previous)
-        ("TAB" . company-complete-common-or-cycle)
-        ("<tab>" . company-complete-common-or-cycle)
+        ([tab] . company-complete-common-or-cycle)
         ("S-TAB" . company-select-previous)
         ("<backtab>" . company-select-previous)))
+  :custom
+  ((company-dabbrev-downcase nil)
+   (company-idle-delay 0)
+   (company-require-match nil)
+   (company-minimum-prefix-length 2))
   :config
   (progn
-    (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0)
     (use-package company-web
       :ensure t
       :bind
@@ -434,7 +445,7 @@
     (use-package company-flx
       :defer t
       :config
-      (company-flx-mode +1)))
+      (company-flx-mode t)))
   :hook
   ((after-init . global-company-mode)
    (after-init . company-statistics-mode)
@@ -520,10 +531,19 @@
 
 (use-package python-mode
   :ensure t
+  :defer t
   :mode "\\.py"
-  :config
-  (progn
-    (setq-default py-split-window-on-execute nil)))
+  :custom
+  ((py-split-window-on-execute nil)))
+
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :diminish)
+
+(use-package lua-mode
+  :ensure t
+  :custom
+  (lua-indent-level 2))
 
 (use-package server
   :if (display-graphic-p)
@@ -564,6 +584,9 @@
 
 (use-package gxref
   :ensure t
+  :init
+  (progn
+    (require 'xref))
   :config
   (progn
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
@@ -589,6 +612,7 @@
                      "%b"))
             " (%*%+%z) %F@" emacs-version "]"))
     (x-stretch-cursor t)
+    (scroll-error-top-bottom t)
     (display-time-default-load-average nil)
     (display-time-format "%a %d %b, %I:%M %p")
     (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
