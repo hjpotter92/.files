@@ -40,10 +40,10 @@
 (set-default-coding-systems 'utf-8-unix)
 (setq-default buffer-file-coding-system 'utf-8-unix)
 (setq-default python-environment-directory "~/.virtualenvs")
-(setq-default custom-file "~/.emacs.d/init-custom.el")
+(setq-default custom-file "~/.emacs.d/custom.el")
 
-(when (file-exists-p custom-file)
-  (load custom-file :noerror :nomessage))
+;; (when (file-exists-p custom-file)
+;;   (load custom-file :noerror :nomessage))
 
 (setq highlight-blocks-mode t)
 
@@ -100,7 +100,15 @@
   :config
   (toggle-diredp-find-file-reuse-dir 1))
 
-(use-package smart-window)
+(use-package smart-window
+  :ensure t)
+
+(use-package benchmark-init
+  :ensure t
+  :hook
+  (after-init . benchmark-init/deactivate)
+  :init
+  (benchmark-init/activate))
 
 (use-package all-the-icons
   :ensure t)
@@ -178,6 +186,12 @@
   (progn
     (use-package yasnippet-snippets
       :ensure t)))
+
+(use-package amx
+  :ensure t
+  :bind
+  (("M-x" . amx)
+   ("M-X" . amx-major-mode-commands)))
 
 (use-package ivy
   :ensure t
@@ -381,15 +395,23 @@
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode))
+  :custom
+  ((web-mode-markup-indent-offset 2)
+   (web-mode-css-indent-offset 2)
+   (web-mode-code-indent-offset 2)
+   (web-mode-enable-current-element-highlight t)
+   (web-mode-enable-current-column-highlight t)
+   (web-mode-engines-alist
+         '(("php" . "\\.phtml?\\'")
+           ("blade" . "\\.blade\\."))))
   :config
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-enable-current-element-highlight t)
-  (setq web-mode-enable-current-column-highlight t)
-  (setq web-mode-engines-alist
-        '(("php" . "\\.phtml?\\'")
-          ("blade" . "\\.blade\\."))))
+  (progn
+    (use-package company-web
+      :ensure t
+      :bind
+      (("C-c w" . company-web-html))
+      :config
+      (add-to-list 'company-backends 'company-web-html))))
 
 (use-package smart-cursor-color
   :ensure t
@@ -440,15 +462,17 @@
 
 (use-package company-quickhelp
   :ensure t
-  :config
+  :if (window-system)
+  :custom
+  ((company-quickhelp-delay 0.25))
+  :init
   (progn
-    (setq company-quickhelp-delay 0.1)
-    (company-quickhelp-mode)))
+    (company-quickhelp-mode t)))
 
 (use-package company
   :ensure t
   :diminish
-  :requires company-statistics
+  :requires (company-statistics)
   :bind
   (("<C-tab>" . company-complete)
    (:map company-active-map
@@ -459,6 +483,10 @@
         ([tab] . company-complete-common-or-cycle)
         ("S-TAB" . company-select-previous)
         ("<backtab>" . company-select-previous)))
+  :init
+  (progn
+    (global-company-mode t)
+    (company-statistics-mode t))
   :custom
   ((company-dabbrev-downcase nil)
    (company-idle-delay 0)
@@ -467,23 +495,15 @@
    (company-minimum-prefix-length 2))
   :config
   (progn
-    (use-package company-web
-      :ensure t
-      :bind
-      (("C-c w" . company-web-html))
-      :config
-      (add-to-list 'company-backends 'company-web-html))
     (use-package company-jedi
-      :defer t)
+      :ensure t
+      :config
+      (progn
+        (add-to-list 'company-backends 'company-jedi)))
     (use-package company-flx
       :defer t
       :config
-      (company-flx-mode t)))
-  :hook
-  ((after-init . global-company-mode)
-   (after-init . company-statistics-mode)
-   (python-mode . (lambda ()
-                    (add-to-list 'company-backends 'company-jedi)))))
+      (company-flx-mode t))))
 
 (use-package ace-jump-mode
   :bind
@@ -571,7 +591,8 @@
   :defer t
   :mode "\\.py"
   :custom
-  ((py-split-window-on-execute nil)))
+  ((py-split-window-on-execute nil)
+   (python-indent-guess-indent-offset nil)))
 
 (use-package pipenv
   :disabled
@@ -658,23 +679,26 @@
    ("C-x k" . kill-this-buffer)
    ("RET" . newline-and-indent))
   :custom
-    ((package-archive-priorities
-          '(("melpa" . 20)
-            ("marmalade" . 15)
-            ("gnu" . 10)))
-    (frame-title-format
-          '("["
-            (:eval (if (buffer-file-name)
-                       (abbreviate-file-name (buffer-file-name))
-                     "%b"))
-            " (%*%+%z) %F@" emacs-version "]"))
-    (x-stretch-cursor t)
-    (use-dialog-box nil)
-    (scroll-error-top-bottom t)
-    (display-time-default-load-average nil)
-    (display-time-format "%a %d %b, %I:%M %p")
-    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
-    (require-final-newline t))
+  ((package-archive-priorities
+    '(("melpa" . 20)
+      ("marmalade" . 15)
+      ("gnu" . 10)))
+   (frame-title-format
+    '("["
+      (:eval (if (buffer-file-name)
+                 (abbreviate-file-name (buffer-file-name))
+               "%b"))
+      " (%*%+%z) %F@" emacs-version "]"))
+   (x-stretch-cursor t)
+   (use-dialog-box nil)
+   (scroll-error-top-bottom t)
+   (display-time-default-load-average nil)
+   (display-time-format "%a %d %b, %I:%M %p")
+   (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
+   (require-final-newline t)
+   (uniquify-buffer-name-style 'forward))
+  :custom-face
+  (default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "Hack Nerd Font"))))
   :init
   (progn
     (setq inhibit-compacting-font-caches t)
