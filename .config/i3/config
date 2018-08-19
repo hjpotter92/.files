@@ -263,6 +263,7 @@ exec_always /usr/bin/gnome-settings-daemon
 
 # Assiging workspaces to applications
 assign [class="^Nautilus$"] $dir
+assign [class="^Doublecmd$"] $dir
 assign [class="^Google-chrome$"] $www
 assign [class="^Firefox$"] $www
 assign [class="^Gnome-control-center$"] $settings

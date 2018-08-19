@@ -61,9 +61,10 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     gitfast git-extras git-prompt gitignore
-    common-aliases cp debian dirhistory sudo rsync extract command-not-found
-    python pip aws colorize fabric httpie virtualenv virtualenvwrapper
-    battery
+    common-aliases cp debian dirhistory sudo rsync extract command-not-found dotenv
+    python pip aws colorize fabric httpie virtualenv virtualenvwrapper pyenv pipenv
+    rust cargo
+    battery emacs
     colored-man-pages tmux
     emoji emoji-clock
     node npm bundler
@@ -71,6 +72,7 @@ plugins=(
     postgres
     web-search history-substring-search
     zsh-syntax-highlighting
+    zsh-syntax-highlighting-filetypes
 )
 
 # User configuration
@@ -112,3 +114,4 @@ ZSH_TMUX_AUTOCONNECT="true"
 source ~/.aliases
 source ~/.exports
 setopt autocd notify
+source $HOME/.cargo/env

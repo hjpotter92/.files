@@ -26,40 +26,6 @@
 (defvar el-get-recipe-path)
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
- '(debug-on-error t)
- '(face-font-family-alternatives
-   (quote
-    (("Hack Nerd Font Regular" "Hack Regular" "Ricty Diminished Regular"))))
- '(global-git-commit-mode t)
- '(global-highlight-parentheses-mode t)
- '(package-selected-packages
-   (quote
-    (projectile-rails projectile-ripgrep counsel-projectile ivy-xref ctags virtualenvwrapper flycheck-yamllint yaml-mode dockerfile-mode neotree js3-mode json-mode json-navigator latex-extra latex-math-preview latex-unicode-math-mode flycheck-demjsonlint minibuffer-line flycheck-package package-lint ace-jump-mode company-flx focus graphviz-dot-mode all-the-icons-ivy all-the-icons-dired magit diminish company-jedi ac-html-bootstrap company-ngram company-quickhelp company-shell company-statistics unicode-fonts counsel-etags ctags-update region-bindings-mode multiple-cursors web git-commit git-gutter git-gutter+ git-gutter-fringe git-ps1-mode gitattributes-mode gitconfig gitconfig-mode company-emoji company-erlang company-go company-lua company-math company-rtags company-web editorconfig font-utils fontawesome format-all format-sql nose pipenv pydoc python-mode flycheck-color-mode-line flycheck-css-colorguard flycheck-elixir flycheck-mix flycheck-pycheckers flycheck-tcl xpm web-mode use-package-ensure-system-package use-package-el-get switch-window smartparens smart-window smart-mode-line smart-cursor-color monokai-theme mode-icons markdown-preview-mode markdown-mode+ image-dired+ highlight-parentheses flycheck emmet-mode counsel company auto-minor-mode auto-indent-mode auto-auto-indent)))
- '(save-place-mode t nil (saveplace))
- '(send-mail-function (quote smtpmail-send-it))
- '(show-smartparens-global-mode t)
- '(smartparens-global-mode t)
- '(starttls-gnutls-program "gnutls-cli")
- '(starttls-use-gnutls t)
- '(tool-bar-mode nil)
- '(visual-line-fringe-indicators (quote (left-curly-arrow nil))))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 85 :width normal :foundry "unknown" :family "Hack Nerd Font")))))
-
 (defvar highlight-blocks-mode)
 (defvar sml/replacer-regexp-list)
 (defvar use-package-minimum-reported-time)
@@ -87,6 +53,37 @@
 ;; (require 'dired+)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(defun hjpotter92/pretty-symbols ()
+  "Add custom symbols in pretty-symbol mode."
+  (push '("!=" . ?≠) prettify-symbols-alist)
+  (push '("<=" . ?≤) prettify-symbols-alist)
+  (push '(">=" . ?≥) prettify-symbols-alist)
+  (push '("+=" . ?⩲) prettify-symbols-alist)
+  (push '("==" . ?⩵) prettify-symbols-alist)
+  (push '("=>" . ?⇒) prettify-symbols-alist))
+
+(defun hjpotter92/pretty-symbols-python ()
+  "Python specific pretty symbols."
+  (hjpotter92/pretty-symbols)
+  (push '("def"    . ?ƒ) prettify-symbols-alist)
+  (push '("sum"    . ?Σ) prettify-symbols-alist)
+  (push '("**2"    . ?²) prettify-symbols-alist)
+  (push '("**3"    . ?³) prettify-symbols-alist)
+  (push '("None"   . ?∅) prettify-symbols-alist)
+  (push '("in"     . ?∈) prettify-symbols-alist)
+  (push '("not in" . ?∉) prettify-symbols-alist)
+  (push '("return" . ?➡) prettify-symbols-alist))
+
+(defun hjpotter92/pretty-symbols-lisp ()
+  "Lisp symbols."
+  (hjpotter92/pretty-symbols)
+  (push '("defun"    . ?ƒ) prettify-symbols-alist)
+  (push '("defmacro" . ?μ) prettify-symbols-alist)
+  (push '("defvar"   . ?ν) prettify-symbols-alist))
+
+(add-hook 'python-mode-hook 'hjpotter92/pretty-symbols-python)
+(add-hook 'emacs-lisp-mode-hook 'hjpotter92/pretty-symbols-lisp)
 
 (progn
   (setq use-package-minimum-reported-time 0)
@@ -116,29 +113,8 @@
   :ensure t
   :config (image-diredx-async-mode 1))
 
-(use-package neotree
-  :ensure t
-  :disabled
-  :bind
-  (("<f7>" . neotree-toggle)
-   ("C-x t t" . neotree-toggle)
-   (:map neotree-mode-map
-         ("RET". neotree-enter)
-         ("c" . neotree-create-node)
-         ("r" . neotree-rename-node)
-         ("d" . neotree-delete-node)
-         ("j" . neotree-next-node)
-         ("k" . neotree-previous-node)
-         ("g" . neotree-refresh)
-         ("C" . neotree-change-root)
-         ("I" . neotree-hidden-file-toggle)
-         ("H" . neotree-hidden-file-toggle)
-         ("q" . neotree-hide)
-         ("l" . neotree-enter)))
-  :defer 1
-  :config
-  (progn
-    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
+(use-package realgud
+  :ensure t)
 
 (use-package dockerfile-mode
   :ensure t
@@ -159,7 +135,7 @@
 
 (use-package magit
   :ensure t
-  :after (ivy)
+  :after (projectile)
   :commands magit-get-top-dir
   :bind
   (("C-c g" . magit-status)
@@ -167,11 +143,21 @@
   :init
   (progn
     ;; we no longer need vc-git
-    (setq magit-completing-read-function 'ivy-completing-read)
-    (delete 'Git vc-handled-backends)))
+    (delete 'Git vc-handled-backends))
+  :custom
+  ((magit-repository-directories '(("~/Documents/Loktra/" . 2)
+                                   ("~/Documents/" . 1)))
+   (magit-completing-read-function 'ivy-completing-read))
+  :config
+  (progn
+    (mapc #'projectile-add-known-project
+          (mapcar #'file-name-as-directory (magit-list-repos)))
+    (global-magit-file-mode t)))
 
 (use-package focus
   :ensure t
+  :hook
+  ((lisp-mode emacs-lisp-mode) . focus-mode)
   :bind ("C-c f" . focus-mode))
 
 (use-package flycheck
@@ -182,6 +168,16 @@
   :commands flycheck-package-setup
   :after (flycheck)
   :init (flycheck-package-setup))
+
+(use-package yasnippet
+  :ensure t
+  :init
+  (progn
+    (yas-global-mode t))
+  :config
+  (progn
+    (use-package yasnippet-snippets
+      :ensure t)))
 
 (use-package ivy
   :ensure t
@@ -230,13 +226,8 @@
 
 (use-package projectile
   :ensure t
-  :after (ivy magit)
-  :delight (projectile-mode '(:eval (format " P[%s]" (projectile-project-name))))
-  :bind
-  (("C-x p" . projectile-switch-project))
-  :init
-  (progn
-    (projectile-mode t))
+  :after (ivy)
+  :delight (projectile-mode '(:eval (concat " P[" (projectile-project-name) "]")))
   :custom
   ((projectile-enable-caching t)
    (projectile-completion-system 'ivy)
@@ -246,24 +237,65 @@
    ;;                             (format "P[%s]" (projectile-project-name))
    ;;                           "")))
    (projectile-tags-backend "ggtags"))
+  :init
+  (progn
+    (projectile-mode t))
   :config
   (progn
-   (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
+    (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
     (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
       (add-to-list 'projectile-globally-ignored-files item))
     ;; Git projects should be marked as projects in top-down fashion,
     ;; so that each git submodule can be a projectile project.
     (add-to-list 'projectile-project-root-files ".git")
-    (mapc #'projectile-add-known-project
-          (mapcar #'file-name-as-directory (magit-list-repos)))
     ;; Optionally write to persistent `projectile-known-projects-file'
-    (projectile-save-known-projects)))
+    (projectile-save-known-projects)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)))
 
 (use-package counsel-projectile
   :ensure t
   :after (counsel projectile)
+  :init
+  (progn
+    (counsel-projectile-mode t)))
+
+(use-package persp-mode
+  :no-require t
+  :disabled
+  :init
+  (progn
+    (persp-mode t))
   :config
-  (counsel-projectile-mode))
+  (progn
+    (use-package persp-mode-projectile-bridge
+      :ensure t
+      :config
+      (progn
+        (with-eval-after-load "persp-mode-projectile-bridge-autoloads"
+          (add-hook 'persp-mode-projectile-bridge-mode-hook
+                    #'(lambda ()
+                        (if persp-mode-projectile-bridge-mode
+                            (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
+                          (persp-mode-projectile-bridge-kill-perspectives))))
+          (add-hook 'after-init-hook
+                    #'(lambda ()
+                        (persp-mode-projectile-bridge-mode 1))
+                    t))))))
+
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode))
+
+;; (use-package perspective
+;;   :ensure t
+;;   :commands persp-mode
+;;   :config
+;;   (progn
+;;     (use-package persp-projectile
+;;       :ensure t
+;;       :commands persp-projectile)
+;;     (persp-mode)))
 
 (use-package ggtags
   :ensure t
@@ -415,7 +447,7 @@
 
 (use-package company
   :ensure t
-  :diminish company-mode
+  :diminish
   :requires company-statistics
   :bind
   (("<C-tab>" . company-complete)
@@ -431,6 +463,7 @@
   ((company-dabbrev-downcase nil)
    (company-idle-delay 0)
    (company-require-match nil)
+   (company-show-numbers t)
    (company-minimum-prefix-length 2))
   :config
   (progn
@@ -462,6 +495,21 @@
   (progn
     (load-theme 'monokai t)))
 
+(use-package smart-mode-line
+  :ensure t
+  :after (monokai-theme)
+  :init
+  (setq sml/no-confirm-load-theme t)
+  :config
+  (progn
+    (setq sml/mode-width 'full)
+    (sml/setup)
+    ;; (sml/apply-theme 'dark)
+    (add-to-list 'sml/replacer-regexp-list '("^:Doc:Loktra/" ":lk:") t)
+    (add-to-list 'sml/replacer-regexp-list '("^:lk:hypertrack-webhook/" ":lkHT:") t)
+    (add-to-list 'sml/replacer-regexp-list '("^:lkHT:vered/v1/" ":lkHT1:") t)
+    (add-to-list 'sml/replacer-regexp-list '("^:lk:backend/odyssey/v\\([12]\\)/" ":lbOD\\1:") t)))
+
 (use-package mode-icons
   :ensure t
   :after (smart-mode-line)
@@ -481,7 +529,6 @@
 
 (use-package smartparens
   :ensure t
-  :diminish
   :init
   (progn
     (use-package smartparens-config)
@@ -506,21 +553,11 @@
    ("C-}" . sp-forward-barf-sexp)
    ("C-(" . sp-backward-slurp-sexp)
    ("C-{" . sp-backward-barf-sexp)
+   ("M-DEL" . sp-unwrap-sexp)
+   ("<M-backspace>" . sp-backward-unwrap-sexp)
    ;; ("M-S" . sp-split-sexp)
    ;; ("M-J" . sp-join-sexp)
    ("C-M-t" . sp-transpose-sexp)))
-
-(use-package smart-mode-line
-  :ensure t
-  :after (monokai-theme)
-  :init
-  (setq sml/no-confirm-load-theme t)
-  :config
-  (progn
-    (setq sml/mode-width 'full)
-    (sml/setup)
-    ;; (sml/apply-theme 'dark)
-    (add-to-list 'sml/replacer-regexp-list '("^:Doc:Loktra/" ":lk:") t)))
 
 (use-package diminish
   :ensure t
@@ -537,8 +574,17 @@
   ((py-split-window-on-execute nil)))
 
 (use-package pipenv
+  :disabled
   :hook (python-mode . pipenv-mode)
   :diminish)
+
+(use-package fill-column-indicator
+  :ensure t
+  :commands (fci-mode)
+  :hook
+  ((lua-mode python-mode elisp-mode) . fci-mode)
+  :custom
+  ((fci-rule-column 80)))
 
 (use-package lua-mode
   :ensure t
@@ -565,10 +611,21 @@
 
 (use-package highlight-parentheses
   :ensure t
-  :diminish (highlight-parentheses-mode)
+  :delight
+  (('highlight-parentheses-mode " ❪❫" 'highlight-parentheses)
+   ('global-highlight-parentheses-mode " ❪❫" 'highlight-parentheses))
   :config
   (progn
     (global-highlight-parentheses-mode t)))
+
+(use-package omni-scratch
+  :ensure t
+  :bind
+  (("M-s $ DEL" . omni-scratch)
+   ("M-s $ -" . omni-scratch-major)
+   ("M-s $ _" . omni-scratch-buffer)
+   ("M-s $ $" . omni-scratch-goto-latest)
+   ("M-s $ b" . omni-scratch-buffers)))
 
 (use-package helpful
   :ensure t
@@ -612,6 +669,7 @@
                      "%b"))
             " (%*%+%z) %F@" emacs-version "]"))
     (x-stretch-cursor t)
+    (use-dialog-box nil)
     (scroll-error-top-bottom t)
     (display-time-default-load-average nil)
     (display-time-format "%a %d %b, %I:%M %p")
@@ -619,11 +677,15 @@
     (require-final-newline t))
   :init
   (progn
+    (setq inhibit-compacting-font-caches t)
+    (setq prettify-symbols-unprettify-at-point t)
     (setq-default inhibit-startup-screen t)
     (setq-default initial-scratch-message nil)
     (setq-default indent-tabs-mode nil))
   :config
   (progn
+    (hjpotter92/pretty-symbols)
+    (global-prettify-symbols-mode t)
     (global-subword-mode t)
     (global-visual-line-mode t)
     (line-number-mode t)
