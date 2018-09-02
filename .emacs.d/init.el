@@ -16,11 +16,11 @@
 
 (unless (require 'el-get nil 'noerror)
   (package-refresh-contents)
-  (package-initialize)
+  (unless package--initialized (package-initialize))
   (package-install 'el-get)
   (require 'el-get))
 
-(package-initialize)
+(unless package--initialized (package-initialize))
 
 (el-get 'sync)
 (defvar el-get-recipe-path)
@@ -49,6 +49,7 @@
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'narrow-to-defun 'disabled nil)
 
 ;; (require 'dired+)
 
@@ -61,7 +62,9 @@
   (push '(">=" . ?≥) prettify-symbols-alist)
   (push '("+=" . ?⩲) prettify-symbols-alist)
   (push '("==" . ?⩵) prettify-symbols-alist)
-  (push '("=>" . ?⇒) prettify-symbols-alist))
+  (push '("=>" . ?⇒) prettify-symbols-alist)
+  (push '("NOTE" . ?¤) prettify-symbols-alist)
+  (push '("TODO" . ?§) prettify-symbols-alist))
 
 (defun hjpotter92/pretty-symbols-python ()
   "Python specific pretty symbols."
@@ -90,6 +93,21 @@
   (setq use-package-compute-statistics t)
   (require 'use-package))
 
+(use-package benchmark-init
+  :ensure t
+  :hook
+  (after-init . benchmark-init/deactivate)
+  :init
+  (benchmark-init/activate))
+
+(use-package delight
+  :ensure t)
+
+(use-package rainbow-mode
+  :ensure t
+  :hook
+  (prog-mode . rainbow-mode))
+
 (use-package dired+
   :commands toggle-diredp-find-file-reuse-dir)
 
@@ -102,13 +120,6 @@
 
 (use-package smart-window
   :ensure t)
-
-(use-package benchmark-init
-  :ensure t
-  :hook
-  (after-init . benchmark-init/deactivate)
-  :init
-  (benchmark-init/activate))
 
 (use-package all-the-icons
   :ensure t)
@@ -199,7 +210,9 @@
   :custom
   ((ivy-use-virtual-buffers t)
    (enable-recursive-minibuffers t)
-   (ivy-extra-directories nil))
+   (ivy-extra-directories nil)
+   (ivy-initial-inputs-alist nil)
+   (ivy-display-style 'fancy))
   :config
   (progn
     (ivy-mode 1))
@@ -221,7 +234,6 @@
    ("<f1> l" . counsel-find-library)
    ("<f1> b" . counsel-descbinds)
    ("<f2> u" . counsel-unicode-char)
-   ("C-c k" . counsel-rg)
    ("M-y" . counsel-yank-pop)
    (:map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history))))
@@ -241,7 +253,7 @@
 (use-package projectile
   :ensure t
   :after (ivy)
-  :delight (projectile-mode '(:eval (concat " P[" (projectile-project-name) "]")))
+  :delight '(:eval (concat " P[" (projectile-project-name) "]"))
   :custom
   ((projectile-enable-caching t)
    (projectile-completion-system 'ivy)
@@ -422,7 +434,6 @@
 
 (use-package multiple-cursors
   :ensure t
-  :diminish multiple-cursors-mode
   :after region-bindings-mode
   :bind
   ("C-S-c C-S-c" . mc/edit-lines)
@@ -471,7 +482,6 @@
 
 (use-package company
   :ensure t
-  :diminish
   :requires (company-statistics)
   :bind
   (("<C-tab>" . company-complete)
@@ -554,12 +564,19 @@
     (use-package smartparens-config)
     (use-package smartparens-ruby)
     (use-package smartparens-html)
+    (use-package smartparens-python)
+    (use-package smartparens-elixir)
+    (use-package smartparens-markdown)
+    (use-package smartparens-text)
+    (use-package smartparens-latex)
+    (use-package smartparens-lua)
+    (use-package smartparens-javascript)
     (smartparens-global-mode 1))
   :config
   (progn
     (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
   :bind
-  (("C-M-k" . sp-kill-sexp-with-a-twist-of-lime)
+  (("C-M-k" . sp-kill-sexp)
    ("C-M-f" . sp-forward-sexp)
    ("C-M-b" . sp-backward-sexp)
    ("C-M-n" . sp-up-sexp)
@@ -588,6 +605,7 @@
 
 (use-package python-mode
   :ensure t
+  :disabled
   :defer t
   :mode "\\.py"
   :custom
@@ -599,13 +617,35 @@
   :hook (python-mode . pipenv-mode)
   :diminish)
 
+(use-package elpy
+  :ensure t
+  :after (flycheck)
+  :hook
+  (elpy-mode . flycheck-mode)
+  :custom
+  ((elpy-rpc-backend "jedi")
+   (elpy-autodoc-delay 0.400))
+  :init
+  (progn
+    (elpy-enable)
+    (mapc (lambda (module) (setq elpy-modules (delq module elpy-modules)))
+          '(elpy-module-flymake elpy-module-highlight-indentation))))
+
 (use-package fill-column-indicator
   :ensure t
+  ;; Disabled due to issue with company-popup
+  :disabled
   :commands (fci-mode)
   :hook
-  ((lua-mode python-mode elisp-mode) . fci-mode)
+  ((lua-mode python-mode emacs-lisp-mode) . fci-mode)
   :custom
   ((fci-rule-column 80)))
+
+(use-package home-end
+  :ensure t
+  :bind
+  (([home] . home-end-home)
+   ([end] . home-end-end)))
 
 (use-package lua-mode
   :ensure t
@@ -622,6 +662,11 @@
 (use-package with-editor
   :config (shell-command-with-editor-mode t))
 
+(use-package ibuffer
+  :ensure t
+  :bind
+  ("C-x C-b" . ibuffer-other-window))
+
 (use-package which-key
   :diminish
   :config
@@ -633,14 +678,16 @@
 (use-package highlight-parentheses
   :ensure t
   :delight
-  (('highlight-parentheses-mode " ❪❫" 'highlight-parentheses)
-   ('global-highlight-parentheses-mode " ❪❫" 'highlight-parentheses))
+  (highlight-parentheses-mode " ❪❫")
+  (global-highlight-parentheses-mode " ❪❫")
   :config
   (progn
     (global-highlight-parentheses-mode t)))
 
 (use-package omni-scratch
   :ensure t
+  :custom
+  ((omni-scratch-pale-background nil))
   :bind
   (("M-s $ DEL" . omni-scratch)
    ("M-s $ -" . omni-scratch-major)
@@ -677,6 +724,7 @@
   (("C-c m" . menu-bar-mode)
    ("C-c s" . scroll-bar-mode)
    ("C-x k" . kill-this-buffer)
+   ([f5] . revert-buffer)
    ("RET" . newline-and-indent))
   :custom
   ((package-archive-priorities
@@ -694,6 +742,7 @@
    (scroll-error-top-bottom t)
    (display-time-default-load-average nil)
    (display-time-format "%a %d %b, %I:%M %p")
+   (display-time-use-mail-icon t)
    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
    (require-final-newline t)
    (uniquify-buffer-name-style 'forward))
@@ -712,6 +761,7 @@
     (global-prettify-symbols-mode t)
     (global-subword-mode t)
     (global-visual-line-mode t)
+    (display-battery-mode t)
     (line-number-mode t)
     (column-number-mode t)
     (save-place-mode t)
