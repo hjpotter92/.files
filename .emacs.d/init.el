@@ -313,6 +313,12 @@
   :config
   (global-hl-todo-mode))
 
+(use-package better-shell
+  :ensure t
+  :bind
+  (("C-c `" . better-shell-shell)
+   ("s-p `" . better-shell-for-projectile-root)))
+
 ;; (use-package perspective
 ;;   :ensure t
 ;;   :commands persp-mode
@@ -715,6 +721,26 @@
   :config
   (progn
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
+
+(use-package css-mode
+  :ensure t
+  :custom
+  (css-indent-offset 2)
+  :hook
+  (css-mode . emmet-mode)
+  :mode
+  ("\\.css\\'"))
+
+(use-package git-gutter+
+  :ensure t
+  :init
+  (progn
+    (global-git-gutter+-mode t)))
+
+(use-package idle-highlight-in-visible-buffers-mode
+  :ensure t
+  :hook
+  (prog-mode . idle-highlight-in-visible-buffers-mode))
 
 (use-package emacs
   :ensure t
