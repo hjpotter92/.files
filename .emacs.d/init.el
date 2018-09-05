@@ -630,12 +630,18 @@
   (elpy-mode . flycheck-mode)
   :custom
   ((elpy-rpc-backend "jedi")
-   (elpy-autodoc-delay 0.400))
+   (elpy-autodoc-delay 0.400)
+   (elpy-rpc-ignored-buffer-size 204800))
   :init
   (progn
     (elpy-enable)
     (mapc (lambda (module) (setq elpy-modules (delq module elpy-modules)))
-          '(elpy-module-flymake elpy-module-highlight-indentation))))
+          '(elpy-module-flymake elpy-module-highlight-indentation elpy-module-django elpy-module-pyvenv))))
+
+(use-package auto-virtualenvwrapper
+  :ensure t
+  :hook
+  (python-mode . auto-virtualenvwrapper-activate))
 
 (use-package fill-column-indicator
   :ensure t
@@ -733,6 +739,7 @@
 
 (use-package git-gutter+
   :ensure t
+  :diminish
   :init
   (progn
     (global-git-gutter+-mode t)))
