@@ -64,7 +64,7 @@ plugins=(
     common-aliases cp debian dirhistory sudo rsync extract command-not-found dotenv
     python pip aws colorize fabric httpie virtualenv virtualenvwrapper pyenv pipenv
     rust cargo
-    battery emacs nmap
+    battery emacs nmap docker docker-compose
     colored-man-pages tmux
     emoji emoji-clock
     node npm bundler

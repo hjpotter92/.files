@@ -55,38 +55,52 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(defun hjpotter92/pretty-symbols ()
+(defun my/pretty-symbols ()
   "Add custom symbols in pretty-symbol mode."
   (push '("!=" . ?≠) prettify-symbols-alist)
   (push '("<=" . ?≤) prettify-symbols-alist)
   (push '(">=" . ?≥) prettify-symbols-alist)
-  (push '("+=" . ?⩲) prettify-symbols-alist)
-  (push '("==" . ?⩵) prettify-symbols-alist)
+  (push '("==" . ?≡) prettify-symbols-alist)
   (push '("=>" . ?⇒) prettify-symbols-alist)
   (push '("NOTE" . ?¤) prettify-symbols-alist)
   (push '("TODO" . ?§) prettify-symbols-alist))
 
-(defun hjpotter92/pretty-symbols-python ()
+(defun my/pretty-symbols-python ()
   "Python specific pretty symbols."
-  (hjpotter92/pretty-symbols)
+  (my/pretty-symbols)
   (push '("def"    . ?ƒ) prettify-symbols-alist)
   (push '("sum"    . ?Σ) prettify-symbols-alist)
   (push '("**2"    . ?²) prettify-symbols-alist)
   (push '("**3"    . ?³) prettify-symbols-alist)
   (push '("None"   . ?∅) prettify-symbols-alist)
+  (push '("True"   . ?⊤) prettify-symbols-alist)
+  (push '("False"  . ?⊥) prettify-symbols-alist)
+  (push '("is"     . ?≣) prettify-symbols-alist)
+  (push '("is not" . ?≢) prettify-symbols-alist)
   (push '("in"     . ?∈) prettify-symbols-alist)
   (push '("not in" . ?∉) prettify-symbols-alist)
-  (push '("return" . ?➡) prettify-symbols-alist))
+  (push '("return" . ?⟾) prettify-symbols-alist))
 
-(defun hjpotter92/pretty-symbols-lisp ()
+(defun my/pretty-symbols-ruby ()
+  "Python specific pretty symbols."
+  (my/pretty-symbols)
+  (push '("def"   . ?ƒ) prettify-symbols-alist)
+  (push '("->"    . ?→) prettify-symbols-alist)
+  (push '("=>"    . ?⟹) prettify-symbols-alist)
+  (push '("true"  . ?⊤) prettify-symbols-alist)
+  (push '("false" . ?⊥) prettify-symbols-alist)
+  (push '("nil"   . ?∅) prettify-symbols-alist))
+
+(defun my/pretty-symbols-lisp ()
   "Lisp symbols."
-  (hjpotter92/pretty-symbols)
+  (my/pretty-symbols)
   (push '("defun"    . ?ƒ) prettify-symbols-alist)
   (push '("defmacro" . ?μ) prettify-symbols-alist)
   (push '("defvar"   . ?ν) prettify-symbols-alist))
 
-(add-hook 'python-mode-hook 'hjpotter92/pretty-symbols-python)
-(add-hook 'emacs-lisp-mode-hook 'hjpotter92/pretty-symbols-lisp)
+(add-hook 'python-mode-hook 'my/pretty-symbols-python)
+(add-hook 'emacs-lisp-mode-hook 'my/pretty-symbols-lisp)
+(add-hook 'ruby-mode-hook 'my/pretty-symbols-ruby)
 
 (progn
   (setq use-package-minimum-reported-time 0)
@@ -255,7 +269,7 @@
   :after (ivy)
   :delight '(:eval (concat " P[" (projectile-project-name) "]"))
   :custom
-  ((projectile-enable-caching t)
+  ((projectile-enable-caching nil)
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
    ;; (projectile-mode-line '(:eval
@@ -609,6 +623,22 @@
     (diminish 'abbrev-mode "Ab")
     (diminish 'outline-mode)))
 
+(use-package ruby-mode
+  :ensure t
+  :config
+  (progn
+    (use-package rbenv
+      :ensure t
+      :hook
+      (ruby-mode . rbenv-use-corresponding)
+      :init
+      (global-rbenv-mode t))
+    (use-package ruby-extra-highlight
+      :hook
+      (ruby-mode . ruby-extra-highlight-mode))
+    (use-package ruby-tools
+      :ensure t)))
+
 (use-package python-mode
   :ensure t
   :disabled
@@ -790,7 +820,7 @@
     (setq-default indent-tabs-mode nil))
   :config
   (progn
-    (hjpotter92/pretty-symbols)
+    (my/pretty-symbols)
     (global-prettify-symbols-mode t)
     (global-subword-mode t)
     (global-visual-line-mode t)
