@@ -73,8 +73,8 @@
   (push '("**2"    . ?²) prettify-symbols-alist)
   (push '("**3"    . ?³) prettify-symbols-alist)
   (push '("None"   . ?∅) prettify-symbols-alist)
-  (push '("True"   . ?⊤) prettify-symbols-alist)
-  (push '("False"  . ?⊥) prettify-symbols-alist)
+  (push '("True"   . ?⥾) prettify-symbols-alist)
+  (push '("False"  . ?⥿) prettify-symbols-alist)
   (push '("is"     . ?≣) prettify-symbols-alist)
   (push '("is not" . ?≢) prettify-symbols-alist)
   (push '("in"     . ?∈) prettify-symbols-alist)
@@ -87,8 +87,8 @@
   (push '("def"   . ?ƒ) prettify-symbols-alist)
   (push '("->"    . ?→) prettify-symbols-alist)
   (push '("=>"    . ?⟹) prettify-symbols-alist)
-  (push '("true"  . ?⊤) prettify-symbols-alist)
-  (push '("false" . ?⊥) prettify-symbols-alist)
+  (push '("true"  . ?⥾) prettify-symbols-alist)
+  (push '("false" . ?⥿) prettify-symbols-alist)
   (push '("nil"   . ?∅) prettify-symbols-alist))
 
 (defun my/pretty-symbols-lisp ()
@@ -190,7 +190,7 @@
 (use-package focus
   :ensure t
   :hook
-  ((lisp-mode emacs-lisp-mode) . focus-mode)
+  ((lisp-mode emacs-lisp-mode ruby-mode) . focus-mode)
   :bind ("C-c f" . focus-mode))
 
 (use-package flycheck
@@ -272,14 +272,14 @@
   ((projectile-enable-caching nil)
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
-   ;; (projectile-mode-line '(:eval
-   ;;                         (if (projectile-project-p)
-   ;;                             (format "P[%s]" (projectile-project-name))
-   ;;                           "")))
    (projectile-tags-backend "ggtags"))
   :init
   (progn
-    (projectile-mode t))
+    (projectile-mode t)
+    (use-package projectile-rails
+      :ensure t
+      :init
+      (projectile-rails-global-mode t)))
   :config
   (progn
     (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
@@ -433,6 +433,7 @@
    (web-mode-code-indent-offset 2)
    (web-mode-enable-current-element-highlight t)
    (web-mode-enable-current-column-highlight t)
+   (web-mode-enable-auto-pairing nil)
    (web-mode-engines-alist
          '(("php" . "\\.phtml?\\'")
            ("blade" . "\\.blade\\."))))
@@ -555,6 +556,7 @@
     (setq sml/mode-width 'full)
     (sml/setup)
     ;; (sml/apply-theme 'dark)
+    (add-to-list 'sml/replacer-regexp-list '("^:Doc:przemek/app/" ":PRZK:") t)
     (add-to-list 'sml/replacer-regexp-list '("^:Doc:Loktra/" ":lk:") t)
     (add-to-list 'sml/replacer-regexp-list '("^:lk:hypertrack-webhook/" ":lkHT:") t)
     (add-to-list 'sml/replacer-regexp-list '("^:lkHT:vered/v1/" ":lkHT1:") t)
@@ -594,6 +596,15 @@
     (smartparens-global-mode 1))
   :config
   (progn
+    (sp-with-modes '(web-mode)
+      (sp-local-pair "%" "%" :unless '(sp-in-string-p)
+                     :post-handlers '(((lambda (&rest _ignored)
+                                         (just-one-space)
+                                         (save-excursion (insert " ")))
+                                       "SPC" "=" "#")))
+      (sp-local-tag "%" "<% "  " %>")
+      (sp-local-tag "=" "<%= " " %>")
+      (sp-local-tag "#" "<%# " " %>"))
     (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
   :bind
   (("C-M-k" . sp-kill-sexp)
@@ -625,6 +636,12 @@
 
 (use-package ruby-mode
   :ensure t
+  :init
+  (progn
+    (use-package inf-ruby
+      :ensure t
+      :hook
+      (ruby-mode . inf-ruby-minor-mode)))
   :config
   (progn
     (use-package rbenv
