@@ -272,6 +272,7 @@
   ((projectile-enable-caching nil)
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
+   (projectile-create-missing-test-files t)
    (projectile-tags-backend "ggtags"))
   :init
   (progn
