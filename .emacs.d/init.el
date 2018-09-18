@@ -7,10 +7,10 @@
 (setq package-enable-at-startup nil)
 
 ;;; Code:
-(mapc (lambda(p) (add-to-list 'package-archives p t))
-      '(("marmalade" . "https://marmalade-repo.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")))
+(mapc (lambda (p) (add-to-list 'package-archives p t))
+      '(("melpa" . "https://melpa.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")
+        ("gelpa" . "http://gelpa.gdritter.com/")))
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -121,6 +121,11 @@
   :ensure t
   :hook
   (prog-mode . rainbow-mode))
+
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode t))
 
 (use-package dired+
   :commands toggle-diredp-find-file-reuse-dir)
