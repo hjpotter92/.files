@@ -276,10 +276,30 @@ assign [class="(?i)vlc"] $media
 assign [class="^smplayer$"] $media
 assign [class="(?i)filebot"] $shit
 
+
+# Specific application settings
 for_window [class=".*"] title_format "%title - %class"
+
+# Steam application sub-instances
+for_window [class="^Steam$" title="^Friends"] floating enable
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required"] floating enable
+for_window [title="^Steam Keyboard"] floating enable
+
+# Firefox sub-instances
+for_window [title="About Mozilla Firefox"] floating enable
+for_window [title="Firefox Preferences"] floating enable
 
 # Set wallpaper from feh
 exec --no-startup-id sh ~/.fehbg
+
+# auto start few programs
 exec --no-startup-id compton -b
 exec --no-startup-id google-chrome
 

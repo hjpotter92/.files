@@ -119,6 +119,7 @@
 
 (use-package rainbow-mode
   :ensure t
+  :diminish t
   :hook
   (prog-mode . rainbow-mode))
 
@@ -679,6 +680,7 @@
 (use-package elpy
   :ensure t
   :after (flycheck)
+  :diminish
   :hook
   (elpy-mode . flycheck-mode)
   :custom

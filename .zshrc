@@ -71,7 +71,7 @@ plugins=(
     rbenv rake-fast rails ruby
     postgres
     web-search history-substring-search
-    zsh-syntax-highlighting
+    zsh-navigation-tools zsh-syntax-highlighting
     zsh-syntax-highlighting-filetypes
 )
 
