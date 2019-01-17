@@ -533,6 +533,13 @@
    (company-minimum-prefix-length 2))
   :config
   (progn
+    (use-package robe
+      :ensure t
+      :after ruby-mode
+      :hook
+      (ruby-mode . robe-mode)
+      :config
+      (add-to-list 'company-backends 'company-robe))
     (use-package company-jedi
       :ensure t
       :config
@@ -831,6 +838,7 @@
    (display-time-default-load-average nil)
    (display-time-format "%a %d %b, %I:%M %p")
    (display-time-use-mail-icon t)
+   (display-line-numbers 'relative)
    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
    (require-final-newline t)
    (uniquify-buffer-name-style 'forward))
@@ -851,6 +859,7 @@
     (global-visual-line-mode t)
     (display-battery-mode t)
     (line-number-mode t)
+    (display-line-numbers-mode t)
     (column-number-mode t)
     (save-place-mode t)
     (menu-bar-mode -1)
