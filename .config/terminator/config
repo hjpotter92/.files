@@ -1,0 +1,33 @@
+[global_config]
+  borderless = True
+  homogeneous_tabbar = False
+  scroll_tabbar = True
+  title_font = Hack Nerd Font Mono 9
+  title_hide_sizetext = True
+  title_use_system_font = False
+  window_state = maximise
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    audible_bell = True
+    background_darkness = 0.76
+    background_type = transparent
+    cursor_color = "#bbbbbb"
+    foreground_color = "#f8f8f2"
+    background_color = "#1e1f29"
+    font = SauceCodePro Nerd Font 10
+    icon_bell = False
+    palette = "#000000:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#bbbbbb:#555555:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#ffffff"
+    scrollback_infinite = True
+    scrollbar_position = hidden
+    show_titlebar = False
+    use_system_font = False
