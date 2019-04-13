@@ -243,9 +243,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 8%+ #increas
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 8%- #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle # mute sound
 
-# Sreen brightness controls
+# Screen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 7 # decrease screen brightness
+# Keyboard brightness controls
+bindsym XF86KbdBrightnessUp exec --no-startup-id kbdlight up 10 # increase screen brightness
+bindsym XF86KbdBrightnessDown exec --no-startup-id kbdlight down 10 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
