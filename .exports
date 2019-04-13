@@ -6,4 +6,5 @@ export LESS_TERMCAP_us=$'\E[04;38;5;111m'
 export LESS_TERMCAP_md=$'\E[01;38;5;208m'
 export LESS_TERMCAP_me=$'\E[0m'
 export LESS_TERMCAP_se=$'\E[0m'
-export TERM="xterm-24bit"
+export GIT_PAGER='cat'
+# export TERM="xterm-24bit"

@@ -123,7 +123,7 @@ label-empty-foreground = #707880
 
 [module/updates]
 type = custom/script
-exec = ~/.config/polybar/modules/polybar-scripts/updates-arch-combined/updates-arch-combined.sh
+exec = sh ~/.config/polybar/modules/polybar-scripts/updates-arch-combined/updates-arch-combined.sh
 interval = 600
 format-prefix = 
 format-prefix-font = 3

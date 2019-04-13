@@ -1,10 +1,14 @@
 rofi.combi-modi:        window,drun,ssh
-rofi.theme:             /usr/local/share/rofi/themes/arthur.rasi
-rofi.font:              hack nerd regular 8
+rofi.font:              SauceCodePro Nerd Font Mono 8
 rofi.modi:              combi,run,calc
 rofi.show:              combi
-rofi.lines:             10
+rofi.lines:             15
 rofi.columns:           2
 rofi.matching:          fuzzy
 rofi.sort:              true
 rofi.levenshtein-sort:  false
+rofi.theme:             /usr/share/rofi/themes/arthur.rasi
+rofi.fixed-num-lines:   false
+rofi.show-icons:        true
+rofi.dpi:               140
+rofi.bw:                0

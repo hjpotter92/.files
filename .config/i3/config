@@ -18,7 +18,7 @@ set $mod Mod4
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
-font pango:Ricty Diminished Regular 8
+font pango:SauceCodePro Nerd Font Mono 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -97,18 +97,16 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Set name for custom workspaces
-set $www 1:<span fgcolor="aquamarine"></span>
-set $shit 2:<span fgcolor="chocolate" weight="heavy"></span>
-set $dir 3:<span fgcolor="brown"></span>
-set $slack 4:
-set $emacs 5:<span fgcolor="orchid"></span>
-set $media 6:<span fgcolor="white"></span>
-set $emacs2 7:<span fgcolor="orchid"></span>
-set $settings 8:<span fgcolor="chocolate" weight="heavy"></span>
-set $term 9:<span fgcolor="grey"></span>
-set $steam 10:<span fgcolor="blue"></span>
-
-workspace 7 output DP1
+set $www 1
+set $shit 2
+set $dir 3
+set $slack 4
+set $emacs 5
+set $media 6
+set $emacs2 7
+set $settings 8
+set $term 9
+set $steam 10
 
 # switch to workspace
 bindsym $mod+1 workspace $www
@@ -169,10 +167,12 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    font pango:Hack Nerd Font 8
-    status_command py3status -b # i3status
-}
+# bar {
+#     font pango:SauceCodePro Nerd Font Mono 8
+#     status_command py3status -b # i3status
+# }
+
+exec_always --no-startup-id ~/.config/polybar/scripts/launch.sh
 
 # System control
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown
@@ -301,7 +301,7 @@ exec --no-startup-id sh ~/.fehbg
 
 # auto start few programs
 exec --no-startup-id compton -b
-exec --no-startup-id google-chrome
+exec --no-startup-id google-chrome-stable
 
 # Configure scratchpad
 # Make the currently focused window a scratchpad

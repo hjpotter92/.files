@@ -2,16 +2,16 @@
 
 case "$1" in
     lock)
-        /opt/i3lock-fancy/lock -pt "Type password to unlock" -- maim
+        i3lock-fancy-rapid 5 2 -f -b
         ;;
     logout)
         i3-msg exit
         ;;
     suspend)
-        /opt/i3lock-fancy/lock && systemctl suspend
+        i3lock-fancy-rapid 5 2 && systemctl suspend
         ;;
     hibernate)
-        /opt/i3lock-fancy/lock && systemctl hibernate
+        i3lock-fancy-rapid 5 2 && systemctl hibernate
         ;;
     reboot)
         systemctl reboot

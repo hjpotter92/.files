@@ -517,9 +517,6 @@
     (sml/setup)
     ;; (sml/apply-theme 'dark)
     (add-to-list 'sml/replacer-regexp-list '("^:Doc:przemek/app/" ":PRZK:") t)
-    (add-to-list 'sml/replacer-regexp-list '("^:Doc:Loktra/" ":lk:") t)
-    (add-to-list 'sml/replacer-regexp-list '("^:lk:hypertrack-webhook/" ":lkHT:") t)
-    (add-to-list 'sml/replacer-regexp-list '("^:lkHT:vered/v1/" ":lkHT1:") t)
     (add-to-list 'sml/replacer-regexp-list '("^:lk:backend/odyssey/v\\([12]\\)/" ":lbOD\\1:") t)))
 
 (use-package mode-icons
@@ -757,6 +754,15 @@
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
 
+(use-package paradox
+  :ensure t
+  :defer t
+  :custom
+  ((paradox-lines-per-entry 2)
+   (paradox-automatically-star t))
+  :config
+  (paradox-enable))
+
 (use-package emacs
   :ensure t
   :diminish
@@ -789,7 +795,7 @@
    (require-final-newline t)
    (uniquify-buffer-name-style 'forward))
   :custom-face
-  (default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "Hack Nerd Font"))))
+  (default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 80 :width normal :foundry "unknown" :family "SauceCodePro Nerd Font"))))
   :init
   (progn
     (setq inhibit-compacting-font-caches t)
