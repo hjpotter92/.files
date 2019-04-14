@@ -5,6 +5,7 @@
       '(
         elpy-nav-backward-indent
         end-of-visual-line
+        kill-region
         ))
 
 (setq mc/cmds-to-run-once
