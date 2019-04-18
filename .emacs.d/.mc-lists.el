@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         elpy-nav-backward-indent
+        elpy-nav-forward-indent
         end-of-visual-line
         ))
 

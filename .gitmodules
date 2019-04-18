@@ -1,3 +1,31 @@
 [submodule "polybar-scripts"]
 	path = .config/polybar/modules
 	url = git@github.com:x70b1/polybar-scripts.git
+
+[submodule "tmux/tpm"]
+	path = .tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
+
+[submodule "tmux/tmux-battery"]
+	path = .tmux/plugins/tmux-battery
+	url = git@github.com:tmux-plugins/tmux-battery.git
+
+[submodule "tmux/tmux-continuum"]
+	path = .tmux/plugins/tmux-continuum
+	url = git@github.com:tmux-plugins/tmux-continuum.git
+
+[submodule "tmux/tmux-logging"]
+	path = .tmux/plugins/tmux-logging
+	url = git@github.com:tmux-plugins/tmux-logging.git
+
+[submodule "tmux/tmux-prefix-highlight"]
+	path = .tmux/plugins/tmux-prefix-highlight
+	url = git@github.com:tmux-plugins/tmux-prefix-highlight.git
+
+[submodule "tmux/tmux-resurrect"]
+	path = .tmux/plugins/tmux-resurrect
+	url = git@github.com:tmux-plugins/tmux-resurrect.git
+
+[submodule "tmux/tmux-sensible"]
+	path = .tmux/plugins/tmux-sensible
+	url = git@github.com:tmux-plugins/tmux-sensible.git
