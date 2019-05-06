@@ -352,17 +352,18 @@
 
 (use-package ggtags
   :ensure t
-  :delight ggtags-mode
   :diminish
   :hook
-  ((python-mode ruby-mode js3-mode emacs-lisp-mode) . ggtags-mode))
+  ((python-mode ruby-mode js2-mode emacs-lisp-mode web-mode) . ggtags-mode))
 
 (use-package counsel-gtags
   :ensure t
   :delight counsel-gtags-mode
   :diminish
   :after (ggtags)
-  :hook (ggtags-mode . counsel-gtags-mode))
+  :hook (ggtags-mode . counsel-gtags-mode)
+  :custom
+  ((counsel-gtags-auto-update t)))
 
 (use-package emmet
   :ensure emmet-mode
@@ -373,6 +374,7 @@
   :ensure t
   :mode
   (("\\.[pm]?html?$" . web-mode)
+   ("\\.jsx?$" . web-mode)
    ("\\.tmpl" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
@@ -387,9 +389,14 @@
    (web-mode-enable-current-element-highlight t)
    (web-mode-enable-current-column-highlight t)
    (web-mode-enable-auto-pairing nil)
+   (web-mode-content-types-alist
+    '(("jsx" . "\\.jsx?\\'")
+      ("json" . "\\.json\\'")
+      ("xml" . "\\.xml\\'")))
    (web-mode-engines-alist
-         '(("php" . "\\.phtml?\\'")
-           ("blade" . "\\.blade\\."))))
+    '(("php" . "\\.phtml?\\'")
+      ("reactjs" . "\\.jsx\\'")
+      ("blade" . "\\.blade\\."))))
   :config
   (progn
     (use-package company-web
@@ -496,19 +503,21 @@
       :config
       (company-flx-mode t))))
 
-(use-package ace-jump-mode
+(use-package avy
+  :ensure t
   :bind
-  (("C-." . ace-jump-mode)))
+  (("C-." . avy-goto-word-1)
+   ("M-g g" . avy-goto-line)))
 
-(use-package monokai-theme
+(use-package monokai-pro-theme
   :if (display-graphic-p)
   :config
   (progn
-    (load-theme 'monokai t)))
+    (load-theme 'monokai-pro t)))
 
 (use-package smart-mode-line
   :ensure t
-  :after (monokai-theme)
+  :after (monokai-pro-theme)
   :init
   (setq sml/no-confirm-load-theme t)
   :config
