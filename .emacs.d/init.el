@@ -510,10 +510,29 @@
    ("M-g g" . avy-goto-line)))
 
 (use-package monokai-pro-theme
+  :ensure t
   :if (display-graphic-p)
   :config
   (progn
     (load-theme 'monokai-pro t)))
+
+(use-package centaur-tabs
+  :ensure t
+  :if (display-graphic-p)
+  :after (smart-mode-line)
+  :custom
+  ((centaur-tabs-style "slant")
+   (centaur-tabs-set-icons t)
+   (centaur-tabs-set-modified-marker t)
+   (centaur-tabs-set-bar 'over))
+  :init
+  (progn
+    (centaur-tabs-mode t)
+    (centaur-tabs-group-by-projectile-project))
+  :bind
+  (("s-<prior>" . centaur-tabs-backward)
+   ("s-<next>" . centaur-tabs-forward)
+   ("C-c t" . centaur-tabs-counsel-switch-group)))
 
 (use-package smart-mode-line
   :ensure t
