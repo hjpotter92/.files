@@ -177,12 +177,12 @@ exec_always --no-startup-id ~/.config/polybar/scripts/launch.sh
 # System control
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit lock, mode "default"
-    bindsym e exec --no-startup-id ~/.config/i3/scripts/i3exit logout, mode "default"
-    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id ~/.config/i3/scripts/i3exit shutdown, mode "default"
+    bindsym l mode "default"; exec --no-startup-id ~/.config/i3/scripts/i3exit lock
+    bindsym e mode "default"; exec --no-startup-id ~/.config/i3/scripts/i3exit logout
+    bindsym s mode "default"; exec --no-startup-id ~/.config/i3/scripts/i3exit suspend
+    bindsym h mode "default"; exec --no-startup-id ~/.config/i3/scripts/i3exit hibernate
+    bindsym r mode "default"; exec --no-startup-id ~/.config/i3/scripts/i3exit reboot
+    bindsym Shift+s mode "default", exec --no-startup-id ~/.config/i3/scripts/i3exit shutdown
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"

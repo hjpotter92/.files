@@ -63,7 +63,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git gitfast git-extras git-prompt gitignore archlinux
+    git gitfast git-extras git-auto-fetch git-prompt gitignore
+    archlinux globalias
     common-aliases cp dirhistory sudo rsync extract command-not-found dotenv
     python pip aws colorize fabric httpie virtualenv virtualenvwrapper pyenv
     rust cargo
