@@ -1,34 +1,25 @@
 ;;; init --- Summary
 ;;; Commentary:
 
-;;; Code
-;; You might already have this line
-(require 'package)
-(setq package-enable-at-startup nil)
-
 ;;; Code:
-(mapc (lambda (p) (add-to-list 'package-archives p t))
-      '(("melpa" . "https://melpa.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")
-        ("gelpa" . "http://gelpa.gdritter.com/")))
+;; You might already have this line
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;; Constants
+(require 'init-const)
 
-(unless (require 'el-get nil 'noerror)
-  (package-refresh-contents)
-  (unless package--initialized (package-initialize))
-  (package-install 'el-get)
-  (require 'el-get))
+;; Packages
+(require 'init-package)
 
-(unless package--initialized (package-initialize))
+;; Base config
+(require 'init-base)
 
-(el-get 'sync)
-(defvar el-get-recipe-path)
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+;; Tools
+(require 'init-ivy)
+(require 'init-docker)
 
 (defvar highlight-blocks-mode)
 (defvar sml/replacer-regexp-list)
-(defvar use-package-minimum-reported-time)
 (defvar use-package-compute-statistics)
 (defvar company-dabbrev-downcase)
 (defvar region-bindings-mode-map)
@@ -50,8 +41,6 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
-
-;; (require 'dired+)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -102,20 +91,12 @@
 (add-hook 'emacs-lisp-mode-hook 'my/pretty-symbols-lisp)
 (add-hook 'ruby-mode-hook 'my/pretty-symbols-ruby)
 
-(progn
-  (setq use-package-minimum-reported-time 0)
-  (setq use-package-compute-statistics t)
-  (require 'use-package))
-
 (use-package benchmark-init
   :ensure t
   :hook
   (after-init . benchmark-init/deactivate)
   :init
   (benchmark-init/activate))
-
-(use-package delight
-  :ensure t)
 
 (use-package rainbow-mode
   :ensure t
@@ -128,16 +109,6 @@
   :init
   (beacon-mode t))
 
-(use-package dired+
-  :commands toggle-diredp-find-file-reuse-dir)
-
-(use-package dired
-  :commands (dired
-             find-name-dired
-             find-dired)
-  :config
-  (toggle-diredp-find-file-reuse-dir 1))
-
 (use-package smart-window
   :ensure t)
 
@@ -148,17 +119,8 @@
   :ensure t
   :hook (dired-mode . all-the-icons-dired-mode))
 
-(use-package image-dired+
-  :ensure t
-  :config (image-diredx-async-mode 1))
-
 (use-package realgud
   :ensure t)
-
-(use-package dockerfile-mode
-  :ensure t
-  :mode
-  (("Dockerfile\\'" . dockerfile-mode)))
 
 (use-package markdown-mode
   :ensure t
@@ -218,53 +180,6 @@
     (use-package yasnippet-snippets
       :ensure t)))
 
-(use-package amx
-  :ensure t
-  :bind
-  (("M-x" . amx)
-   ("M-X" . amx-major-mode-commands)))
-
-(use-package ivy
-  :ensure t
-  :diminish ivy-mode
-  :custom
-  ((ivy-use-virtual-buffers t)
-   (enable-recursive-minibuffers t)
-   (ivy-extra-directories nil)
-   (ivy-initial-inputs-alist nil)
-   (ivy-display-style 'fancy))
-  :config
-  (progn
-    (ivy-mode 1))
-  :bind
-  (("\C-s" . swiper)
-   ("\C-r" . ivy-resume)
-   ([f6] . ivy-resume)))
-
-(use-package counsel
-  :ensure t
-  :diminish counsel-mode
-  :config (counsel-mode t)
-  :bind
-  (("C-x C-f" . counsel-find-file)
-   ("C-x M-f" . counsel-recentf)
-   ("M-x" . counsel-M-x)
-   ("<f1> f" . counsel-describe-function)
-   ("<f1> v" . counsel-describe-variable)
-   ("<f1> l" . counsel-find-library)
-   ("<f1> b" . counsel-descbinds)
-   ("<f2> u" . counsel-unicode-char)
-   ("M-y" . counsel-yank-pop)
-   (:map minibuffer-local-map
-         ("C-r" . counsel-minibuffer-history))))
-
-(use-package ivy-xref
-  :ensure t
-  :after (ivy)
-  :init
-  (progn
-    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))
-
 (use-package all-the-icons-ivy
   :after (ivy)
   :config
@@ -298,13 +213,6 @@
     ;; Optionally write to persistent `projectile-known-projects-file'
     (projectile-save-known-projects)
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)))
-
-(use-package counsel-projectile
-  :ensure t
-  :after (counsel projectile)
-  :init
-  (progn
-    (counsel-projectile-mode t)))
 
 (use-package persp-mode
   :no-require t
@@ -517,7 +425,6 @@
     (load-theme 'monokai-pro t)))
 
 (use-package centaur-tabs
-  :ensure t
   :if (display-graphic-p)
   :after (smart-mode-line)
   :custom
@@ -568,16 +475,16 @@
   :ensure t
   :init
   (progn
-    (use-package smartparens-config)
-    (use-package smartparens-ruby)
-    (use-package smartparens-html)
-    (use-package smartparens-python)
-    (use-package smartparens-elixir)
-    (use-package smartparens-markdown)
-    (use-package smartparens-text)
-    (use-package smartparens-latex)
-    (use-package smartparens-lua)
-    (use-package smartparens-javascript)
+    (require 'smartparens-config)
+    (require 'smartparens-ruby)
+    (require 'smartparens-html)
+    (require 'smartparens-python)
+    (require 'smartparens-elixir)
+    (require 'smartparens-markdown)
+    (require 'smartparens-text)
+    (require 'smartparens-latex)
+    (require 'smartparens-lua)
+    (require 'smartparens-javascript)
     (smartparens-global-mode 1))
   :config
   (progn
@@ -611,13 +518,6 @@
    ;; ("M-S" . sp-split-sexp)
    ;; ("M-J" . sp-join-sexp)
    ("C-M-t" . sp-transpose-sexp)))
-
-(use-package diminish
-  :ensure t
-  :config
-  (progn
-    (diminish 'abbrev-mode "Ab")
-    (diminish 'outline-mode)))
 
 (use-package ruby-mode
   :ensure t
@@ -697,13 +597,6 @@
   :custom
   (lua-indent-level 2))
 
-(use-package server
-  :if (display-graphic-p)
-  :config
-  (progn
-    (unless (or (daemonp) (server-running-p))
-        (server-start))))
-
 (use-package with-editor
   :config (shell-command-with-editor-mode t))
 
@@ -782,15 +675,6 @@
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
 
-(use-package paradox
-  :ensure t
-  :defer t
-  :custom
-  ((paradox-lines-per-entry 2)
-   (paradox-automatically-star t))
-  :config
-  (paradox-enable))
-
 (use-package emacs
   :ensure t
   :diminish
@@ -815,9 +699,6 @@
    (x-stretch-cursor t)
    (use-dialog-box nil)
    (scroll-error-top-bottom t)
-   (display-time-default-load-average nil)
-   (display-time-format "%a %d %b, %I:%M %p")
-   (display-time-use-mail-icon t)
    (display-line-numbers 'relative)
    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
    (require-final-newline t)
@@ -845,8 +726,7 @@
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
-    (defalias 'yes-or-no-p 'y-or-n-p)
-    (display-time-mode t)))
+    (defalias 'yes-or-no-p 'y-or-n-p)))
 
 (provide 'init)
 ;;; init.el ends here

@@ -1,7 +1,7 @@
 ;;; init-const.el --- Constants across package definistion -*- lexical-binding: t -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
-;; Maintainer:
+;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: (dependencies)
 ;; Homepage: https://github.com/hjpotter92/.files

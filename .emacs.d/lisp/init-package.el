@@ -1,11 +1,10 @@
-;;; init-package.el --- Setting up emacs packages -*- lexical-binding: t -*-
+;;; init-package.el --- Setting up packages
 
-;; Author: hjpotter92
-;; Maintainer:
+;; Author: hjpotter92 <hjpotter92+github@gmail.com>
+;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: (dependencies)
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: emacs package init
+;; Keywords: tools internal convenience
 
 
 ;; This file is not part of GNU Emacs
@@ -39,16 +38,18 @@
   (package-initialize))
 
 ;; Setup `el-get'
-(unless (package-installed-p 'el-get)
-  (package-refresh-contents)
-  (package-install 'el-get))
+(add-to-list 'load-path (expand-file-name "el-get/el-get" user-emacs-directory))
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
 
 (eval-and-compile
-  (add-to-list 'load-path (concat user-emacs-directory "el-get"))
-  (require 'el-get)
-  (el-get 'sync)
-  (defvar el-get-recipe-path)
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes"))
+  (add-to-list 'el-get-recipe-path (expand-file-name "el-get-user/recipes" user-emacs-directory))
+  (el-get 'sync))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
@@ -59,12 +60,17 @@
   (setq use-package-minimum-reported-time 0)
   (setq use-package-compute-statistics t)
   (setq use-package-always-ensure t)
-  (setq use-package-always-defer t)
+  ;; (setq use-package-always-defer t)
   (setq use-package-expand-minimally t)
   (require 'use-package))
 
-(use-package diminish)
 (use-package bind-key)
+(use-package delight
+  :config
+  (progn
+    (diminish 'abbrev-mode "Ab")
+    (diminish 'outline-mode)))
+(use-package diminish)
 
 (use-package paradox
   :custom
