@@ -65,11 +65,7 @@
   (require 'use-package))
 
 (use-package bind-key)
-(use-package delight
-  :config
-  (progn
-    (diminish 'abbrev-mode "Ab")
-    (diminish 'outline-mode)))
+(use-package delight)
 (use-package diminish)
 
 (use-package paradox

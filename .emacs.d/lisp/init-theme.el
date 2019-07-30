@@ -3,6 +3,7 @@
 ;; Author: hjpotter92
 ;; Maintainer: hjpotter92
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: convenience
 
@@ -73,9 +74,14 @@
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ivy
-  :after (ivy)
+  :after (ivy all-the-icons counsel)
+  :custom
+  (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window ivy-switch-buffer))
   :config
-  (all-the-icons-ivy-setup))
+  (progn
+    (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
+    (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
+    (all-the-icons-ivy-setup)))
 
 (use-package smart-cursor-color
   :diminish smart-cursor-color-mode
@@ -86,7 +92,7 @@
 (use-package centaur-tabs
   :if (display-graphic-p)
   :after (smart-mode-line)
-  :functions
+  :commands
   (centaur-tabs-group-by-projectile-project)
   :custom
   ((centaur-tabs-style "slant")
@@ -104,15 +110,21 @@
 
 (use-package smart-mode-line
   :after (monokai-pro-theme)
+  :custom
+  ((sml/no-confirm-load-theme t)
+   (sml/mode-width 'full))
+  :preface
+  (setq-local h-mode-line-patterns
+    '(("^:Doc:.files/" . ":.f:")
+      ("^:Doc:przemek/app/" . ":PRZK:")
+      ("^:Doc:\\(projects|src\\)/\\([^/]+\\)/" . ":\\2:")))
   :init
-  (setq sml/no-confirm-load-theme t)
+  (sml/setup)
   :config
   (progn
-    (setq sml/mode-width 'full)
-    (sml/setup)
-    ;; (sml/apply-theme 'dark)
-    (add-to-list 'sml/replacer-regexp-list '("^:Doc:przemek/app/" ":PRZK:") t)
-    (add-to-list 'sml/replacer-regexp-list '("^:lk:backend/odyssey/v\\([12]\\)/" ":lbOD\\1:") t)))
+    (mapc (lambda (it)
+            (add-to-list 'sml/replacer-regexp-list (list (car it) (cdr it)) t))
+          h-mode-line-patterns)))
 
 (use-package mode-icons
   :after (smart-mode-line)

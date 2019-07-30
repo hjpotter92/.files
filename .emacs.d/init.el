@@ -13,6 +13,7 @@
 
 ;; Base config
 (require 'init-base)
+(require 'init-simple)
 (require 'init-backup)
 (require 'init-editor)
 (require 'init-theme)
@@ -21,19 +22,15 @@
 (require 'init-ivy)
 (require 'init-docker)
 (require 'init-dired)
+(require 'init-buffer)
 (require 'init-flycheck)
 (require 'init-yasnippet)
 
 ;; Prgramming languages specific
 (require 'init-prog)
 
-(defvar highlight-blocks-mode)
-(defvar sml/replacer-regexp-list)
-(defvar use-package-compute-statistics)
 (defvar company-dabbrev-downcase)
-(defvar region-bindings-mode-map)
 
-(setq-default abbrev-mode t)
 (setq-default auto-revert-mode t)
 (prefer-coding-system 'utf-8)
 (set-language-environment "UTF-8")
@@ -424,8 +421,6 @@
 
 (use-package emacs
   :ensure t
-  :diminish
-  (visual-line-mode abbrev-mode)
   :bind
   (("C-c m" . menu-bar-mode)
    ("C-c s" . scroll-bar-mode)
@@ -446,7 +441,6 @@
    (x-stretch-cursor t)
    (use-dialog-box nil)
    (scroll-error-top-bottom t)
-   (display-line-numbers 'relative)
    (visual-line-fringe-indicators (quote (left-curly-arrow nil)))
    (require-final-newline t)
    (uniquify-buffer-name-style 'forward))
@@ -463,12 +457,8 @@
   (progn
     (my/pretty-symbols)
     (global-prettify-symbols-mode t)
-    (global-visual-line-mode t)
     (display-battery-mode -1)
-    (line-number-mode t)
     (display-line-numbers-mode t)
-    (column-number-mode t)
-    (save-place-mode t)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
