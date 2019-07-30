@@ -13,10 +13,19 @@
 
 ;; Base config
 (require 'init-base)
+(require 'init-backup)
+(require 'init-editor)
+(require 'init-theme)
 
 ;; Tools
 (require 'init-ivy)
 (require 'init-docker)
+(require 'init-dired)
+(require 'init-flycheck)
+(require 'init-yasnippet)
+
+;; Prgramming languages specific
+(require 'init-prog)
 
 (defvar highlight-blocks-mode)
 (defvar sml/replacer-regexp-list)
@@ -98,30 +107,6 @@
   :init
   (benchmark-init/activate))
 
-(use-package rainbow-mode
-  :ensure t
-  :diminish t
-  :hook
-  (prog-mode . rainbow-mode))
-
-(use-package beacon
-  :ensure t
-  :init
-  (beacon-mode t))
-
-(use-package smart-window
-  :ensure t)
-
-(use-package all-the-icons
-  :ensure t)
-
-(use-package all-the-icons-dired
-  :ensure t
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-(use-package realgud
-  :ensure t)
-
 (use-package markdown-mode
   :ensure t
   :mode
@@ -154,36 +139,6 @@
     (mapc #'projectile-add-known-project
           (mapcar #'file-name-as-directory (magit-list-repos)))
     (global-magit-file-mode t)))
-
-(use-package focus
-  :ensure t
-  :hook
-  ((lisp-mode emacs-lisp-mode ruby-mode) . focus-mode)
-  :bind ("C-c f" . focus-mode))
-
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-
-(use-package flycheck-package
-  :commands flycheck-package-setup
-  :after (flycheck)
-  :init (flycheck-package-setup))
-
-(use-package yasnippet
-  :ensure t
-  :init
-  (progn
-    (yas-global-mode t))
-  :config
-  (progn
-    (use-package yasnippet-snippets
-      :ensure t)))
-
-(use-package all-the-icons-ivy
-  :after (ivy)
-  :config
-  (all-the-icons-ivy-setup))
 
 (use-package projectile
   :ensure t
@@ -236,11 +191,6 @@
                     #'(lambda ()
                         (persp-mode-projectile-bridge-mode 1))
                     t))))))
-
-(use-package hl-todo
-  :ensure t
-  :config
-  (global-hl-todo-mode))
 
 (use-package better-shell
   :ensure t
@@ -314,44 +264,6 @@
       :config
       (add-to-list 'company-backends 'company-web-html))))
 
-(use-package smart-cursor-color
-  :ensure t
-  :diminish smart-cursor-color-mode
-  :config
-  (global-hl-line-mode t)
-  (smart-cursor-color-mode t))
-
-(use-package multiple-cursors
-  :ensure t
-  :after region-bindings-mode
-  :bind
-  ("C-S-c C-S-c" . mc/edit-lines)
-  ("C->" . mc/mark-next-like-this)
-  ("C-<" . mc/mark-previous-like-this)
-  ("C-c C-<" . mc/mark-all-like-this)
-  ("C-S-<mouse-1>" . mc/add-cursor-on-click)
-  :bind
-  (:map region-bindings-mode-map
-        ("a" . mc/mark-all-like-this)
-        ("p" . mc/mark-previous-like-this)
-        ("n" . mc/mark-next-like-this)
-        ("P" . mc/unmark-previous-like-this)
-        ("N" . mc/unmark-next-like-this)
-        ("j" . mc/cycle-backward)
-        ("k" . mc/cycle-forward)
-        ("m" . mc/mark-more-like-this-extended)
-        ("h" . mc-hide-unmatched-lines-mode)
-        ("\\" . mc/vertical-align-with-space)
-        ("#" . mc/insert-numbers)             ; use num prefix to set the starting number
-        ("^" . mc/edit-beginnings-of-lines)
-        ("$" . mc/edit-ends-of-lines)))
-
-(use-package region-bindings-mode
-  :ensure t
-  :diminish
-  :config
-  (region-bindings-mode-enable))
-
 (use-package switch-window
   :ensure t
   :bind
@@ -411,54 +323,6 @@
       :config
       (company-flx-mode t))))
 
-(use-package avy
-  :ensure t
-  :bind
-  (("C-." . avy-goto-word-1)
-   ("M-g g" . avy-goto-line)))
-
-(use-package monokai-pro-theme
-  :ensure t
-  :if (display-graphic-p)
-  :config
-  (progn
-    (load-theme 'monokai-pro t)))
-
-(use-package centaur-tabs
-  :if (display-graphic-p)
-  :after (smart-mode-line)
-  :custom
-  ((centaur-tabs-style "slant")
-   (centaur-tabs-set-icons t)
-   (centaur-tabs-set-modified-marker t)
-   (centaur-tabs-set-bar 'over))
-  :init
-  (progn
-    (centaur-tabs-mode t)
-    (centaur-tabs-group-by-projectile-project))
-  :bind
-  (("s-<prior>" . centaur-tabs-backward)
-   ("s-<next>" . centaur-tabs-forward)
-   ("C-c t" . centaur-tabs-counsel-switch-group)))
-
-(use-package smart-mode-line
-  :ensure t
-  :after (monokai-pro-theme)
-  :init
-  (setq sml/no-confirm-load-theme t)
-  :config
-  (progn
-    (setq sml/mode-width 'full)
-    (sml/setup)
-    ;; (sml/apply-theme 'dark)
-    (add-to-list 'sml/replacer-regexp-list '("^:Doc:przemek/app/" ":PRZK:") t)
-    (add-to-list 'sml/replacer-regexp-list '("^:lk:backend/odyssey/v\\([12]\\)/" ":lbOD\\1:") t)))
-
-(use-package mode-icons
-  :ensure t
-  :after (smart-mode-line)
-  :config (mode-icons-mode))
-
 (use-package minibuffer-line
   :if (display-graphic-p)
   :ensure t
@@ -470,54 +334,6 @@
     (setq minibuffer-line-format (format-time-string "%l:%M %b %d %a")))
   :config
   (minibuffer-line-mode))
-
-(use-package smartparens
-  :ensure t
-  :init
-  (progn
-    (require 'smartparens-config)
-    (require 'smartparens-ruby)
-    (require 'smartparens-html)
-    (require 'smartparens-python)
-    (require 'smartparens-elixir)
-    (require 'smartparens-markdown)
-    (require 'smartparens-text)
-    (require 'smartparens-latex)
-    (require 'smartparens-lua)
-    (require 'smartparens-javascript)
-    (smartparens-global-mode 1))
-  :config
-  (progn
-    (sp-with-modes '(web-mode)
-      (sp-local-pair "%" "%" :unless '(sp-in-string-p)
-                     :post-handlers '(((lambda (&rest _ignored)
-                                         (just-one-space)
-                                         (save-excursion (insert " ")))
-                                       "SPC" "=" "#")))
-      (sp-local-tag "%" "<% "  " %>")
-      (sp-local-tag "=" "<%= " " %>")
-      (sp-local-tag "#" "<%# " " %>"))
-    (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
-  :bind
-  (("C-M-k" . sp-kill-sexp)
-   ("C-M-f" . sp-forward-sexp)
-   ("C-M-b" . sp-backward-sexp)
-   ("C-M-n" . sp-up-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-u" . sp-backward-up-sexp)
-   ("C-M-p" . sp-backward-down-sexp)
-   ("C-M-w" . sp-copy-sexp)
-   ;; ("M-s" . sp-splice-sexp)
-   ;; ("M-r" . sp-splice-sexp-killing-around)
-   ("C-)" . sp-forward-slurp-sexp)
-   ("C-}" . sp-forward-barf-sexp)
-   ("C-(" . sp-backward-slurp-sexp)
-   ("C-{" . sp-backward-barf-sexp)
-   ("M-DEL" . sp-unwrap-sexp)
-   ("<M-backspace>" . sp-backward-unwrap-sexp)
-   ;; ("M-S" . sp-split-sexp)
-   ;; ("M-J" . sp-join-sexp)
-   ("C-M-t" . sp-transpose-sexp)))
 
 (use-package ruby-mode
   :ensure t
@@ -576,74 +392,10 @@
   :hook
   (python-mode . auto-virtualenvwrapper-activate))
 
-(use-package fill-column-indicator
-  :ensure t
-  ;; Disabled due to issue with company-popup
-  :disabled
-  :commands (fci-mode)
-  :hook
-  ((lua-mode python-mode emacs-lisp-mode) . fci-mode)
-  :custom
-  ((fci-rule-column 80)))
-
-(use-package home-end
-  :ensure t
-  :bind
-  (([home] . home-end-home)
-   ([end] . home-end-end)))
-
 (use-package lua-mode
   :ensure t
   :custom
   (lua-indent-level 2))
-
-(use-package with-editor
-  :config (shell-command-with-editor-mode t))
-
-(use-package ibuffer
-  :ensure t
-  :bind
-  ("C-x C-b" . ibuffer-other-window))
-
-(use-package which-key
-  :diminish
-  :config
-  (progn
-    (which-key-mode t)
-    (which-key-setup-minibuffer)
-    (setq which-key-idle-delay 0.400)))
-
-(use-package highlight-parentheses
-  :ensure t
-  :delight
-  (highlight-parentheses-mode " ❪❫")
-  (global-highlight-parentheses-mode " ❪❫")
-  :config
-  (progn
-    (global-highlight-parentheses-mode t)))
-
-(use-package omni-scratch
-  :ensure t
-  :custom
-  ((omni-scratch-pale-background nil))
-  :bind
-  (("M-s $ DEL" . omni-scratch)
-   ("M-s $ -" . omni-scratch-major)
-   ("M-s $ _" . omni-scratch-buffer)
-   ("M-s $ $" . omni-scratch-goto-latest)
-   ("M-s $ b" . omni-scratch-buffers)))
-
-(use-package helpful
-  :ensure t
-  :delight
-  :bind
-  (:map help-map
-   ("f" . helpful-callable)
-   ("v" . helpful-variable)
-   ("F" . helpful-function)
-   ("k" . helpful-key)
-   ("c" . helpful-key)
-   ("C-d" . helpful-at-point)))
 
 (use-package gxref
   :ensure t
@@ -670,11 +422,6 @@
   (progn
     (global-git-gutter+-mode t)))
 
-(use-package idle-highlight-in-visible-buffers-mode
-  :ensure t
-  :hook
-  (prog-mode . idle-highlight-in-visible-buffers-mode))
-
 (use-package emacs
   :ensure t
   :diminish
@@ -689,7 +436,7 @@
   ((package-archive-priorities
     '(("melpa" . 20)
       ("marmalade" . 15)
-      ("gnu" . 10)))
+      ("elpa" . 10)))
    (frame-title-format
     '("["
       (:eval (if (buffer-file-name)
@@ -716,7 +463,6 @@
   (progn
     (my/pretty-symbols)
     (global-prettify-symbols-mode t)
-    (global-subword-mode t)
     (global-visual-line-mode t)
     (display-battery-mode -1)
     (line-number-mode t)
@@ -730,3 +476,4 @@
 
 (provide 'init)
 ;;; init.el ends here
+(put 'narrow-to-region 'disabled nil)

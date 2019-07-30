@@ -79,6 +79,7 @@
   :bind
   (("C-x C-f" . counsel-find-file)
    ("C-x M-f" . counsel-recentf)
+   ("C-x b" . counsel-ibuffer)
    ("C-c c w" . counsel-colors-web)
    ("M-x" . counsel-M-x)
    ("<f1> f" . counsel-describe-function)

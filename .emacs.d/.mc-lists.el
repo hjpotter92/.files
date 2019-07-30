@@ -12,6 +12,7 @@
         indent-for-tab-command
         kill-region
         sp-backward-unwrap-sexp
+        yas-expand
         ))
 
 (setq mc/cmds-to-run-once
