@@ -5,6 +5,7 @@
       '(
         beginning-of-visual-line
         c-electric-colon
+        delete-indentation
         electric-newline-and-maybe-indent
         elpy-nav-backward-indent
         elpy-nav-forward-indent
@@ -12,6 +13,7 @@
         indent-for-tab-command
         kill-region
         sp-backward-unwrap-sexp
+        tex-handle-newline
         yas-expand
         ))
 

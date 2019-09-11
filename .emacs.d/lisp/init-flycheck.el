@@ -3,9 +3,8 @@
 ;; Author: hjpotter92
 ;; Maintainer: hjpotter92
 ;; Version: 0.0.1
-;; Package-Requires: (dependencies)
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: keywords
+;; Keywords: internal
 
 
 ;; This file is not part of GNU Emacs
@@ -34,7 +33,6 @@
   (require 'init-const))
 
 (use-package flycheck
-  :ensure t
   :hook (after-init . global-flycheck-mode)
   :custom
   ((flycheck-emacs-lisp-load-path 'inherit)
@@ -49,6 +47,10 @@
   :if (display-graphic-p)
   :after (flycheck)
   :hook (flycheck-mode . flycheck-popup-tip-mode))
+
+(use-package flycheck-indicator
+  :after (flycheck)
+  :hook (flycheck-mode . flycheck-indicator-mode))
 
 (provide 'init-flycheck)
 

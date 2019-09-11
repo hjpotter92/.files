@@ -22,14 +22,13 @@
 (require 'init-ivy)
 (require 'init-docker)
 (require 'init-dired)
+(require 'init-company)
 (require 'init-buffer)
 (require 'init-flycheck)
 (require 'init-yasnippet)
 
 ;; Prgramming languages specific
 (require 'init-prog)
-
-(defvar company-dabbrev-downcase)
 
 (setq-default auto-revert-mode t)
 (prefer-coding-system 'utf-8)
@@ -97,15 +96,7 @@
 (add-hook 'emacs-lisp-mode-hook 'my/pretty-symbols-lisp)
 (add-hook 'ruby-mode-hook 'my/pretty-symbols-ruby)
 
-(use-package benchmark-init
-  :ensure t
-  :hook
-  (after-init . benchmark-init/deactivate)
-  :init
-  (benchmark-init/activate))
-
 (use-package markdown-mode
-  :ensure t
   :mode
   (("README\\.md\\'" . gfm-mode)
    ("\\.md\\'" . markdown-mode)
@@ -113,11 +104,9 @@
   :init (setq markdown-command "multimarkdown"))
 
 (use-package python-docstring
-  :ensure t
   :hook (python-mode . python-docstring-mode))
 
 (use-package magit
-  :ensure t
   :after (projectile)
   :commands magit-get-top-dir
   :bind
@@ -138,7 +127,6 @@
     (global-magit-file-mode t)))
 
 (use-package projectile
-  :ensure t
   :after (ivy)
   :delight '(:eval (concat " P[" (projectile-project-name) "]"))
   :custom
@@ -151,7 +139,6 @@
   (progn
     (projectile-mode t)
     (use-package projectile-rails
-      :ensure t
       :init
       (projectile-rails-global-mode t)))
   :config
@@ -175,7 +162,6 @@
   :config
   (progn
     (use-package persp-mode-projectile-bridge
-      :ensure t
       :config
       (progn
         (with-eval-after-load "persp-mode-projectile-bridge-autoloads"
@@ -190,29 +176,16 @@
                     t))))))
 
 (use-package better-shell
-  :ensure t
   :bind
   (("C-c `" . better-shell-shell)
    ("s-p `" . better-shell-for-projectile-root)))
 
-;; (use-package perspective
-;;   :ensure t
-;;   :commands persp-mode
-;;   :config
-;;   (progn
-;;     (use-package persp-projectile
-;;       :ensure t
-;;       :commands persp-projectile)
-;;     (persp-mode)))
-
 (use-package ggtags
-  :ensure t
   :diminish
   :hook
   ((python-mode ruby-mode js2-mode emacs-lisp-mode web-mode) . ggtags-mode))
 
 (use-package counsel-gtags
-  :ensure t
   :delight counsel-gtags-mode
   :diminish
   :after (ggtags)
@@ -226,7 +199,6 @@
   :after (web-mode))
 
 (use-package web-mode
-  :ensure t
   :mode
   (("\\.[pm]?html?$" . web-mode)
    ("\\.jsx?$" . web-mode)
@@ -255,74 +227,17 @@
   :config
   (progn
     (use-package company-web
-      :ensure t
       :bind
       (("C-c w" . company-web-html))
       :config
       (add-to-list 'company-backends 'company-web-html))))
 
 (use-package switch-window
-  :ensure t
   :bind
   ("C-x o" . switch-window))
 
-(use-package company-statistics
-  :ensure t)
-
-(use-package company-quickhelp
-  :ensure t
-  :if (window-system)
-  :custom
-  ((company-quickhelp-delay 0.25))
-  :init
-  (progn
-    (company-quickhelp-mode t)))
-
-(use-package company
-  :ensure t
-  :requires (company-statistics)
-  :bind
-  (("<C-tab>" . company-complete)
-   (:map company-active-map
-        ("M-n" . nil)
-        ("M-p" . nil)
-        ("C-n" . company-select-next)
-        ("C-p" . company-select-previous)
-        ([tab] . company-complete-common-or-cycle)
-        ("S-TAB" . company-select-previous)
-        ("<backtab>" . company-select-previous)))
-  :init
-  (progn
-    (global-company-mode t)
-    (company-statistics-mode t))
-  :custom
-  ((company-dabbrev-downcase nil)
-   (company-idle-delay 0)
-   (company-require-match nil)
-   (company-show-numbers t)
-   (company-minimum-prefix-length 2))
-  :config
-  (progn
-    (use-package robe
-      :ensure t
-      :after ruby-mode
-      :hook
-      (ruby-mode . robe-mode)
-      :config
-      (add-to-list 'company-backends 'company-robe))
-    (use-package company-jedi
-      :ensure t
-      :config
-      (progn
-        (add-to-list 'company-backends 'company-jedi)))
-    (use-package company-flx
-      :defer t
-      :config
-      (company-flx-mode t))))
-
 (use-package minibuffer-line
   :if (display-graphic-p)
-  :ensure t
   :disabled t
   :defer 1
   :init
@@ -333,17 +248,14 @@
   (minibuffer-line-mode))
 
 (use-package ruby-mode
-  :ensure t
   :init
   (progn
     (use-package inf-ruby
-      :ensure t
       :hook
       (ruby-mode . inf-ruby-minor-mode)))
   :config
   (progn
     (use-package rbenv
-      :ensure t
       :hook
       (ruby-mode . rbenv-use-corresponding)
       :init
@@ -351,11 +263,9 @@
     (use-package ruby-extra-highlight
       :hook
       (ruby-mode . ruby-extra-highlight-mode))
-    (use-package ruby-tools
-      :ensure t)))
+    (use-package ruby-tools)))
 
 (use-package python-mode
-  :ensure t
   :disabled
   :defer t
   :mode "\\.py"
@@ -369,7 +279,6 @@
   :diminish)
 
 (use-package elpy
-  :ensure t
   :after (flycheck)
   :diminish
   :hook
@@ -385,17 +294,14 @@
           '(elpy-module-flymake elpy-module-highlight-indentation elpy-module-django elpy-module-pyvenv))))
 
 (use-package auto-virtualenvwrapper
-  :ensure t
   :hook
   (python-mode . auto-virtualenvwrapper-activate))
 
 (use-package lua-mode
-  :ensure t
   :custom
   (lua-indent-level 2))
 
 (use-package gxref
-  :ensure t
   :init
   (progn
     (require 'xref))
@@ -404,7 +310,6 @@
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
 
 (use-package css-mode
-  :ensure t
   :custom
   (css-indent-offset 2)
   :hook
@@ -413,14 +318,12 @@
   ("\\.css\\'"))
 
 (use-package git-gutter+
-  :ensure t
   :diminish
   :init
   (progn
     (global-git-gutter+-mode t)))
 
 (use-package emacs
-  :ensure t
   :bind
   (("C-c m" . menu-bar-mode)
    ("C-c s" . scroll-bar-mode)

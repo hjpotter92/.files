@@ -35,8 +35,15 @@
 (setq user-full-name "hjpotter92")
 (setq user-mail-address "hjpotter92+github@gmail.com")
 
+(use-package benchmark-init
+  :hook
+  (after-init . benchmark-init/deactivate)
+  :init
+  (benchmark-init/activate))
+
 (use-package server
   :ensure nil
+  :function (server-running-p)
   :if (display-graphic-p)
   :config
   (progn
