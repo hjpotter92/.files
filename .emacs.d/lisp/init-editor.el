@@ -42,6 +42,13 @@
   (("C-." . avy-goto-word-1)
    ("M-g g" . avy-goto-line)))
 
+(use-package better-shell
+  :after (projectile)
+  :bind
+  (("C-c `" . better-shell-shell)
+   :map projectile-mode-map
+   ("`" . better-shell-for-projectile-root)))
+
 (use-package helpful
   :ensure t
   :delight
@@ -66,7 +73,38 @@
 
 (use-package ibuffer
   :bind
-  ("C-x C-b" . ibuffer-other-window))
+  ("C-x C-b" . ibuffer-other-window)
+  :custom
+  ((ibuffer-show-empty-filter-groups nil)
+   (ibuffer-expert t)
+   (ibuffer-saved-filter-groups
+    (quote
+     (("default"
+       ("dired" (mode . dired-mode))
+       ("org" (name . "\\.org$"))
+       ("magit" (mode . magit-mode))
+       ("IRC" (or (mode . circe-channel-mode) (mode . circe-server-mode)))
+       ("web" (or (mode . web-mode) (mode . js2-mode)))
+       ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+       ("mu4e"
+        (or
+         (mode . mu4e-compose-mode)
+         (name . "\*mu4e\*")))
+       ("programming"
+        (or
+         (mode . emacs-lisp-mode)
+         (mode . lua-mode)
+         (mode . python-mode)
+         (mode . c++-mode)))
+       ("emacs"
+        (or
+         (name . "^\\*scratch\\*$")
+         (name . "^\\*Messages\\*$"))))))))
+  :functions (ibuffer-auto-mode ibuffer-switch-to-saved-filter-groups)
+  :hook
+  (ibuffer-mode . (lambda ()
+                    (ibuffer-auto-mode 1)
+                    (ibuffer-switch-to-saved-filter-groups "default"))))
 
 (use-package hl-todo
   :config

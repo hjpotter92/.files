@@ -153,37 +153,9 @@
     (projectile-save-known-projects)
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)))
 
-(use-package persp-mode
-  :no-require t
-  :disabled
-  :init
-  (progn
-    (persp-mode t))
-  :config
-  (progn
-    (use-package persp-mode-projectile-bridge
-      :config
-      (progn
-        (with-eval-after-load "persp-mode-projectile-bridge-autoloads"
-          (add-hook 'persp-mode-projectile-bridge-mode-hook
-                    #'(lambda ()
-                        (if persp-mode-projectile-bridge-mode
-                            (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
-                          (persp-mode-projectile-bridge-kill-perspectives))))
-          (add-hook 'after-init-hook
-                    #'(lambda ()
-                        (persp-mode-projectile-bridge-mode 1))
-                    t))))))
-
-(use-package better-shell
-  :bind
-  (("C-c `" . better-shell-shell)
-   ("s-p `" . better-shell-for-projectile-root)))
-
 (use-package ggtags
   :diminish
-  :hook
-  ((python-mode ruby-mode js2-mode emacs-lisp-mode web-mode) . ggtags-mode))
+  :hook prog-mode)
 
 (use-package counsel-gtags
   :delight counsel-gtags-mode

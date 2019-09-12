@@ -44,7 +44,6 @@
         ("C-n" . company-select-next)
         ("C-p" . company-select-previous)
         ([tab] . company-complete-common-or-cycle)
-        ("S-TAB" . company-select-previous)
         ("<backtab>" . company-select-previous)))
   :init
   (progn

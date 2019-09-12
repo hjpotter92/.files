@@ -43,7 +43,7 @@
 
 (use-package server
   :ensure nil
-  :function (server-running-p)
+  :functions (server-running-p)
   :if (display-graphic-p)
   :config
   (progn
