@@ -3,6 +3,7 @@
 ;; Author: hjpotter92
 ;; Maintainer: hjpotter92
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: internal
 
@@ -35,8 +36,7 @@
 (use-package flycheck
   :hook (after-init . global-flycheck-mode)
   :custom
-  ((flycheck-emacs-lisp-load-path 'inherit)
-   (flycheck-check-syntax-automatically '(save mode-enabled))))
+  (flycheck-emacs-lisp-load-path 'inherit))
 
 (use-package flycheck-package
   :commands flycheck-package-setup

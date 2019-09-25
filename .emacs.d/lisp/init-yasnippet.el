@@ -34,10 +34,28 @@
 
 (use-package yasnippet
   :init (yas-global-mode t)
+  :bind
+  ("C-c y" . yasnippet-hydra/body)
+  :pretty-hydra
+  ((:quit-key "q" :color amaranth)
+   ("Modes"
+    (("g" yas/global-mode "Global")
+     ("m" yas/minor-mode "Minor")
+     ("e" yas-activate-extra-mode "Extra"))
+    "Load/Visit"
+    (("d" yas-load-directory "Directory")
+     ("f" yas-visit-snippet-file "File" :color blue)
+     ("l" yas-describe-tables "List")
+     ("a" yas-reload-all "All"))
+    "Actions"
+    (("i" yas-insert-snippet "Insert")
+     ("n" yas-new-snippet "New")
+     ("t" yas-tryout-snippet "Tryout")
+     ("q" nil "Quit hydra"))))
   :config
-  (use-package yasnippet-snippets))
-
-(use-package auto-yasnippet)
+  (use-package yasnippet-snippets)
+  (use-package auto-yasnippet)
+  (use-package ivy-yasnippet))
 
 (provide 'init-yasnippet)
 

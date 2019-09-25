@@ -23,6 +23,7 @@
 (require 'init-docker)
 (require 'init-dired)
 (require 'init-company)
+(require 'init-lsp)
 (require 'init-buffer)
 (require 'init-flycheck)
 (require 'init-yasnippet)
@@ -155,7 +156,7 @@
 
 (use-package ggtags
   :diminish
-  :hook prog-mode)
+  :hook (prog-mode . ggtags-mode))
 
 (use-package counsel-gtags
   :delight counsel-gtags-mode
@@ -199,6 +200,7 @@
   :config
   (progn
     (use-package company-web
+      :ensure nil
       :bind
       (("C-c w" . company-web-html))
       :config

@@ -3,6 +3,7 @@
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools convenience
 
@@ -34,6 +35,8 @@
 
 (use-package ibuffer
   :ensure nil
+  :bind
+  ("C-x C-b" . ibuffer)
   :commands
   (ibuffer-auto-mode
    ibuffer-switch-to-saved-filter-groups)
@@ -49,6 +52,12 @@
      (("default"
        (" dired" (mode . dired-mode))
        (" perl" (mode . cperl-mode))
+       ("programming"
+        (or
+         (mode . emacs-lisp-mode)
+         (mode . lua-mode)
+         (mode . python-mode)
+         (mode . c++-mode)))
        (" planner"
         (or
          (name . "^\\*Calendar\\*$")

@@ -1,11 +1,11 @@
-;;; init-prog.el --- Programming global modes
+;;; init-lsp.el --- LSP mode settings -*- lexical-binding: t -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: tools
+;; Keywords: convenience tools internal
 
 
 ;; This file is not part of GNU Emacs
@@ -26,29 +26,30 @@
 
 ;;; Commentary:
 
-;; General programming language settings
+;; commentary
 
 ;;; Code:
 
 (eval-when-compile
   (require 'init-const))
 
-(use-package prog-mode
-  :ensure nil
-  :hook (prog-mode . prettify-symbols-mode)
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook ((python-mode web-mode js2-mode) . lsp))
+
+(use-package company-lsp
+  :after (company lsp-mode)
   :config
-  (progn
-    (use-package highlight-numbers
-      :hook (prog-mode . highlight-numbers-mode))))
+  (push 'company-lsp company-backends)
+  :custom
+  ((company-transformers nil)
+   (company-lsp-async t)
+   (company-lsp-cache-candidates nil)))
 
-(use-package editorconfig
-  :diminish editorconfig-mode
-  :hook (after-init . editorconfig-mode))
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode))
 
-(use-package realgud
-  :init
-  (load-library "realgud"))
+(provide 'init-lsp)
 
-(provide 'init-prog)
-
-;;; init-prog.el ends here
+;;; init-lsp.el ends here

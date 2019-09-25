@@ -46,22 +46,37 @@
   :after (projectile)
   :bind
   (("C-c `" . better-shell-shell)
-   :map projectile-mode-map
-   ("`" . better-shell-for-projectile-root)))
+   ("s-`" . better-shell-for-projectile-root)))
+
+(use-package easy-kill
+  :bind
+  (([remap kill-ring-save] . easy-kill)
+   ([remap mark-sexp] . easy-mark))
+  :config
+  (progn
+    (add-to-list 'easy-kill-alist '(?^ backward-line-edge ""))
+    (add-to-list 'easy-kill-alist '(?$ forward-line-edge ""))
+    (add-to-list 'easy-kill-alist '(?< buffer-before-point ""))
+    (add-to-list 'easy-kill-alist '(?> buffer-after-point ""))
+    (add-to-list 'easy-kill-alist '(?t string-to-char-backward ""))
+    (add-to-list 'easy-kill-alist '(?T string-up-to-char-backward ""))))
 
 (use-package helpful
-  :ensure t
   :delight
+  :pretty-hydra
+  ((:color teal :quit-key "q")
+   ("Helpful"
+    (("f" helpful-callable "callable")
+     ("v" helpful-variable "variable")
+     ("k" helpful-key "key")
+     ("F" helpful-function "function")
+     ("m" helpful-macro "macro")
+     ("c" helpful-command "command")
+     ("d" helpful-at-point "thing at point"))
+    "Quit"
+    (("q" nil "Quit hydra"))))
   :bind
-  (:map help-map
-   ("f" . helpful-callable)
-   ("v" . helpful-variable)
-   ("F" . helpful-function)
-   ("m" . helpful-macro)
-   ("C" . helpful-command)
-   ("k" . helpful-key)
-   ("c" . helpful-key)
-   ("C-d" . helpful-at-point)))
+  ("C-h" . helpful-hydra/body))
 
 (use-package home-end
   :bind
@@ -70,41 +85,6 @@
 
 (use-package with-editor
   :config (shell-command-with-editor-mode t))
-
-(use-package ibuffer
-  :bind
-  ("C-x C-b" . ibuffer-other-window)
-  :custom
-  ((ibuffer-show-empty-filter-groups nil)
-   (ibuffer-expert t)
-   (ibuffer-saved-filter-groups
-    (quote
-     (("default"
-       ("dired" (mode . dired-mode))
-       ("org" (name . "\\.org$"))
-       ("magit" (mode . magit-mode))
-       ("IRC" (or (mode . circe-channel-mode) (mode . circe-server-mode)))
-       ("web" (or (mode . web-mode) (mode . js2-mode)))
-       ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
-       ("mu4e"
-        (or
-         (mode . mu4e-compose-mode)
-         (name . "\*mu4e\*")))
-       ("programming"
-        (or
-         (mode . emacs-lisp-mode)
-         (mode . lua-mode)
-         (mode . python-mode)
-         (mode . c++-mode)))
-       ("emacs"
-        (or
-         (name . "^\\*scratch\\*$")
-         (name . "^\\*Messages\\*$"))))))))
-  :functions (ibuffer-auto-mode ibuffer-switch-to-saved-filter-groups)
-  :hook
-  (ibuffer-mode . (lambda ()
-                    (ibuffer-auto-mode 1)
-                    (ibuffer-switch-to-saved-filter-groups "default"))))
 
 (use-package hl-todo
   :config
@@ -115,8 +95,23 @@
   :hook
   (prog-mode . hs-minor-mode)
   :bind
-  (:map prog-mode-map
-        ("C-c h" . hs-toggle-hiding)))
+  ("C-c h" . hideshow-hydra/body)
+  :pretty-hydra
+  ((:quit-key "q" :title "Code folding")
+   ("Hide"
+    (("h" hs-hide-all "All")
+     ("d" hs-hide-block "Block")
+     ("l" hs-hide-level "Level"))
+    "Show"
+    (("s" hs-show-all "All")
+     ("a" hs-show-block "Block"))
+    "Toggle"
+    (("t" hs-toggle-hiding "Toggle"))
+    "Navigation"
+    (("n" forward-line "Next line")
+     ("p" (forward-line -1) "Previous line"))
+    "Quit"
+    (("q" nil "Quit hydra")))))
 
 (use-package which-key
   :diminish
@@ -128,13 +123,19 @@
 
 (use-package omni-scratch
   :custom
-  ((omni-scratch-pale-background nil))
+  (omni-scratch-pale-background nil)
+  :pretty-hydra
+  ((:color amaranth :quit-key "q" :title "Omni scratch buffer management")
+   ("Omni Scratch"
+    (;; ("DEL" omni-scratch "omni-scratch")
+     ("-" omni-scratch-major "major mode")
+     ("_" omni-scratch-buffer "buffer")
+     ("$" omni-scratch-goto-latest "goto latest")
+     ("b" omni-scratch-buffers "buffers"))
+    "Quit"
+    (("q" nil "Quit hydra"))))
   :bind
-  (("M-s $ DEL" . omni-scratch)
-   ("M-s $ -" . omni-scratch-major)
-   ("M-s $ _" . omni-scratch-buffer)
-   ("M-s $ $" . omni-scratch-goto-latest)
-   ("M-s $ b" . omni-scratch-buffers)))
+  ("C-c $" . omni-scratch-hydra/body))
 
 (use-package smartparens
   :commands

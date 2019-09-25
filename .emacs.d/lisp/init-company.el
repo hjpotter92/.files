@@ -51,7 +51,9 @@
     (company-statistics-mode t))
   :custom
   ((company-dabbrev-downcase nil)
-   (company-idle-delay 0)
+   (company-idle-delay 0.2)
+   (company-tooltip-align-annotations t)
+   (company-tooltip-limit 15)
    (company-require-match nil)
    (company-show-numbers t)
    (company-minimum-prefix-length 2))
@@ -73,6 +75,10 @@
       :defer t
       :config
       (company-flx-mode t))))
+
+(use-package company-box
+  :diminish
+  :hook (company-mode . company-box-mode))
 
 (use-package company-quickhelp
   :if (window-system)

@@ -48,6 +48,7 @@
     (eval-print-last-sexp)))
 
 (eval-and-compile
+  (require 'el-get)
   (add-to-list 'el-get-recipe-path (expand-file-name "el-get-user/recipes" user-emacs-directory))
   (el-get 'sync))
 
@@ -65,7 +66,7 @@
   (require 'use-package))
 
 (use-package bind-key)
-(use-package delight)
+(use-package delight :pin "gnu")
 (use-package diminish)
 
 (use-package paradox

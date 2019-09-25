@@ -41,6 +41,15 @@
   :init
   (benchmark-init/activate))
 
+(use-package use-package-hydra
+  :disabled)
+
+(use-package pretty-hydra)
+
+(use-package major-mode-hydra
+  :bind
+  ("M-SPC" . major-mode-hydra))
+
 (use-package server
   :ensure nil
   :functions (server-running-p)
