@@ -1,7 +1,7 @@
 ;;; init-flycheck.el --- Flycheck initialisations
 
-;; Author: hjpotter92
-;; Maintainer: hjpotter92
+;; Author: hjpotter92 <hjpotter92+github@gmail.com>
+;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
@@ -34,13 +34,12 @@
   (require 'init-const))
 
 (use-package flycheck
-  :hook (after-init . global-flycheck-mode)
+  :hook (prog-mode . flycheck-mode)
   :custom
   (flycheck-emacs-lisp-load-path 'inherit))
 
 (use-package flycheck-package
   :commands flycheck-package-setup
-  :after (flycheck)
   :init (flycheck-package-setup))
 
 (use-package flycheck-popup-tip
@@ -51,6 +50,10 @@
 (use-package flycheck-indicator
   :after (flycheck)
   :hook (flycheck-mode . flycheck-indicator-mode))
+
+(use-package flycheck-elixir)
+
+(use-package flycheck-mix)
 
 (provide 'init-flycheck)
 

@@ -64,7 +64,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git gitfast git-extras git-auto-fetch git-prompt gitignore
-    archlinux globalias
+    archlinux globalias direnv
     common-aliases cp dirhistory sudo rsync extract command-not-found dotenv
     python pip aws colorize fabric httpie virtualenv virtualenvwrapper pyenv
     rust cargo

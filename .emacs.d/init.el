@@ -25,6 +25,8 @@
 (require 'init-company)
 (require 'init-lsp)
 (require 'init-buffer)
+(require 'init-projectile)
+(require 'init-vc)
 (require 'init-flycheck)
 (require 'init-yasnippet)
 
@@ -106,53 +108,6 @@
 
 (use-package python-docstring
   :hook (python-mode . python-docstring-mode))
-
-(use-package magit
-  :after (projectile)
-  :commands magit-get-top-dir
-  :bind
-  (("C-c g" . magit-status)
-   ("C-c C-g l" . magit-file-log))
-  :init
-  (progn
-    ;; we no longer need vc-git
-    (delete 'Git vc-handled-backends))
-  :custom
-  ((magit-repository-directories '(("~/Documents/Loktra/" . 2)
-                                   ("~/Documents/" . 1)))
-   (magit-completing-read-function 'ivy-completing-read))
-  :config
-  (progn
-    (mapc #'projectile-add-known-project
-          (mapcar #'file-name-as-directory (magit-list-repos)))
-    (global-magit-file-mode t)))
-
-(use-package projectile
-  :after (ivy)
-  :delight '(:eval (concat " P[" (projectile-project-name) "]"))
-  :custom
-  ((projectile-enable-caching nil)
-   (projectile-completion-system 'ivy)
-   (projectile-require-project-root nil)
-   (projectile-create-missing-test-files t)
-   (projectile-tags-backend "ggtags"))
-  :init
-  (progn
-    (projectile-mode t)
-    (use-package projectile-rails
-      :init
-      (projectile-rails-global-mode t)))
-  :config
-  (progn
-    (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
-    (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
-      (add-to-list 'projectile-globally-ignored-files item))
-    ;; Git projects should be marked as projects in top-down fashion,
-    ;; so that each git submodule can be a projectile project.
-    (add-to-list 'projectile-project-root-files ".git")
-    ;; Optionally write to persistent `projectile-known-projects-file'
-    (projectile-save-known-projects)
-    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)))
 
 (use-package ggtags
   :diminish

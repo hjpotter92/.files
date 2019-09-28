@@ -1,11 +1,11 @@
-;;; init-lsp.el --- LSP mode settings -*- lexical-binding: t -*-
+;;; init-vc.el --- Magit and other VC settings
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: convenience tools internal
+;; Keywords: internal tools
 
 
 ;; This file is not part of GNU Emacs
@@ -26,35 +26,34 @@
 
 ;;; Commentary:
 
-;; commentary
+;; VC support in Emacs
 
 ;;; Code:
 
 (eval-when-compile
   (require 'init-const))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
+(use-package magit
+  :after (projectile)
+  :commands
+  (magit-get-top-dir projectile-add-known-project magit-list-repos)
+  :bind
+  (("C-c g" . magit-status)
+   ("C-c C-g l" . magit-file-log))
+  :init
+  (progn
+    ;; we no longer need vc-git
+    (delete 'Git vc-handled-backends))
   :custom
-  ((lsp-prefer-flymake nil)
-   (lsp-auto-guess-root t)
-   (lsp-auto-configure t)
-   (lsp-before-save-edits nil))
-  :hook ((python-mode web-mode js2-mode dockerfile-mode) . lsp))
-
-(use-package company-lsp
-  :after (company lsp-mode)
+  ((magit-repository-directories '(("~/Documents/Loktra/" . 2)
+                                   ("~/Documents/" . 1)))
+   (magit-completing-read-function 'ivy-completing-read))
   :config
-  (push 'company-lsp company-backends)
-  :custom
-  ((company-transformers nil)
-   (company-lsp-async t)
-   (company-lsp-cache-candidates nil)))
+  (progn
+    (mapc #'projectile-add-known-project
+          (mapcar #'file-name-as-directory (magit-list-repos)))
+    (global-magit-file-mode t)))
 
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode))
+(provide 'init-vc)
 
-(provide 'init-lsp)
-
-;;; init-lsp.el ends here
+;;; init-vc.el ends here

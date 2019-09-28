@@ -41,8 +41,9 @@
   :init
   (benchmark-init/activate))
 
-(use-package use-package-hydra
-  :disabled)
+(use-package hydra
+  :custom
+  (lv-use-separator t))
 
 (use-package pretty-hydra)
 

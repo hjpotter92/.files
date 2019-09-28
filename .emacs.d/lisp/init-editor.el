@@ -70,9 +70,12 @@
      ("v" helpful-variable "variable")
      ("k" helpful-key "key")
      ("F" helpful-function "function")
-     ("m" helpful-macro "macro")
+     ("M" helpful-macro "macro")
      ("c" helpful-command "command")
      ("d" helpful-at-point "thing at point"))
+    "Describe"
+    (("m" describe-mode "mode")
+     ("b" describe-bindings "bindings"))
     "Quit"
     (("q" nil "Quit hydra"))))
   :bind
@@ -166,26 +169,48 @@
       (sp-local-tag "=" "<%= " " %>")
       (sp-local-tag "#" "<%# " " %>"))
     (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
+  :pretty-hydra
+  ((:quit-key "q" :title "Smartparens hydra menu" :color teal)
+   ("Moving"
+    (("a" sp-beginning-of-sexp "beginning")
+     ("e" sp-end-of-sexp "end")
+     ("f" sp-forward-sexp "forward")
+     ("b" sp-backward-sexp "backward")
+     ("n" sp-down-sexp "down")
+     ("N" sp-backward-down-sexp "bw down")
+     ("p" sp-up-sexp "up")
+     ("P" sp-backward-up-sexp "bw up"))
+    "Slurping & barfing"
+    (("h" sp-backward-slurp-sexp "bw slurp")
+     ("H" sp-backward-barf-sexp "bw barf")
+     ("l" sp-forward-slurp-sexp "slurp")
+     ("L" sp-forward-barf-sexp "barf"))
+    "Wrapping"
+    (("R" sp-rewrap-sexp "rewrap")
+     ("u" sp-unwrap-sexp "unwrap")
+     ("U" sp-backward-unwrap-sexp "bw unwrap")
+     ("(" sp-wrap-round "wrap (")
+     ("{" sp-wrap-curly "wrap {")
+     ("[" sp-wrap-square "wrap ["))
+    "Sexp juggling"
+    (("S" sp-split-sexp "split")
+     ("s" sp-splice-sexp "splice")
+     ("r" sp-raise-sexp "raose")
+     ("j" sp-join-sexp "join")
+     ("t" sp-transpose-sexp "transpose")
+     ("A" sp-absorb-sexp "absorb")
+     ("E" sp-emit-sexp "emit")
+     ("o" sp-convolute-sexp "convolute"))
+    "Destructive editing"
+    (("c" sp-change-inner "change inner" :exit t)
+     ("C" sp-change-enclosing "change outer" :exit t)
+     ("k" sp-kill-sexp "kill")
+     ("K" sp-backward-kill-sexp "bw kill")
+     ("w" sp-copy-sexp "copy"))
+    "Quit hydra"
+    (("q" nil "quit hydra"))))
   :bind
-  (("C-M-k" . sp-kill-sexp)
-   ("C-M-f" . sp-forward-sexp)
-   ("C-M-b" . sp-backward-sexp)
-   ("C-M-n" . sp-up-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-u" . sp-backward-up-sexp)
-   ("C-M-p" . sp-backward-down-sexp)
-   ("C-M-w" . sp-copy-sexp)
-   ;; ("M-s" . sp-splice-sexp)
-   ;; ("M-r" . sp-splice-sexp-killing-around)
-   ("C-)" . sp-forward-slurp-sexp)
-   ("C-}" . sp-forward-barf-sexp)
-   ("C-(" . sp-backward-slurp-sexp)
-   ("C-{" . sp-backward-barf-sexp)
-   ("M-DEL" . sp-unwrap-sexp)
-   ("<M-backspace>" . sp-backward-unwrap-sexp)
-   ;; ("M-S" . sp-split-sexp)
-   ;; ("M-J" . sp-join-sexp)
-   ("C-M-t" . sp-transpose-sexp)))
+  ("C-c p" . smartparens-hydra/body))
 
 (use-package smart-window)
 
@@ -200,28 +225,38 @@
 
 (use-package multiple-cursors
   :after region-bindings-mode
+  :pretty-hydra
+  ((:color amaranth :quit-key "q")
+   ("Up"
+    (("p" mc/mark-previous-like-this "next")
+     ("P" mc/skip-to-previous-like-this "skip")
+     ("M-p" mc/unmark-previous-like-this "unmark"))
+    "Down"
+    (("n" mc/mark-next-like-this "next")
+     ("N" mc/skip-to-next-like-this "skip")
+     ("M-n" mc/unmark-next-like-this "unmark"))
+    "Miscellaneous"
+    (("l" mc/edit-lines "edit lines" :exit t)
+     ("a" mc/mark-all-like-this "mark all" :exit t)
+     ("s" mc/mark-all-in-region-regexp "search" :exit t)
+     ("0" mc/insert-numbers "insert numbers" :exit t)
+     ("A" mc/insert-letters "insert letters" :exit t))
+    "Mouse"
+    (("<mouse-1>" mc/add-cursor-on-click "cursor at point")
+     ;; Help with click recognition in this hydra
+     ("<down-mouse-1>" ignore)
+     ("<drag-mouse-1>" ignore))
+    "Quit hydra"
+    (("q" nil "quit hydra"))))
   :bind
-  (("C-S-c C-S-c" . mc/edit-lines)
-  ("C->" . mc/mark-next-like-this)
-  ("C-<" . mc/mark-previous-like-this)
-  ("C-c C-<" . mc/mark-all-like-this)
-  ("C-S-<mouse-1>" . mc/add-cursor-on-click)
-  :map mc/keymap
-  ("C-|" . mc/vertical-align-with-space)
-  :map region-bindings-mode-map
-  ("a" . mc/mark-all-like-this)
-  ("p" . mc/mark-previous-like-this)
-  ("n" . mc/mark-next-like-this)
-  ("P" . mc/unmark-previous-like-this)
-  ("N" . mc/unmark-next-like-this)
-  ("j" . mc/cycle-backward)
-  ("k" . mc/cycle-forward)
-  ("m" . mc/mark-more-like-this-extended)
-  ("h" . mc-hide-unmatched-lines-mode)
-  ("\\" . mc/vertical-align-with-space)
-  ("#" . mc/insert-numbers)             ; use num prefix to set the starting number
-  ("^" . mc/edit-beginnings-of-lines)
-  ("$" . mc/edit-ends-of-lines)))
+  ("C-c u" . multiple-cursors-hydra/body))
+
+(use-package rg
+  :defer t
+  :custom
+  (rg-keymap-prefix "\M-ss")
+  :init
+  (rg-enable-default-bindings))
 
 (use-package subword
   :ensure nil
