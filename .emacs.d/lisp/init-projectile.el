@@ -36,7 +36,7 @@
 (use-package projectile
   :after (ivy)
   :delight '(:eval (concat " P[" (projectile-project-name) "]"))
-  :function
+  :functions
   (projectile-save-known-projects)
   :custom
   ((projectile-enable-caching nil)

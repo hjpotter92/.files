@@ -32,12 +32,15 @@
 (eval-when-compile
   (require 'init-const))
 
-(setq vc-make-backup-files t
-      version-control :make-numbered-backups
-      kept-new-versions 5
-      kept-old-versions 2
-      delete-old-versions t
-      backup-by-copying t)
+(use-package files
+  :ensure nil
+  :custom
+  ((vc-make-backup-files t)
+   (version-control :make-numbered-backups)
+   (kept-new-versions 5)
+   (kept-old-versions 2)
+   (delete-old-versions t)
+   (backup-by-copying t)))
 
 (provide 'init-backup)
 

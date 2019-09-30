@@ -1,7 +1,7 @@
 ;;; init-theme.el --- Set up theme and related UI items
 
-;; Author: hjpotter92
-;; Maintainer: hjpotter92
+;; Author: hjpotter92 <hjpotter92+github@gmail.com>
+;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
@@ -50,7 +50,6 @@
   (prog-mode . rainbow-mode))
 
 (use-package highlight-parentheses
-  :ensure t
   :delight
   (highlight-parentheses-mode " ❪❫")
   (global-highlight-parentheses-mode " ❪❫")
@@ -59,14 +58,17 @@
     (global-highlight-parentheses-mode t)))
 
 (use-package beacon
-  :diminish
+  :delight
   :init
   (beacon-mode t))
 
 (use-package idle-highlight-in-visible-buffers-mode
-  :ensure t
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
+
+(use-package pretty-mode
+  :config
+  (global-pretty-mode t))
 
 (use-package all-the-icons)
 
@@ -74,7 +76,6 @@
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ivy
-  :after (ivy all-the-icons counsel)
   :custom
   (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window ivy-switch-buffer))
   :config
@@ -109,7 +110,6 @@
    ("C-c t" . centaur-tabs-counsel-switch-group)))
 
 (use-package smart-mode-line
-  :after (monokai-pro-theme)
   :custom
   ((sml/no-confirm-load-theme t)
    (sml/mode-width 'full))
@@ -127,7 +127,6 @@
           h-mode-line-patterns)))
 
 (use-package mode-icons
-  :after (smart-mode-line)
   :config (mode-icons-mode))
 
 (provide 'init-theme)

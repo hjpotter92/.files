@@ -3,6 +3,7 @@
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: bib internal
 
@@ -53,7 +54,7 @@
 
 (use-package server
   :ensure nil
-  :functions (server-running-p)
+  :commands (server-running-p)
   :if (display-graphic-p)
   :config
   (progn

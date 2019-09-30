@@ -1,9 +1,9 @@
-;;; init-docker.el --- Docker and docker-compose settings -*- lexical-binding: t -*-
+;;; init-docker.el --- Docker and docker-compose settings
 
-;; Author: hjpotter92
-;; Maintainer: hjpotter92
+;; Author: hjpotter92 <hjpotter92+github@gmail.com>
+;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: (dependencies)
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools
 
@@ -34,8 +34,7 @@
   (require 'init-const))
 
 (use-package dockerfile-mode
-  :ensure t
-  :mode "Dockerfile[a-zA-Z*-]*\\'")
+  :mode "Dockerfile[.a-zA-Z-]*\\'")
 
 (use-package docker-compose-mode
   :mode "docker-compose.*\.yml\\'")

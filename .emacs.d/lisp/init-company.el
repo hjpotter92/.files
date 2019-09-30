@@ -3,6 +3,7 @@
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: internal
 
@@ -53,21 +54,19 @@
   ((company-dabbrev-downcase nil)
    (company-idle-delay 0.2)
    (company-tooltip-align-annotations t)
-   (company-tooltip-limit 15)
+   (company-tooltip-limit 10)
    (company-require-match nil)
    (company-show-numbers t)
    (company-minimum-prefix-length 2))
   :config
   (progn
     (use-package robe
-      :ensure t
       :after ruby-mode
       :hook
       (ruby-mode . robe-mode)
       :config
       (add-to-list 'company-backends 'company-robe))
     (use-package company-jedi
-      :ensure t
       :config
       (progn
         (add-to-list 'company-backends 'company-jedi)))

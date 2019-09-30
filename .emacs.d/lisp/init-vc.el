@@ -37,17 +37,36 @@
   :after (projectile)
   :commands
   (magit-get-top-dir projectile-add-known-project magit-list-repos)
+  :pretty-hydra
+  ((:exit-key "q" :title "Magit bindings" :color teal)
+   ("Blame"
+    (("B" magit-blame "blame"))
+    "Log"
+    (("l" magit-log-all-branches "log"))
+    "Action"
+    (("$" magit-process "process"))
+    "Popup"
+    (("b" magit-branch-popup "branch")
+     ("F" magit-pull-popup "pull")
+     ("r" magit-rebase-popup "rebase")
+     ("f" magit-fetch-popup "fetch")
+     ("P" magit-push-popup "push popup"))
+    "Quit"
+    (("q" nil "quit hydra"))))
   :bind
   (("C-c g" . magit-status)
-   ("C-c C-g l" . magit-file-log))
+   ("C-c C-g" . magit-hydra/body))
   :init
   (progn
     ;; we no longer need vc-git
     (delete 'Git vc-handled-backends))
   :custom
-  ((magit-repository-directories '(("~/Documents/Loktra/" . 2)
+  ((magit-repository-directories '(("~/Documents/src" . 3)
+                                   ("~/Documents/projects/" . 2)
                                    ("~/Documents/" . 1)))
-   (magit-completing-read-function 'ivy-completing-read))
+   (magit-completing-read-function 'ivy-completing-read)
+   (magit-default-tracking-name-function 'magit-default-tracking-name-branch-only)
+   (magit-diff-refine-hunk t))
   :config
   (progn
     (mapc #'projectile-add-known-project
