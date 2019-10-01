@@ -5,7 +5,7 @@
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: internal tools
+;; Keywords: internal tools vc
 
 
 ;; This file is not part of GNU Emacs
@@ -38,7 +38,7 @@
   :commands
   (magit-get-top-dir projectile-add-known-project magit-list-repos)
   :pretty-hydra
-  ((:exit-key "q" :title "Magit bindings" :color teal)
+  ((:quit-key "q" :title "Magit bindings" :color teal)
    ("Blame"
     (("B" magit-blame "blame"))
     "Log"

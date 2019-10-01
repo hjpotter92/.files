@@ -13,8 +13,6 @@
         indent-for-tab-command
         kill-region
         multiple-cursors-hydra/ignore
-        multiple-cursors-hydra/mc/mark-all-like-this-and-exit
-        multiple-cursors-hydra/mc/mark-next-like-this
         multiple-cursors-hydra/nil
         sp-backward-unwrap-sexp
         tex-handle-newline

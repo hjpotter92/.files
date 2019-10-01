@@ -17,6 +17,7 @@
 (require 'init-backup)
 (require 'init-editor)
 (require 'init-theme)
+(require 'init-ui)
 
 ;; Tools
 (require 'init-ivy)
@@ -32,6 +33,8 @@
 
 ;; Prgramming languages specific
 (require 'init-prog)
+(require 'init-web)
+(require 'init-python)
 
 (setq-default auto-revert-mode t)
 (prefer-coding-system 'utf-8)
@@ -106,75 +109,19 @@
    ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package python-docstring
-  :hook (python-mode . python-docstring-mode))
-
 (use-package ggtags
   :diminish
   :hook (prog-mode . ggtags-mode))
 
 (use-package counsel-gtags
   :delight counsel-gtags-mode
-  :diminish
-  :after (ggtags)
   :hook (ggtags-mode . counsel-gtags-mode)
   :custom
   ((counsel-gtags-auto-update t)))
 
-(use-package emmet
-  :ensure emmet-mode
-  :hook ((sgml-mode html-mode css-mode web-mode) . emmet-mode)
-  :after (web-mode))
-
-(use-package web-mode
-  :mode
-  (("\\.[pm]?html?$" . web-mode)
-   ("\\.jsx?$" . web-mode)
-   ("\\.tmpl" . web-mode)
-   ("\\.tpl\\.php\\'" . web-mode)
-   ("\\.[agj]sp\\'" . web-mode)
-   ("\\.as[cp]x\\'" . web-mode)
-   ("\\.erb\\'" . web-mode)
-   ("\\.mustache\\'" . web-mode)
-   ("\\.djhtml\\'" . web-mode))
-  :custom
-  ((web-mode-markup-indent-offset 2)
-   (web-mode-css-indent-offset 2)
-   (web-mode-code-indent-offset 2)
-   (web-mode-enable-current-element-highlight t)
-   (web-mode-enable-current-column-highlight t)
-   (web-mode-enable-auto-pairing nil)
-   (web-mode-content-types-alist
-    '(("jsx" . "\\.jsx?\\'")
-      ("json" . "\\.json\\'")
-      ("xml" . "\\.xml\\'")))
-   (web-mode-engines-alist
-    '(("php" . "\\.phtml?\\'")
-      ("reactjs" . "\\.jsx\\'")
-      ("blade" . "\\.blade\\."))))
-  :config
-  (progn
-    (use-package company-web
-      :ensure nil
-      :bind
-      (("C-c w" . company-web-html))
-      :config
-      (add-to-list 'company-backends 'company-web-html))))
-
 (use-package switch-window
   :bind
   ("C-x o" . switch-window))
-
-(use-package minibuffer-line
-  :if (display-graphic-p)
-  :disabled t
-  :defer 1
-  :init
-  (progn
-    (setq-default display-time-format "")
-    (setq minibuffer-line-format (format-time-string "%l:%M %b %d %a")))
-  :config
-  (minibuffer-line-mode))
 
 (use-package ruby-mode
   :init
@@ -194,38 +141,6 @@
       (ruby-mode . ruby-extra-highlight-mode))
     (use-package ruby-tools)))
 
-(use-package python-mode
-  :disabled
-  :defer t
-  :mode "\\.py"
-  :custom
-  ((py-split-window-on-execute nil)
-   (python-indent-guess-indent-offset nil)))
-
-(use-package pipenv
-  :disabled
-  :hook (python-mode . pipenv-mode)
-  :diminish)
-
-(use-package elpy
-  :after (flycheck)
-  :diminish
-  :hook
-  (elpy-mode . flycheck-mode)
-  :custom
-  ((elpy-rpc-backend "jedi")
-   (elpy-autodoc-delay 0.400)
-   (elpy-rpc-ignored-buffer-size 204800))
-  :init
-  (progn
-    (elpy-enable)
-    (mapc (lambda (module) (setq elpy-modules (delq module elpy-modules)))
-          '(elpy-module-flymake elpy-module-highlight-indentation elpy-module-django elpy-module-pyvenv))))
-
-(use-package auto-virtualenvwrapper
-  :hook
-  (python-mode . auto-virtualenvwrapper-activate))
-
 (use-package lua-mode
   :custom
   (lua-indent-level 2))
@@ -237,14 +152,6 @@
   :config
   (progn
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
-
-(use-package css-mode
-  :custom
-  (css-indent-offset 2)
-  :hook
-  (css-mode . emmet-mode)
-  :mode
-  ("\\.css\\'"))
 
 (use-package git-gutter+
   :diminish

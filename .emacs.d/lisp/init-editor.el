@@ -37,6 +37,14 @@
   :ensure nil
   :hook (after-init . abbrev-mode))
 
+(use-package anzu
+  :hook
+  (after-init . global-anzu-mode)
+  :custom
+  ((anzu-cons-mode-line-p nil))
+  :bind
+  ([remap query-replace] . anzu-query-replace-regexp))
+
 (use-package avy
   :bind
   (("C-." . avy-goto-word-1)
@@ -94,7 +102,6 @@
   (global-hl-todo-mode))
 
 (use-package hideshow
-  :diminish
   :hook
   (prog-mode . hs-minor-mode)
   :bind
@@ -117,12 +124,18 @@
     (("q" nil "Quit hydra")))))
 
 (use-package which-key
-  :diminish
+  :delight
   :config
   (progn
     (which-key-mode t)
     (which-key-setup-minibuffer)
     (setq which-key-idle-delay 0.400)))
+
+(use-package which-key-posframe
+  :custom
+  (which-key-posframe-poshandler 'posframe-poshandler-frame-bottom-left-corner)
+  :config
+  (which-key-posframe-mode t))
 
 (use-package omni-scratch
   :custom
@@ -214,8 +227,14 @@
 
 (use-package smart-window)
 
+(use-package imenu-list
+  :custom
+  ((imenu-list-auto-resize t))
+  :hook
+  (python-mode . imenu-list-smart-toggle))
+
 (use-package region-bindings-mode
-  :diminish
+  :delight
   :commands
   (region-bindings-mode-enable)
   :custom
@@ -230,17 +249,27 @@
    ("Up"
     (("p" mc/mark-previous-like-this "next")
      ("P" mc/skip-to-previous-like-this "skip")
-     ("M-p" mc/unmark-previous-like-this "unmark"))
+     ("M-p" mc/unmark-previous-like-this "unmark")
+     ("j" mc/cycle-backward "visit previous cursor"))
     "Down"
     (("n" mc/mark-next-like-this "next")
      ("N" mc/skip-to-next-like-this "skip")
-     ("M-n" mc/unmark-next-like-this "unmark"))
-    "Miscellaneous"
+     ("M-n" mc/unmark-next-like-this "unmark")
+     ("k" mc/cycle-forward "visit next cursor"))
+    "Actions"
     (("l" mc/edit-lines "edit lines" :exit t)
-     ("a" mc/mark-all-like-this "mark all" :exit t)
+     ("^" mc/edit-beginnings-of-lines "edit beginnings of lines" :exit t)
+     ("$" mc/edit-ends-of-lines "edit ends of lines" :exit t))
+    "Miscellaneous"
+    (("a" mc/mark-all-like-this "mark all" :exit t)
      ("s" mc/mark-all-in-region-regexp "search" :exit t)
+     ("SPC" mc/mark-pop "pop mark")
+     ("h" mc-hide-unmatched-line-mode "toggle view")
      ("0" mc/insert-numbers "insert numbers" :exit t)
      ("A" mc/insert-letters "insert letters" :exit t))
+    "Align"
+    (("|" mc/vertical-align-with-space "align with space")
+     ("M-|" mc/vertical-align "align vertically"))
     "Mouse"
     (("<mouse-1>" mc/add-cursor-on-click "cursor at point")
      ;; Help with click recognition in this hydra

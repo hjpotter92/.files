@@ -71,13 +71,18 @@
 
 (use-package paradox
   :custom
-  ((paradox-lines-per-entry 2)
+  ((paradox-column-width-package 32)
+   (paradox-column-width-version 16)
+   (paradox-lines-per-entry 2)
+   (paradox-github-token t)
    (paradox-execute-asynchronously t)
    (paradox-automatically-star nil))
   :init
   (defalias 'upgrade-packages #'paradox-upgrade-packages)
   :config
-  (paradox-enable))
+  (progn
+    (paradox-enable)
+    (remove-hook 'paradox-after-execute-functions #'paradox--report-buffer-print)))
 
 (provide 'init-package)
 

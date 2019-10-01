@@ -5,7 +5,7 @@
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: convenience
+;; Keywords: convenience faces
 
 
 ;; This file is not part of GNU Emacs
@@ -39,29 +39,6 @@
   (progn
     (load-theme 'monokai-pro t)))
 
-(use-package focus
-  :hook
-  ((lisp-mode emacs-lisp-mode ruby-mode) . focus-mode)
-  :bind ("C-c f" . focus-mode))
-
-(use-package rainbow-mode
-  :diminish
-  :hook
-  (prog-mode . rainbow-mode))
-
-(use-package highlight-parentheses
-  :delight
-  (highlight-parentheses-mode " ❪❫")
-  (global-highlight-parentheses-mode " ❪❫")
-  :config
-  (progn
-    (global-highlight-parentheses-mode t)))
-
-(use-package beacon
-  :delight
-  :init
-  (beacon-mode t))
-
 (use-package idle-highlight-in-visible-buffers-mode
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
@@ -83,31 +60,6 @@
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
     (all-the-icons-ivy-setup)))
-
-(use-package smart-cursor-color
-  :diminish smart-cursor-color-mode
-  :config
-  (global-hl-line-mode t)
-  (smart-cursor-color-mode t))
-
-(use-package centaur-tabs
-  :if (display-graphic-p)
-  :after (smart-mode-line)
-  :commands
-  (centaur-tabs-group-by-projectile-project)
-  :custom
-  ((centaur-tabs-style "slant")
-   (centaur-tabs-set-icons t)
-   (centaur-tabs-set-modified-marker t)
-   (centaur-tabs-set-bar 'over))
-  :init
-  (progn
-    (centaur-tabs-mode t)
-    (centaur-tabs-group-by-projectile-project))
-  :bind
-  (("s-<prior>" . centaur-tabs-backward)
-   ("s-<next>" . centaur-tabs-forward)
-   ("C-c t" . centaur-tabs-counsel-switch-group)))
 
 (use-package smart-mode-line
   :custom

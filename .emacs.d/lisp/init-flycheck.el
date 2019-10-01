@@ -36,7 +36,28 @@
 (use-package flycheck
   :hook (prog-mode . flycheck-mode)
   :custom
-  (flycheck-emacs-lisp-load-path 'inherit))
+  (flycheck-emacs-lisp-load-path 'inherit)
+  :pretty-hydra
+  ((:quit-key "q" :title " Flycheck")
+   ("Move"
+   (("n" flycheck-next-error "next")
+    ("p" flycheck-previous-error "previous")
+    ("^" flycheck-first-error "first")
+    ("g" flycheck-error-goto-error "goto"))
+   "Actions"
+   (("l" flycheck-list-errors "list" :exit t)
+    ("h" flycheck-manual "manual" :exit t)
+    ("v" flycheck-verify-setup "verify setup")
+    ("c" flycheck-buffer "check buffer"))
+   "Checkers"
+   (("f" flycheck-verify-checker "verify checker")
+    ("?" flycheck-describe-checker "describe")
+    ("x" flycheck-disable-checker "disable")
+    ("s" flycheck-select-checker "select"))
+   "Miscellaneous"
+   (("C" flycheck-clear "clear")
+    ("V" flycheck-version "version")
+    ("q" nil "quit hydra")))))
 
 (use-package flycheck-package
   :commands flycheck-package-setup

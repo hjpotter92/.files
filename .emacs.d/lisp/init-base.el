@@ -49,6 +49,7 @@
 (use-package pretty-hydra)
 
 (use-package major-mode-hydra
+  :demand t
   :bind
   ("M-SPC" . major-mode-hydra))
 

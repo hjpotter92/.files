@@ -53,6 +53,9 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode
+  :custom
+  ((lsp-ui-sideline-ignore-duplicates t)
+   (lsp-ui-flycheck t))
   :hook (lsp-mode . lsp-ui-mode))
 
 (provide 'init-lsp)

@@ -5,7 +5,7 @@
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: tools convenience
+;; Keywords: tools convenience vc
 
 
 ;; This file is not part of GNU Emacs
@@ -103,7 +103,7 @@
       ("/" ibuffer-filter-disable "disable")
       ("b" nil "back" :color blue)))
   :pretty-hydra
-  ((:exit-key "." :title "ibuffer hydra")
+  ((:quit-key "." :title "ibuffer hydra")
    ("Navigation"
     (("h" ibuffer-backword-filter-group "up group")
      ("k" ibuffer-backward-line "up")
@@ -142,7 +142,7 @@
      (("default"
        (" dired" (mode . dired-mode))
        (" perl" (mode . cperl-mode))
-       ("programming"
+       (" programming"
         (or
          (mode . emacs-lisp-mode)
          (mode . lua-mode)

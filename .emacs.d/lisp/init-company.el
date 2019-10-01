@@ -70,6 +70,8 @@
       :config
       (progn
         (add-to-list 'company-backends 'company-jedi)))
+    (use-package company-lua
+      :mode "\\.lua'")
     (use-package company-flx
       :defer t
       :config
