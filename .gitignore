@@ -1,3 +1,6 @@
+# custom ignore paths
+.emacs.d/elpa-*/
+.emacs.d/el-get/
 
 # Created by https://www.gitignore.io/api/git,emacs,pip,python,vim,osx,linux
 

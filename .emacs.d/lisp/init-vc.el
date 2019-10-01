@@ -73,6 +73,10 @@
           (mapcar #'file-name-as-directory (magit-list-repos)))
     (global-magit-file-mode t)))
 
+(use-package gitattributes-mode)
+(use-package gitconfig-mode)
+(use-package gitignore-mode)
+
 (provide 'init-vc)
 
 ;;; init-vc.el ends here

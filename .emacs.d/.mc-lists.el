@@ -21,4 +21,11 @@
 
 (setq mc/cmds-to-run-once
       '(
+        centaur-tabs-forward
+        multiple-cursors-hydra/body
+        multiple-cursors-hydra/mc/add-cursor-on-click
+        multiple-cursors-hydra/mc/cycle-backward
+        multiple-cursors-hydra/mc/mark-all-like-this-and-exit
+        multiple-cursors-hydra/mc/mark-next-like-this
+        yaml-electric-dash-and-dot
         ))
