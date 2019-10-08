@@ -89,11 +89,6 @@
   :bind
   ("C-h" . helpful-hydra/body))
 
-(use-package home-end
-  :bind
-  (([home] . home-end-home)
-   ([end] . home-end-end)))
-
 (use-package with-editor
   :config (shell-command-with-editor-mode t))
 
@@ -231,7 +226,7 @@
   :custom
   ((imenu-list-auto-resize t))
   :hook
-  (python-mode . imenu-list-smart-toggle))
+  ((python-mode js2-mode c-mode c++-mode java-mode ruby-mode yaml-mode) . imenu-list-smart-toggle))
 
 (use-package region-bindings-mode
   :delight

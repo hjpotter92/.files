@@ -36,13 +36,14 @@
 (use-package projectile
   :after (ivy)
   :delight '(:eval (concat " P[" (projectile-project-name) "]"))
-  :functions
+  :commands
   (projectile-save-known-projects)
   :custom
   ((projectile-enable-caching nil)
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
    (projectile-create-missing-test-files t)
+   (projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
    (projectile-tags-backend "ggtags"))
   :init
   (progn
@@ -50,17 +51,17 @@
     (use-package projectile-rails
       :init
       (projectile-rails-global-mode t)))
+  :bind-keymap
+  ("s-p" . projectile-command-map)
   :config
   (progn
-    (setq projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
-    (dolist (item '("GTAGS" "GRTAGS" "GPATH" "~$"))
+    (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
       (add-to-list 'projectile-globally-ignored-files item))
     ;; Git projects should be marked as projects in top-down fashion,
     ;; so that each git submodule can be a projectile project.
     (add-to-list 'projectile-project-root-files ".git")
     ;; Optionally write to persistent `projectile-known-projects-file'
-    (projectile-save-known-projects)
-    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)))
+    (projectile-save-known-projects)))
 
 
 (provide 'init-projectile)

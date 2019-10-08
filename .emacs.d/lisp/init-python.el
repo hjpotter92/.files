@@ -33,6 +33,8 @@
 (eval-when-compile
   (require 'init-const))
 
+(setq-default python-environment-directory "~/.virtualenvs")
+
 (use-package python-docstring
   :hook (python-mode . python-docstring-mode))
 

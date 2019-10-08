@@ -16,6 +16,7 @@
 (require 'init-simple)
 (require 'init-backup)
 (require 'init-editor)
+(require 'init-navigation)
 (require 'init-theme)
 (require 'init-ui)
 
@@ -29,6 +30,7 @@
 (require 'init-projectile)
 (require 'init-vc)
 (require 'init-flycheck)
+(require 'init-flyspell)
 (require 'init-yasnippet)
 
 ;; Prgramming languages specific
@@ -41,7 +43,6 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
 (setq-default buffer-file-coding-system 'utf-8-unix)
-(setq-default python-environment-directory "~/.virtualenvs")
 (setq-default custom-file "~/.emacs.d/custom.el")
 
 ;; (when (file-exists-p custom-file)
@@ -118,10 +119,6 @@
   :hook (ggtags-mode . counsel-gtags-mode)
   :custom
   ((counsel-gtags-auto-update t)))
-
-(use-package switch-window
-  :bind
-  ("C-x o" . switch-window))
 
 (use-package ruby-mode
   :init

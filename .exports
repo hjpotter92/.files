@@ -1,5 +1,6 @@
 #  -*- mode: sh; -*-
 
+export LESSGLOBALTAGS=global
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;111m'

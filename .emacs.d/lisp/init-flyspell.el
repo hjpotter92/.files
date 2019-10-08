@@ -1,11 +1,11 @@
-;;; init-lsp.el --- LSP mode settings -*- lexical-binding: t -*-
+;;; init-flyspell.el --- Flyspell initialisations
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: convenience tools internal
+;; Keywords: internal convenience
 
 
 ;; This file is not part of GNU Emacs
@@ -26,44 +26,39 @@
 
 ;;; Commentary:
 
-;; commentary
+;; Configure flyspell and its dictionaries.
 
 ;;; Code:
 
 (eval-when-compile
   (require 'init-const))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :custom
-  ((lsp-prefer-flymake nil)
-   (lsp-auto-guess-root t)
-   (lsp-auto-configure t)
-   (lsp-before-save-edits nil))
-  :hook ((web-mode js2-mode dockerfile-mode) . lsp))
-
-(use-package lsp-python-ms
+(use-package flyspell
   :hook
-  (python-mode . (lambda ()
-                   (require 'lsp-python-ms)
-                   (lsp))))
-
-(use-package company-lsp
-  :after (company lsp-mode)
-  :config
-  (push 'company-lsp company-backends)
+  ((prog-mode . flyspell-prog-mode)
+   ((text-mode log-edit-mode) . flyspell-mode))
   :custom
-  ((company-transformers nil)
-   (company-lsp-async t)
-   (company-lsp-cache-candidates nil)))
+  ((flyspell-issue-message-flag nil)
+   (ispell-list-command "--list"))
+  :pretty-hydra
+  ((:quit-key "q" :title "flyspell hydra")
+   ("Spell check"
+    (("b" flyspell-buffer "buffer")
+     ("r" flyspell-region "region")
+     ("w" flyspell-word "word"))
+    "Actions"
+    (("f" flyspell-mode "spell check mode")
+     ("F" flyspell-prog-mode "prog-spell check mode")
+     ("q" nil "quit hydra")))))
 
-(use-package lsp-ui
-  :commands lsp-ui-mode
+(use-package flyspell-correct-ivy
   :custom
-  ((lsp-ui-sideline-ignore-duplicates t)
-   (lsp-ui-flycheck t))
-  :hook (lsp-mode . lsp-ui-mode))
+  (flyspell-correct-interface #'flyspell-correct-ivy))
 
-(provide 'init-lsp)
+(use-package flyspell-lazy
+  :init
+  (flyspell-lazy-mode t))
 
-;;; init-lsp.el ends here
+(provide 'init-flyspell)
+
+;;; init-flyspell.el ends here

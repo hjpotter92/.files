@@ -56,19 +56,22 @@
 
 (use-package dired-git-info
   :bind
-  (:map dired-mode-map
-        (")" . dired-git-info-mode)))
+  (:map
+   dired-mode-map
+   (")" . dired-git-info-mode)))
 
 (use-package dired-narrow
   :bind
-  (:map dired-mode-map
-        ("C-c n" . dired-narrow)))
+  (:map
+   dired-mode-map
+   ("C-c n" . dired-narrow)))
 
 (use-package dired-subtree
   :bind
-  (:map dired-mode-map
-        ([tab] . dired-subtree-toggle)
-        ([backtab] . dired-subtree-cycle)))
+  (:map
+   dired-mode-map
+   ([tab] . dired-subtree-toggle)
+   ([backtab] . dired-subtree-cycle)))
 
 (provide 'init-dired)
 

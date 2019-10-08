@@ -81,6 +81,7 @@
 (use-package centaur-tabs
   :if (display-graphic-p)
   :after (smart-mode-line)
+  :disabled t
   :commands
   (centaur-tabs-group-by-projectile-project)
   :custom

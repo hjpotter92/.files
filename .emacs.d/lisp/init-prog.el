@@ -68,6 +68,9 @@
     ("f" counsel-describe-function "function")
     ("v" counsel-describe-variable "variable")
     ("i" info-lookup-symbol "info lookup"))
+   "Tools"
+   (("!" flycheck-hydra/body "flycheck")
+    ("i" flyspell-hydra/body "flyspell"))
    "Quit"
    (("q" nil "quit hydra"))))
 
