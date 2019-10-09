@@ -1,4 +1,4 @@
-;;; init-web.el --- Web mode and related packages -*- lexical-binding: t -*-
+;;; init-web.el --- Web mode and related packages
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -36,8 +36,6 @@
 (use-package css-mode
   :custom
   (css-indent-offset 2)
-  :hook
-  (css-mode . emmet-mode)
   :mode
   ("\\.css\\'"))
 
@@ -84,9 +82,7 @@
       (add-to-list 'company-backends 'company-web-html))))
 
 (use-package emmet
-  :ensure emmet-mode
-  :hook ((sgml-mode html-mode css-mode web-mode) . emmet-mode)
-  :after (web-mode))
+  :hook ((sgml-mode html-mode css-mode web-mode) . emmet-mode))
 
 (provide 'init-web)
 

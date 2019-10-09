@@ -74,6 +74,10 @@
    "Quit"
    (("q" nil "quit hydra"))))
 
+(use-package eros
+  :hook
+  (emacs-lisp-mode . eros-mode))
+
 (provide 'init-prog)
 
 ;;; init-prog.el ends here

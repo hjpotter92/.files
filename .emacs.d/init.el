@@ -37,6 +37,7 @@
 (require 'init-prog)
 (require 'init-web)
 (require 'init-python)
+(require 'init-ruby)
 
 (setq-default auto-revert-mode t)
 (prefer-coding-system 'utf-8)
@@ -56,42 +57,6 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(defun my/pretty-symbols ()
-  "Add custom symbols in pretty-symbol mode."
-  (push '("!=" . ?≠) prettify-symbols-alist)
-  (push '("<=" . ?≤) prettify-symbols-alist)
-  (push '(">=" . ?≥) prettify-symbols-alist)
-  (push '("==" . ?≡) prettify-symbols-alist)
-  (push '("=>" . ?⇒) prettify-symbols-alist)
-  (push '("NOTE" . ?¤) prettify-symbols-alist)
-  (push '("TODO" . ?§) prettify-symbols-alist))
-
-(defun my/pretty-symbols-python ()
-  "Python specific pretty symbols."
-  (my/pretty-symbols)
-  (push '("def"    . ?ƒ) prettify-symbols-alist)
-  (push '("sum"    . ?Σ) prettify-symbols-alist)
-  (push '("**2"    . ?²) prettify-symbols-alist)
-  (push '("**3"    . ?³) prettify-symbols-alist)
-  (push '("None"   . ?∅) prettify-symbols-alist)
-  (push '("True"   . ?⥾) prettify-symbols-alist)
-  (push '("False"  . ?⥿) prettify-symbols-alist)
-  (push '("is"     . ?≣) prettify-symbols-alist)
-  (push '("is not" . ?≢) prettify-symbols-alist)
-  (push '("in"     . ?∈) prettify-symbols-alist)
-  (push '("not in" . ?∉) prettify-symbols-alist)
-  (push '("return" . ?⟾) prettify-symbols-alist))
-
-(defun my/pretty-symbols-ruby ()
-  "Python specific pretty symbols."
-  (my/pretty-symbols)
-  (push '("def"   . ?ƒ) prettify-symbols-alist)
-  (push '("->"    . ?→) prettify-symbols-alist)
-  (push '("=>"    . ?⟹) prettify-symbols-alist)
-  (push '("true"  . ?⥾) prettify-symbols-alist)
-  (push '("false" . ?⥿) prettify-symbols-alist)
-  (push '("nil"   . ?∅) prettify-symbols-alist))
-
 (defun my/pretty-symbols-lisp ()
   "Lisp symbols."
   (my/pretty-symbols)
@@ -99,9 +64,7 @@
   (push '("defmacro" . ?μ) prettify-symbols-alist)
   (push '("defvar"   . ?ν) prettify-symbols-alist))
 
-(add-hook 'python-mode-hook 'my/pretty-symbols-python)
 (add-hook 'emacs-lisp-mode-hook 'my/pretty-symbols-lisp)
-(add-hook 'ruby-mode-hook 'my/pretty-symbols-ruby)
 
 (use-package markdown-mode
   :mode
@@ -120,24 +83,6 @@
   :custom
   ((counsel-gtags-auto-update t)))
 
-(use-package ruby-mode
-  :init
-  (progn
-    (use-package inf-ruby
-      :hook
-      (ruby-mode . inf-ruby-minor-mode)))
-  :config
-  (progn
-    (use-package rbenv
-      :hook
-      (ruby-mode . rbenv-use-corresponding)
-      :init
-      (global-rbenv-mode t))
-    (use-package ruby-extra-highlight
-      :hook
-      (ruby-mode . ruby-extra-highlight-mode))
-    (use-package ruby-tools)))
-
 (use-package lua-mode
   :custom
   (lua-indent-level 2))
@@ -150,12 +95,6 @@
   (progn
     (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
 
-(use-package git-gutter+
-  :diminish
-  :init
-  (progn
-    (global-git-gutter+-mode t)))
-
 (use-package emacs
   :bind
   (("C-c m" . menu-bar-mode)
@@ -167,7 +106,7 @@
   ((package-archive-priorities
     '(("melpa" . 20)
       ("marmalade" . 15)
-      ("elpa" . 10)))
+      ("gnu" . 10)))
    (frame-title-format
     '("["
       (:eval (if (buffer-file-name)

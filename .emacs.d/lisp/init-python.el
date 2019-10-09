@@ -31,15 +31,35 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-function))
 
 (setq-default python-environment-directory "~/.virtualenvs")
+
+(defun init-python-pretty-symbols ()
+  "Python specific pretty symbols."
+  (my/pretty-symbols)
+  (push '("def"    . ?ƒ) prettify-symbols-alist)
+  (push '("sum"    . ?Σ) prettify-symbols-alist)
+  (push '("**2"    . ?²) prettify-symbols-alist)
+  (push '("**3"    . ?³) prettify-symbols-alist)
+  (push '("None"   . ?∅) prettify-symbols-alist)
+  (push '("True"   . ?⥾) prettify-symbols-alist)
+  (push '("False"  . ?⥿) prettify-symbols-alist)
+  (push '("is"     . ?≣) prettify-symbols-alist)
+  (push '("is not" . ?≢) prettify-symbols-alist)
+  (push '("in"     . ?∈) prettify-symbols-alist)
+  (push '("not in" . ?∉) prettify-symbols-alist)
+  (push '("return" . ?⟾) prettify-symbols-alist))
 
 (use-package python-docstring
   :hook (python-mode . python-docstring-mode))
 
 (use-package python-mode
   :mode "\\.py"
+  :hook
+  (python-mode . (lambda ()
+                   (init-python-pretty-symbols)))
   :custom
   ((py-split-window-on-execute nil)
    (python-indent-guess-indent-offset nil))
@@ -47,11 +67,21 @@
   ("imenu"
    (("m" imenu-list-smart-toggle "toggle imenu"))
    "actions"
-   (("!" flycheck-hydra/body "flycheck hydra"))
+   (("!" flycheck-hydra/body "flycheck hydra")
+    ("v" pyvenv-hydra/body "pyvenv hydra"))
    "misc"
    (("q" nil "quit hydra"))))
 
+(use-package pyvenv
+  :pretty-hydra
+  ((:quit-key "q" :title "pyvenv hydra")
+   ("Actions"
+    (("w" pyvenv-workon "workon")
+     ("a" pyvenv-activate "activate")
+     ("d" pyvenv-deactivate "deactivate")))))
+
 (use-package pipenv
+  :disabled t
   :hook (python-mode . pipenv-mode)
   :delight)
 
@@ -72,6 +102,7 @@
           '(elpy-module-flymake elpy-module-highlight-indentation elpy-module-django elpy-module-pyvenv))))
 
 (use-package auto-virtualenvwrapper
+  :disabled t
   :hook
   (python-mode . auto-virtualenvwrapper-activate))
 

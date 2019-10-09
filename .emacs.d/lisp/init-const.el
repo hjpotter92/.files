@@ -1,11 +1,11 @@
-;;; init-const.el --- Constants across package definistion -*- lexical-binding: t -*-
+;;; init-const.el --- Constants across package definistion
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: (dependencies)
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: emacs constants init
+;; Keywords: internal tools
 
 
 ;; This file is not part of GNU Emacs

@@ -277,6 +277,7 @@
 
 (use-package rg
   :defer t
+  :disabled t
   :custom
   (rg-keymap-prefix "\M-ss")
   :init

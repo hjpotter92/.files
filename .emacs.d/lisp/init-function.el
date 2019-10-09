@@ -36,6 +36,16 @@
 (require 'all-the-icons)
 (require 's)
 
+(defun my/pretty-symbols ()
+  "Add custom symbols in pretty-symbol mode."
+  (push '("!=" . ?≠) prettify-symbols-alist)
+  (push '("<=" . ?≤) prettify-symbols-alist)
+  (push '(">=" . ?≥) prettify-symbols-alist)
+  (push '("==" . ?≡) prettify-symbols-alist)
+  (push '("=>" . ?⇒) prettify-symbols-alist)
+  (push '("NOTE" . ?¤) prettify-symbols-alist)
+  (push '("TODO" . ?§) prettify-symbols-alist))
+
 (defun with-faicon (icon str &optional height v-adjust)
   "ICON STR HEIGHT V-ADJUST."
   (s-concat (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))

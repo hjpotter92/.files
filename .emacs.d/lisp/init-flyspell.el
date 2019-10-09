@@ -1,4 +1,4 @@
-;;; init-flyspell.el --- Flyspell initialisations
+;;; init-flyspell.el --- Flyspell initialisation
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -46,12 +46,21 @@
     (("b" flyspell-buffer "buffer")
      ("r" flyspell-region "region")
      ("w" flyspell-word "word"))
+    "Movements"
+    (("n" flyspell-goto-next-error "next"))
+    "Corrections"
+    (("N" flyspell-correct-next "fix next")
+     ("P" flyspell-correct-previous "fix previous")
+     ("W" flyspell-correct-word "fix word")
+     ("T" flyspell-correct-at-point "fix at point"))
     "Actions"
     (("f" flyspell-mode "spell check mode")
      ("F" flyspell-prog-mode "prog-spell check mode")
      ("q" nil "quit hydra")))))
 
 (use-package flyspell-correct-ivy
+  :bind
+  ("C-M-;" . flyspell-correct-wrapper)
   :custom
   (flyspell-correct-interface #'flyspell-correct-ivy))
 

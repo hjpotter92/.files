@@ -70,6 +70,8 @@
 (use-package diminish)
 
 (use-package paradox
+  :commands
+  (paradox--report-buffer-print)
   :custom
   ((paradox-column-width-package 32)
    (paradox-column-width-version 16)

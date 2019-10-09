@@ -59,6 +59,10 @@
     ("V" flycheck-version "version")
     ("q" nil "quit hydra")))))
 
+(use-package flycheck-pycheckers
+  :hook
+  (flycheck-mode . flycheck-pycheckers-setup))
+
 (use-package flycheck-package
   :commands flycheck-package-setup
   :init (flycheck-package-setup))
@@ -73,7 +77,6 @@
   :hook (flycheck-mode . flycheck-indicator-mode))
 
 (use-package flycheck-elixir)
-
 (use-package flycheck-mix)
 
 (provide 'init-flycheck)

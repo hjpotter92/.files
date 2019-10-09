@@ -1,4 +1,4 @@
-;;; init-lsp.el --- LSP mode settings -*- lexical-binding: t -*-
+;;; init-lsp.el --- LSP mode settings
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -40,7 +40,8 @@
    (lsp-auto-guess-root t)
    (lsp-auto-configure t)
    (lsp-before-save-edits nil))
-  :hook ((web-mode js2-mode dockerfile-mode) . lsp))
+  :hook
+  ((web-mode js2-mode css-mode dockerfile-mode python-mode ruby-mode c++-mode c-mode) . lsp))
 
 (use-package lsp-python-ms
   :hook
@@ -48,21 +49,28 @@
                    (require 'lsp-python-ms)
                    (lsp))))
 
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :custom
+  ((lsp-ui-sideline-ignore-duplicates t)
+   (lsp-ui-flycheck t)
+   (lsp-ui-doc-include-signature t)
+   (lsp-ui-doc-use-webkit t)
+   (lsp-ui-sideline-ignore-duplicate t)
+   (lsp-ui-sideline-show-code-actions nil))
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (progn
+    (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+      (setq mode-line-format nil))))
+
 (use-package company-lsp
-  :after (company lsp-mode)
   :config
   (push 'company-lsp company-backends)
   :custom
   ((company-transformers nil)
    (company-lsp-async t)
    (company-lsp-cache-candidates nil)))
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :custom
-  ((lsp-ui-sideline-ignore-duplicates t)
-   (lsp-ui-flycheck t))
-  :hook (lsp-mode . lsp-ui-mode))
 
 (provide 'init-lsp)
 
