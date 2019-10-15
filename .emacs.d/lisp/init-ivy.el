@@ -54,18 +54,17 @@
    ("C-S-s" . swiper-all)
    ("C-r" . ivy-resume)
    ([f6] . ivy-resume)
-
    :map isearch-mode-map
    ("M-s" . swiper-isearch-toggle)))
 
 (use-package ivy-rich
-  :after ivy
+  :after (ivy counsel)
   :custom
   (ivy-rich-parse-remote-buffer nil)
   :config (ivy-rich-mode t))
 
 (use-package ivy-xref
-  :after (ivy)
+  :after (ivy counsel)
   :custom
   ((xref-show-xrefs-function #'ivy-xref-show-xrefs)
    (xref-show-definitions-function #'ivy-xref-show-defs)))

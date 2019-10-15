@@ -33,7 +33,8 @@
   (require 'init-const))
 
 (use-package yasnippet
-  :init (yas-global-mode t)
+  :init
+  (yas-global-mode t)
   :bind
   ("C-c y" . yasnippet-hydra/body)
   :pretty-hydra
@@ -47,6 +48,10 @@
      ("f" yas-visit-snippet-file "File" :color blue)
      ("l" yas-describe-tables "List")
      ("a" yas-reload-all "All"))
+    "Autosnippets"
+    (("c" aya-create "create auto snippet")
+     ("x" aya-expand "expand snippet")
+     ("s" aya-persist-snippet "save snippet"))
     "Actions"
     (("i" yas-insert-snippet "Insert")
      ("n" yas-new-snippet "New")

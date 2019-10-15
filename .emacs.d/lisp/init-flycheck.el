@@ -57,7 +57,10 @@
    "Miscellaneous"
    (("C" flycheck-clear "clear")
     ("V" flycheck-version "version")
-    ("q" nil "quit hydra")))))
+    ("q" nil "quit hydra"))))
+  :config
+  (progn
+    (flycheck-add-mode 'javascript-eslint 'web-mode)))
 
 (use-package flycheck-pycheckers
   :hook

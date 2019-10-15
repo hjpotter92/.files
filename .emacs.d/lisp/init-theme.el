@@ -64,12 +64,14 @@
 (use-package smart-mode-line
   :custom
   ((sml/no-confirm-load-theme t)
-   (sml/mode-width 'full))
+   (sml/mode-width 'full)
+   (sml/name-width 64))
   :preface
   (setq-local h-mode-line-patterns
     '(("^:Doc:.files/" . ":.f:")
+      ("^:.f:.emacs.d/" . ":ED:")
       ("^:Doc:przemek/app/" . ":PRZK:")
-      ("^:Doc:\\(projects|src\\)/\\([^/]+\\)/" . ":\\2:")))
+      ("^:Doc:projects/\\([^/]+\\)/" . ":\\1:")))
   :init
   (sml/setup)
   :config

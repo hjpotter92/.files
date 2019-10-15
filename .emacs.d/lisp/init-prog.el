@@ -70,7 +70,8 @@
     ("i" info-lookup-symbol "info lookup"))
    "Tools"
    (("!" flycheck-hydra/body "flycheck")
-    ("i" flyspell-hydra/body "flyspell"))
+    ("i" flyspell-hydra/body "flyspell")
+    ("y" yasnippet-hydra/body "yasnippet"))
    "Quit"
    (("q" nil "quit hydra"))))
 

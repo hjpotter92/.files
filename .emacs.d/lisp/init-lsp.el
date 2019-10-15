@@ -39,7 +39,9 @@
   ((lsp-prefer-flymake nil)
    (lsp-auto-guess-root t)
    (lsp-auto-configure t)
-   (lsp-before-save-edits nil))
+   (lsp-before-save-edits nil)
+   (lsp-enable-semantic-highlighting t)
+   (lsp-enable-imenu t))
   :hook
   ((web-mode js2-mode css-mode dockerfile-mode python-mode ruby-mode c++-mode c-mode) . lsp))
 
@@ -51,14 +53,17 @@
 
 (use-package lsp-ui
   :commands lsp-ui-mode
+  :bind
+  (([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+   ([remap xref-find-references] . lsp-ui-peek-find-references))
   :custom
-  ((lsp-ui-sideline-ignore-duplicates t)
-   (lsp-ui-flycheck t)
+  ((lsp-ui-flycheck t)
    (lsp-ui-doc-include-signature t)
    (lsp-ui-doc-use-webkit t)
    (lsp-ui-sideline-ignore-duplicate t)
    (lsp-ui-sideline-show-code-actions nil))
-  :hook (lsp-mode . lsp-ui-mode)
+  :hook
+  (lsp-mode . lsp-ui-mode)
   :config
   (progn
     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)

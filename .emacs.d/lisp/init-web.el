@@ -81,7 +81,7 @@
       :config
       (add-to-list 'company-backends 'company-web-html))))
 
-(use-package emmet
+(use-package emmet-mode
   :hook ((sgml-mode html-mode css-mode web-mode) . emmet-mode))
 
 (provide 'init-web)
