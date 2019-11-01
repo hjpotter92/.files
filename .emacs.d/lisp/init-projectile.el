@@ -47,10 +47,7 @@
    (projectile-tags-backend "ggtags"))
   :init
   (progn
-    (projectile-mode t)
-    (use-package projectile-rails
-      :init
-      (projectile-rails-global-mode t)))
+    (projectile-mode t))
   :bind-keymap
   ("s-p" . projectile-command-map)
   :config

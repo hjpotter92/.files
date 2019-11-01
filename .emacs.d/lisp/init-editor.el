@@ -222,12 +222,6 @@
 
 (use-package smart-window)
 
-(use-package imenu-list
-  :custom
-  ((imenu-list-auto-resize t))
-  :hook
-  ((python-mode js2-mode c-mode c++-mode java-mode ruby-mode yaml-mode) . imenu-list-smart-toggle))
-
 (use-package region-bindings-mode
   :delight
   :commands

@@ -37,6 +37,19 @@
   (([home] . home-end-home)
    ([end] . home-end-end)))
 
+(use-package imenu-list
+  :custom
+  ((imenu-list-auto-resize t))
+  :preface
+  (defun init-navigation-disable-local-centaur-tabs ()
+    "Disable buffer local centaur tabs when needed."
+    (centaur-tabs-local-mode -1))
+  :config
+  (progn
+    (add-hook 'imenu-list-major-mode-hook 'init-navigation-disable-local-centaur-tabs))
+  :hook
+  (((python-mode js2-mode c-mode c++-mode java-mode ruby-mode) . imenu-list-smart-toggle)))
+
 (use-package switch-window
   :bind
   (("C-x o" . switch-window)

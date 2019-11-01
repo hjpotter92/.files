@@ -1,4 +1,4 @@
-;;; init-python.el --- Programming global modes
+;;; init-go.el --- Programming global modes fo golang
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -6,8 +6,6 @@
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools languages
-;; Prefix: my/python
-;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -38,7 +36,7 @@
 
 (setq-default python-environment-directory "~/.virtualenvs")
 
-(defun init-python-pretty-symbols ()
+(defun init-go-pretty-symbols ()
   "Python specific pretty symbols."
   (my/pretty-symbols)
   (push '("def"    . ?ƒ) prettify-symbols-alist)
@@ -54,60 +52,30 @@
   (push '("not in" . ?∉) prettify-symbols-alist)
   (push '("return" . ?⟾) prettify-symbols-alist))
 
-(use-package python-docstring
-  :hook (python-mode . python-docstring-mode))
-
-(use-package python-mode
-  :mode "\\.py"
+(use-package go-mode
+  :mode "\\.go"
   :hook
-  (python-mode . (lambda ()
-                   (init-python-pretty-symbols)))
+  (go-mode . (lambda ()
+               (init-go-pretty-symbols)))
   :custom
-  ((py-split-window-on-execute nil)
-   (python-indent-guess-indent-offset nil))
+  ((gofmt-command "goimports"))
   :mode-hydra
   ("imenu"
-   (("m" imenu-list-smart-toggle "toggle imenu"))
+   (("m" lsp-ui-imenu "toggle imenu"))
    "actions"
-   (("!" flycheck-hydra/body "flycheck hydra")
-    ("v" pyvenv-hydra/body "pyvenv hydra"))
+   (("!" flycheck-hydra/body "flycheck hydra"))
    "misc"
-   (("q" nil "quit hydra"))))
-
-(use-package pyvenv
-  :pretty-hydra
-  ((:quit-key "q" :title "pyvenv hydra")
-   ("Actions"
-    (("w" pyvenv-workon "workon")
-     ("a" pyvenv-activate "activate")
-     ("d" pyvenv-deactivate "deactivate")))))
-
-(use-package pipenv
-  :disabled t
-  :hook (python-mode . pipenv-mode)
-  :delight)
-
-(use-package elpy
-  :after (flycheck)
-  :disabled
-  :delight
-  :hook
-  (elpy-mode . flycheck-mode)
-  :custom
-  ((elpy-rpc-backend "jedi")
-   (elpy-autodoc-delay 0.400)
-   (elpy-rpc-ignored-buffer-size 204800))
-  :init
+   (("q" nil "quit hydra")))
+  :config
   (progn
-    (elpy-enable)
-    (mapc (lambda (module) (setq elpy-modules (delq module elpy-modules)))
-          '(elpy-module-flymake elpy-module-highlight-indentation elpy-module-django elpy-module-pyvenv))))
+    (use-package go-guru)
+    (use-package company-go)
+    (use-package golint)
+    (use-package go-errcheck)))
 
-(use-package auto-virtualenvwrapper
-  :disabled t
-  :hook
-  (python-mode . auto-virtualenvwrapper-activate))
+(use-package go-eldoc
+  :hook (go-mode . go-eldoc-setup))
 
-(provide 'init-python)
+(provide 'init-go)
 
-;;; init-python.el ends here
+;;; init-go.el ends here
