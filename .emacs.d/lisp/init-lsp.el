@@ -71,9 +71,13 @@
     (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
       (setq mode-line-format nil))))
 
+(use-package lsp-ivy
+  :after lsp-mode)
+
 (use-package company-lsp
   :config
-  (push 'company-lsp company-backends)
+  (progn
+    (add-to-list 'company-backends 'company-lsp))
   :custom
   ((company-transformers nil)
    (company-lsp-async t)
