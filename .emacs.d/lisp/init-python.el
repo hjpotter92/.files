@@ -64,12 +64,14 @@
                    (init-python-pretty-symbols)))
   :custom
   ((py-split-window-on-execute nil)
+   (python-indent-offset 4)
    (python-indent-guess-indent-offset nil))
   :mode-hydra
   ("imenu"
    (("m" imenu-list-smart-toggle "toggle imenu"))
    "actions"
    (("!" flycheck-hydra/body "flycheck hydra")
+    ("p" pyenv-mode-hydra/body "pyenv hydra")
     ("v" pyvenv-hydra/body "pyvenv hydra"))
    "misc"
    (("q" nil "quit hydra"))))
@@ -81,6 +83,30 @@
     (("w" pyvenv-workon "workon")
      ("a" pyvenv-activate "activate")
      ("d" pyvenv-deactivate "deactivate")))))
+
+(use-package pyenv-mode
+  :hook
+  (python-mode . pyenv-mode)
+  :preface
+  (defun init-python-pyenv-activate ()
+  "Automatically activates pyenv version if .python-version file exists."
+  (interactive)
+  (let ((python-version-directory (locate-dominating-file (buffer-file-name) ".python-version")))
+    (if python-version-directory
+        (let* ((pyenv-version-path (f-expand ".python-version" python-version-directory))
+               (pyenv-current-version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+          (pyenv-mode-set pyenv-current-version)
+          (message (concat "Setting virtualenv to " pyenv-current-version))))))
+  :init
+  (progn
+    (setenv "WORKON_HOME" "~/.pyenv/versions/"))
+  :pretty-hydra
+  ((:quit-key "q" :title "pyenv mode hydra")
+   ("Actions"
+    (("m" pyenv-mode "Toggle pyenv mode" :toggle)
+     ("s" pyenv-mode-set "Set pyenv version")
+     ("u" pyenv-mode-unset "Unset pyenv version")
+     ("e" init-python-pyenv-activate "Auto activate pyenv version")))))
 
 (use-package pipenv
   :disabled t

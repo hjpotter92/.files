@@ -1,6 +1,7 @@
 # custom ignore paths
 .emacs.d/elpa-*/
 .emacs.d/el-get/
+.emacs.d/mspyls/
 
 # Created by https://www.gitignore.io/api/git,emacs,pip,python,vim,osx,linux
 

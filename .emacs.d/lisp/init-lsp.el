@@ -41,11 +41,16 @@
    (lsp-auto-configure t)
    (lsp-before-save-edits nil)
    (lsp-enable-semantic-highlighting t)
+   (lsp-enable-file-watchers t)
+   (lsp-enable-indentation t)
+   (lsp-enable-completion-at-point t)
+   (lsp-enable-xref t)
+   (lsp-enable-snippet t)
    (lsp-enable-imenu t))
   :hook
   ((web-mode js2-mode css-mode dockerfile-mode
              python-mode ruby-mode c++-mode
-             c-mode go-mode) . lsp))
+             c-mode go-mode yaml-mode) . lsp))
 
 (use-package lsp-python-ms
   :hook

@@ -178,7 +178,7 @@
       (sp-local-tag "#" "<%# " " %>"))
     (sp-local-pair 'emacs-lisp-mode "`" nil :when '(sp-in-string-p)))
   :pretty-hydra
-  ((:quit-key "q" :title "Smartparens hydra menu" :color teal)
+  ((:quit-key "q" :title "Smartparens hydra menu")
    ("Moving"
     (("a" sp-beginning-of-sexp "beginning")
      ("e" sp-end-of-sexp "end")
