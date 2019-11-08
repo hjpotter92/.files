@@ -218,7 +218,9 @@
     "Quit hydra"
     (("q" nil "quit hydra"))))
   :bind
-  ("C-c p" . smartparens-hydra/body))
+  (("C-c p" . smartparens-hydra/body)
+   ("M-DEL" . sp-unwrap-sexp)
+   ("M-<backspace>" . sp-backward-unwrap-sexp)))
 
 (use-package smart-window)
 
