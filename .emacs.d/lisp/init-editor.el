@@ -203,7 +203,7 @@
     "Sexp juggling"
     (("S" sp-split-sexp "split")
      ("s" sp-splice-sexp "splice")
-     ("r" sp-raise-sexp "raose")
+     ("r" sp-raise-sexp "raise")
      ("j" sp-join-sexp "join")
      ("t" sp-transpose-sexp "transpose")
      ("A" sp-absorb-sexp "absorb")
