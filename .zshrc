@@ -86,7 +86,6 @@ plugins=(
 # ZSH_TMUX_AUTOSTART="true"
 # ZSH_TMUX_AUTOCONNECT="true"
 
-export PATH="/home/hjpotter92/.cask/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
 
 source ~/.aliases
