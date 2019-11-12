@@ -73,7 +73,7 @@
   (minibuffer-line-mode))
 
 (use-package smart-cursor-color
-  :diminish smart-cursor-color-mode
+  :delight
   :config
   (global-hl-line-mode t)
   (smart-cursor-color-mode t))

@@ -40,7 +40,7 @@
    ("M-X" . amx-major-mode-commands)))
 
 (use-package ivy
-  :diminish ivy-mode
+  :delight
   :custom
   ((ivy-use-virtual-buffers t)
    (enable-recursive-minibuffers t)
@@ -70,7 +70,7 @@
    (xref-show-definitions-function #'ivy-xref-show-defs)))
 
 (use-package counsel
-  :diminish counsel-mode
+  :delight
   :custom
   ((counsel-find-file-at-point t)
    (counsel-yank-pop-separator "\n--------\n"))
@@ -87,15 +87,12 @@
    ("<f1> b" . counsel-descbinds)
    ("<f2> u" . counsel-unicode-char)
    ("M-y" . counsel-yank-pop)
-
    :map swiper-map
    ("M-%" . swiper-query-replace)
    ("M-s" . swiper-isearch-toggle)
-
    :map counsel-mode-map
    ([remap swiper] . counsel-grep-or-swiper)
    ([remap dired] . counsel-dired)
-
    :map minibuffer-local-map
    ("C-r" . counsel-minibuffer-history)))
 

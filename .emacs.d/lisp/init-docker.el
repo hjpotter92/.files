@@ -41,7 +41,7 @@
 
 (use-package docker
   :bind ("C-c d" . docker)
-  :diminish
+  :delight
   :init
   (use-package docker-image
     :ensure nil

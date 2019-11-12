@@ -40,6 +40,7 @@
     (load-theme 'monokai-pro t)))
 
 (use-package idle-highlight-in-visible-buffers-mode
+  :disabled t
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
 

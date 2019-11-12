@@ -52,7 +52,7 @@
     (company-statistics-mode t))
   :custom
   ((company-dabbrev-downcase nil)
-   (company-idle-delay 0.2)
+   (company-idle-delay 0.4)
    (company-tooltip-align-annotations t)
    (company-tooltip-limit 10)
    (company-require-match nil)
@@ -67,6 +67,7 @@
       :config
       (add-to-list 'company-backends 'company-robe))
     (use-package company-jedi
+      :disabled t
       :config
       (progn
         (add-to-list 'company-backends 'company-jedi)))
@@ -78,7 +79,7 @@
       (company-flx-mode t))))
 
 (use-package company-box
-  :diminish
+  :delight
   :hook (company-mode . company-box-mode))
 
 (use-package company-quickhelp
@@ -91,7 +92,7 @@
 
 (use-package company-fuzzy
   :after (company)
-  :diminish
+  :delight
   :init
   (global-company-fuzzy-mode t))
 

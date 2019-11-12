@@ -42,7 +42,7 @@
       :hook (prog-mode . highlight-numbers-mode))))
 
 (use-package editorconfig
-  :diminish editorconfig-mode
+  :delight
   :hook (after-init . editorconfig-mode))
 
 (use-package realgud
