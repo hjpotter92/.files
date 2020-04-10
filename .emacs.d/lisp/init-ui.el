@@ -38,6 +38,11 @@
   ((lisp-mode emacs-lisp-mode ruby-mode) . focus-mode)
   :bind ("C-c f" . focus-mode))
 
+(use-package modern-fringes
+  :init
+  (progn
+    (modern-fringes-invert-arrows)))
+
 (use-package rainbow-mode
   :delight
   :hook

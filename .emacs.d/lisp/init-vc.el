@@ -73,6 +73,9 @@
           (mapcar #'file-name-as-directory (magit-list-repos)))
     (global-magit-file-mode t)))
 
+(use-package magit-patch-changelog
+  :after (magit))
+
 (use-package git-gutter+
   :delight
   :init
