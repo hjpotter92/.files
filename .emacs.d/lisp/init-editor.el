@@ -289,6 +289,10 @@
   :hook
   ((prog-mode minibuffer-setup) . subword-mode))
 
+(use-package editorconfig
+  :config
+  (editorconfig-mode t))
+
 (provide 'init-editor)
 
 ;;; init-editor.el ends here

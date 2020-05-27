@@ -45,10 +45,6 @@
   :delight
   :hook (after-init . editorconfig-mode))
 
-(use-package realgud
-  :init
-  (load-library "realgud"))
-
 (use-package emacs-lisp-mode
   :ensure nil
   :after (major-mode-hydra)

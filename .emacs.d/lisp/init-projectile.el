@@ -62,6 +62,7 @@
 
 (use-package activity-watch-mode
   :after (projectile)
+  :delight
   :init
   (global-activity-watch-mode t))
 

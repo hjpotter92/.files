@@ -35,24 +35,34 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
+  :init
+  (progn
+    ;; Set gc to 100 MB and process buffer to 5 MB
+    (setq gc-cons-threshold (* 100 1024 1024))
+    (setq read-process-output-max (* 5 1024 1024)))
+  :bind-keymap
+  ("C-c l" . lsp-command-map)
   :custom
-  ((lsp-prefer-flymake nil)
+  ((lsp-auto-configure t)
    (lsp-auto-guess-root t)
-   (lsp-auto-configure t)
    (lsp-before-save-edits nil)
-   (lsp-enable-semantic-highlighting t)
+   (lsp-enable-completion-at-point t)
    (lsp-enable-file-watchers t)
    (lsp-enable-indentation t)
-   (lsp-enable-completion-at-point t)
-   (lsp-enable-xref t)
+   (lsp-enable-imenu t)
+   (lsp-enable-semantic-highlighting t)
    (lsp-enable-snippet t)
-   (lsp-enable-imenu t))
+   (lsp-enable-xref t)
+   (lsp-prefer-flymake nil))
   :hook
   ((web-mode js2-mode css-mode dockerfile-mode
              python-mode ruby-mode c++-mode
-             c-mode go-mode yaml-mode) . lsp))
+             c-mode go-mode yaml-mode) . lsp)
+  (lsp-mode . lsp-enable-which-key-integration))
 
 (use-package lsp-python-ms
+  :custom
+  (lsp-python-ms-auto-install-server t)
   :hook
   (python-mode . (lambda ()
                    (require 'lsp-python-ms)

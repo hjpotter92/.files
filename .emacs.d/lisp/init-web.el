@@ -42,8 +42,8 @@
 (use-package js2-mode
   :custom
   ((js2-idle-timer-delay 0)
-  (js2-mode-show-parse-errors nil)
-  (js2-mode-show-strict-warnings nil)))
+   (js2-mode-show-parse-errors nil)
+   (js2-mode-show-strict-warnings nil)))
 
 (use-package web-mode
   :after company
@@ -78,6 +78,8 @@
       :ensure nil
       :bind
       (("C-c w" . company-web-html))
+      :init
+      (setq js-indent-level 2)
       :config
       (add-to-list 'company-backends 'company-web-html))))
 
