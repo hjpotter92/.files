@@ -70,8 +70,7 @@
   :config
   (progn
     (mapc #'projectile-add-known-project
-          (mapcar #'file-name-as-directory (magit-list-repos)))
-    (global-magit-file-mode t)))
+          (mapcar #'file-name-as-directory (magit-list-repos)))))
 
 (use-package git-gutter+
   :delight

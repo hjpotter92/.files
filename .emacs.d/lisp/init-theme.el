@@ -70,6 +70,7 @@
   :preface
   (setq-local h-mode-line-patterns
     '(("^:Doc:.files/" . ":.f:")
+      ("^:Doc:work/\\([^/]+\\)/" . ":W:\\1:")
       ("^:.f:.emacs.d/" . ":ED:")
       ("^:Doc:przemek/app/" . ":PRZK:")
       ("^:Doc:projects/\\([^/]+\\)/" . ":\\1:")))

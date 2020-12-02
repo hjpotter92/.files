@@ -101,6 +101,12 @@
   :hook
   (prog-mode . sublimity-mode))
 
+(use-package modern-fringes
+  :init
+  (progn
+    (modern-fringes-mode t)
+    (modern-fringes-invert-arrows)))
+
 (provide 'init-ui)
 
 ;;; init-ui.el ends here
