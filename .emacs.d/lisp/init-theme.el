@@ -53,9 +53,18 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
+(use-package all-the-icons-ibuffer
+  :init
+  (all-the-icons-ibuffer-mode t))
+
 (use-package all-the-icons-ivy
   :custom
   (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window ivy-switch-buffer))
+  :init
+  (progn
+    (use-package all-the-icons-ivy-rich
+      :init
+      (all-the-icons-ivy-rich-mode t)))
   :config
   (progn
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)

@@ -1,4 +1,4 @@
-#alias ls='ls --color=always -a'
+alias -g ls='lsd'
 alias lh='ls -lh'
 #alias ...='cd ../..'
 #alias agi='sudo apt-get install'
@@ -16,3 +16,6 @@ do
         done
     done
 done
+
+alias -s {mp4,mkv,avi,m4v}='smplayer'
+alias -s {jpg,png,gif,svg,jpeg}='feh'

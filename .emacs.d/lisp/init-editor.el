@@ -69,6 +69,11 @@
     (add-to-list 'easy-kill-alist '(?t string-to-char-backward ""))
     (add-to-list 'easy-kill-alist '(?T string-up-to-char-backward ""))))
 
+(use-package format-all
+  :bind
+  (("<f8>" . format-all-buffer)
+   ("<f9>" . format-all-mode)))
+
 (use-package helpful
   :delight
   :pretty-hydra
@@ -283,6 +288,10 @@
   :ensure nil
   :hook
   ((prog-mode minibuffer-setup) . subword-mode))
+
+(use-package editorconfig
+  :config
+  (editorconfig-mode t))
 
 (provide 'init-editor)
 

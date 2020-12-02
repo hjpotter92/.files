@@ -87,8 +87,11 @@
   :custom
   ((company-quickhelp-delay 0.25))
   :init
-  (progn
-    (company-quickhelp-mode t)))
+  (company-quickhelp-mode t)
+  :config
+  (use-package company-quickhelp-terminal
+    :init
+    (company-quickhelp-terminal-mode t)))
 
 (use-package company-fuzzy
   :after (company)

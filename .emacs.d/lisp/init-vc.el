@@ -72,6 +72,9 @@
     (mapc #'projectile-add-known-project
           (mapcar #'file-name-as-directory (magit-list-repos)))))
 
+(use-package magit-patch-changelog
+  :after (magit))
+
 (use-package git-gutter+
   :delight
   :init

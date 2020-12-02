@@ -32,6 +32,7 @@
 (require 'init-flycheck)
 (require 'init-flyspell)
 (require 'init-yasnippet)
+(require 'init-debug)
 
 ;; Prgramming languages specific
 (require 'init-prog)
