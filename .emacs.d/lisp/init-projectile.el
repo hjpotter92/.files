@@ -61,6 +61,7 @@
     (projectile-save-known-projects)))
 
 (use-package activity-watch-mode
+  :disabled
   :after (projectile)
   :delight
   :init

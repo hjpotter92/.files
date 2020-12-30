@@ -9,3 +9,5 @@ export LESS_TERMCAP_me=$'\E[0m'
 export LESS_TERMCAP_se=$'\E[0m'
 export GIT_PAGER='cat'
 # export TERM="xterm-24bit"
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1

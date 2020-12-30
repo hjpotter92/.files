@@ -43,10 +43,10 @@
   (benchmark-init/activate))
 
 (use-package exec-path-from-shell
-  :init
+  :config
   (exec-path-from-shell-initialize)
   :custom
-  ((exec-path-from-shell-arguments '("-l"))
+  ((exec-path-from-shell-arguments '("-li"))
    (exec-path-from-shell-variables '("PATH" "MANPATH" "GOPATH" "PYTHONPATH"))))
 
 (use-package hydra

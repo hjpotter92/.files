@@ -41,9 +41,7 @@
   :commands
   (dired
    find-name-dired
-   find-dired)
-  :config
-  (toggle-diredp-find-file-reuse-dir 1))
+   find-dired))
 
 (use-package dired+
   :ensure nil

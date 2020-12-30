@@ -66,6 +66,13 @@
   ((py-split-window-on-execute nil)
    (python-indent-offset 4)
    (python-indent-guess-indent-offset nil))
+  :init
+  (progn
+    (add-hook 'hack-local-variables-hook
+              (lambda ()
+                (when (derived-mode-p 'python-mode)
+                  (require 'lsp-python-ms)
+                  (lsp-deferred)))))
   :mode-hydra
   ("imenu"
    (("m" imenu-list-smart-toggle "toggle imenu"))
@@ -77,6 +84,7 @@
    (("q" nil "quit hydra"))))
 
 (use-package pyvenv
+  :disabled
   :pretty-hydra
   ((:quit-key "q" :title "pyvenv hydra")
    ("Actions"
@@ -88,18 +96,28 @@
   :hook
   (python-mode . pyenv-mode)
   :preface
-  (defun init-python-pyenv-activate ()
-  "Automatically activates pyenv version if .python-version file exists."
-  (interactive)
-  (let ((python-version-directory (locate-dominating-file (buffer-file-name) ".python-version")))
-    (if python-version-directory
-        (let* ((pyenv-version-path (f-expand ".python-version" python-version-directory))
-               (pyenv-current-version (s-trim (f-read-text pyenv-version-path 'utf-8))))
-          (pyenv-mode-set pyenv-current-version)
-          (message (concat "Setting virtualenv to " pyenv-current-version))))))
+  (progn
+    (defun init-python-pyenv-activate ()
+      "Automatically activates pyenv version if .python-version file exists."
+      (interactive)
+      (let ((python-version-directory (locate-dominating-file (buffer-file-name) ".python-version")))
+        (if python-version-directory
+            (let* ((pyenv-version-path (f-expand ".python-version" python-version-directory))
+                   (pyenv-current-version (s-trim (f-read-text pyenv-version-path 'utf-8))))
+              (pyenv-mode-set pyenv-current-version)
+              (message (concat "Setting virtualenv to " pyenv-current-version)))))))
   :init
   (progn
     (setenv "WORKON_HOME" "~/.pyenv/versions/"))
+  :config
+  (progn
+    (defun init-python-projectile-pyenv ()
+      "Check for project name availability in pyenv"
+      (let ((project (projectile-project-name)))
+        (if (member project (pyenv-mode-versions))
+            (pyenv-mode-set project)
+          (pyenv-mode-unset))))
+    (add-hook 'python-mode #'init-python-projectile-pyenv))
   :pretty-hydra
   ((:quit-key "q" :title "pyenv mode hydra")
    ("Actions"

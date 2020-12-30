@@ -80,7 +80,6 @@
   :hook (flycheck-mode . flycheck-indicator-mode))
 
 (use-package flycheck-elixir)
-(use-package flycheck-mix)
 
 (provide 'init-flycheck)
 

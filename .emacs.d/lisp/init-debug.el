@@ -55,7 +55,7 @@
       (dap-ui-controls-mode t))
     (require 'dap-python)
     (require 'dap-node)
-    (require 'dap-pwsh))))
+    (require 'dap-pwsh)))
 
 (use-package realgud
   :disabled

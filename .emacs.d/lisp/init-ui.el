@@ -84,6 +84,7 @@
   (smart-cursor-color-mode t))
 
 (use-package centaur-tabs
+  :disabled
   :if (display-graphic-p)
   :after (smart-mode-line)
   :commands

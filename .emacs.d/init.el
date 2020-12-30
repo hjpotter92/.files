@@ -38,7 +38,7 @@
 (require 'init-prog)
 (require 'init-web)
 (require 'init-python)
-(require 'init-ruby)
+;; (require 'init-ruby)
 
 (setq-default auto-revert-mode t)
 (prefer-coding-system 'utf-8)
@@ -75,10 +75,12 @@
   :init (setq markdown-command "multimarkdown"))
 
 (use-package ggtags
+  :disabled
   :diminish
   :hook (prog-mode . ggtags-mode))
 
 (use-package counsel-gtags
+  :disabled
   :delight counsel-gtags-mode
   :hook (ggtags-mode . counsel-gtags-mode)
   :custom
@@ -131,6 +133,7 @@
     (setq-default indent-tabs-mode nil))
   :config
   (progn
+    (put 'narrow-to-region 'disabled nil)
     (my/pretty-symbols)
     (global-prettify-symbols-mode t)
     (display-battery-mode -1)
@@ -142,4 +145,3 @@
 
 (provide 'init)
 ;;; init.el ends here
-(put 'narrow-to-region 'disabled nil)
