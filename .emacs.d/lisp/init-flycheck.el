@@ -63,6 +63,7 @@
     (flycheck-add-mode 'javascript-eslint 'web-mode)))
 
 (use-package flycheck-pycheckers
+  :disabled
   :hook
   (flycheck-mode . flycheck-pycheckers-setup))
 

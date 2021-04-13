@@ -1,11 +1,12 @@
-;;; init-debug.el --- Attaching and defining debuggers.
+;;; init-emacs-lisp.el --- Emacs lisp configuration
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: internal
+;; Keywords: tools languages
+;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -26,32 +27,36 @@
 
 ;;; Commentary:
 
-;; Attaching and defining debuggers.
+;; Emacs-lisp and similar languages configuration
 
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-function))
 
-(use-package dap-mode
-  :commands dap-mode
-  :hook (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
-  :config
-  (progn
-    (dap-mode t)
-    (dap-ui-mode t)
-    (dap-tooltip-mode t)
-    (tooltip-mode t)
-    (dap-ui-controls-mode t)
-    (require 'dap-python)
-    (require 'dap-node)
-    (require 'dap-pwsh)))
+(use-package emacs-lisp
+  :ensure nil
+  :preface
+  (defun my/pretty-symbols-lisp ()
+    "Lisp symbols."
+    (my/pretty-symbols)
+    (push '("defun"    . ?ƒ) prettify-symbols-alist)
+    (push '("defmacro" . ?μ) prettify-symbols-alist)
+    (push '("defvar"   . ?ν) prettify-symbols-alist))
+  :hook
+  (emacs-lisp . my/pretty-symbols-lisp))
 
-(use-package realgud
-  :disabled
-  :init
-  (load-library "realgud"))
+(use-package symbol-overlay
+  :bind-keymap
+  ("C-c s" . symbol-overlay-map)
+  :hook
+  (emacs-lisp-mode . symbol-overlay-mode))
 
-(provide 'init-debug)
+(use-package highlight-defined
+  :hook
+  (emacs-lisp . highlight-defined-mode))
 
-;;; init-debug.el ends here
+(provide 'init-emacs-lisp)
+
+;;; init-emacs-lisp.el ends here

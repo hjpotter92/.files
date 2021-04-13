@@ -36,68 +36,77 @@
 (use-package company-statistics)
 
 (use-package company
+  :hook
+  (after-init . global-company-mode)
+  :delight
   :requires (company-statistics)
   :bind
   (("<C-tab>" . company-complete)
+   (:map company-mode-map
+         ([remap completion-at-point] . company-complete)
+         ([remap indent-for-tab-command] . company-indent-or-complete-common))
    (:map company-active-map
-        ("M-n" . nil)
-        ("M-p" . nil)
-        ("C-n" . company-select-next)
-        ("C-p" . company-select-previous)
-        ([tab] . company-complete-common-or-cycle)
-        ("<backtab>" . company-select-previous)))
+         ("M-n" . nil)
+         ("M-p" . nil)
+         ("M-/" . company-other-backend)
+         ("C-d" . company-show-doc-buffer)
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ([tab] . company-complete-common-or-cycle)
+         ("<backtab>" . company-select-previous)))
   :init
   (progn
-    (global-company-mode t)
     (company-statistics-mode t))
   :custom
   ((company-dabbrev-downcase nil)
-   (company-idle-delay 0.4)
-   (company-tooltip-align-annotations t)
-   (company-tooltip-limit 10)
+   (company-dabbrev-other-buffers 'all)
+   (company-eclim-autosave nil)
+   (company-format-margin-function 'company-detect-icons-margin)
+   (company-idle-delay 0)
+   (company-minimum-prefix-length 1)
    (company-require-match nil)
+   (company-selection-wrap-around t)
    (company-show-numbers t)
-   (company-minimum-prefix-length 2))
-  :config
-  (progn
-    (use-package robe
-      :after ruby-mode
-      :hook
-      (ruby-mode . robe-mode)
-      :config
-      (add-to-list 'company-backends 'company-robe))
-    (use-package company-jedi
-      :disabled t
-      :config
-      (progn
-        (add-to-list 'company-backends 'company-jedi)))
-    (use-package company-lua
-      :mode "\\.lua'")
-    (use-package company-flx
-      :defer t
-      :config
-      (company-flx-mode t))))
+   (company-tooltip-align-annotations t)
+   (company-tooltip-limit 10)))
+
+(use-package company-lua
+  :mode "\\.lua'")
+
+(use-package company-flx
+  :after (company)
+  :delight
+  :disabled t
+  :hook
+  (company-mode . company-flx-mode))
 
 (use-package company-box
   :delight
-  :hook (company-mode . company-box-mode))
+  :custom
+  (company-box-icons-alist 'company-box-icons-all-the-icons)
+  :hook
+  (company-mode . company-box-mode))
 
 (use-package company-quickhelp
-  :if (window-system)
+  :if (display-graphic-p)
+  :after (company)
   :custom
-  ((company-quickhelp-delay 0.25))
-  :init
-  (company-quickhelp-mode t)
-  :config
-  (use-package company-quickhelp-terminal
-    :init
-    (company-quickhelp-terminal-mode t)))
+  ((company-quickhelp-delay 0.5))
+  :hook
+  (company-mode . company-quickhelp-mode))
+
+(use-package company-quickhelp-terminal
+  :unless (display-graphic-p)
+  :hook
+  (company-mode . company-quickhelp-terminal-mode))
 
 (use-package company-fuzzy
   :after (company)
-  :delight
-  :init
-  (global-company-fuzzy-mode t))
+  :config
+  (progn
+    (add-to-list 'company-backends 'company-capf)
+    (company-fuzzy-mode t))
+  :delight)
 
 (provide 'init-company)
 

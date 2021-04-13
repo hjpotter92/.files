@@ -34,20 +34,22 @@
 
 (use-package amx
   :custom
-  (amx-history-length 20)
+  ((amx-backend 'ivy)
+   (amx-history-length 20)
+   (amx-show-key-bindings t))
   :bind
-  (("M-x" . amx)
-   ("M-X" . amx-major-mode-commands)))
+  ("M-S-X" . amx-major-mode-commands))
 
 (use-package ivy
   :delight
   :custom
-  ((ivy-use-virtual-buffers t)
-   (enable-recursive-minibuffers t)
+  ((enable-recursive-minibuffers t)
+   (ivy-display-style 'fancy)
    (ivy-extra-directories nil)
    (ivy-initial-inputs-alist nil)
    (ivy-on-del-error-function nil)
-   (ivy-display-style 'fancy))
+   (ivy-use-selectable-prompt t)
+   (ivy-use-virtual-buffers t))
   :config (ivy-mode 1)
   :bind
   (("C-s" . swiper-isearch)
@@ -80,7 +82,7 @@
    ("C-x M-f" . counsel-recentf)
    ("C-x b" . counsel-ibuffer)
    ("C-c c w" . counsel-colors-web)
-   ("M-x" . counsel-M-x)
+   ([remap execute-extended-command] . counsel-M-x)
    ("<f1> f" . counsel-describe-function)
    ("<f1> v" . counsel-describe-variable)
    ("<f1> l" . counsel-find-library)
@@ -100,9 +102,8 @@
   :after (counsel projectile)
   :custom
   (counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-  :init
-  (progn
-    (counsel-projectile-mode t)))
+  :config
+  (counsel-projectile-mode t))
 
 (provide 'init-ivy)
 

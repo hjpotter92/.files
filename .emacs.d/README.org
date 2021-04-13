@@ -11,4 +11,4 @@
 * Requirements
   The configurations work for the emacs built from master branch. I
   have no idea if it will work on older emacs versions. Most of the
-  packages used do support emacs 25.1+.
+  packages used do support emacs 26.1+.

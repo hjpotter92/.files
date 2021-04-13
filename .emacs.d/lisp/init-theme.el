@@ -48,7 +48,10 @@
   :config
   (global-pretty-mode t))
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :custom
+  ((all-the-icons-default-adjust 0)
+   (all-the-icons-scale-factor 1)))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -92,7 +95,29 @@
           h-mode-line-patterns)))
 
 (use-package mode-icons
-  :config (mode-icons-mode))
+  :config
+  (mode-icons-mode t))
+
+(use-package major-mode-icons
+  :config
+  (major-mode-icons-mode t))
+
+(use-package dashboard
+  :custom
+  ((dashboard-center-content nil)
+   (dashboard-items '((projects . 20)
+                      (recents . 15)
+                      (registers . 5)
+                      (bookmarks . 5)))
+   (dashboard-projects-backend 'projectile)
+   (dashboard-projects-switch-function 'counsel-projectile-switch-project-action)
+   (dashboard-set-file-icons t)
+   (dashboard-set-heading-icons t)
+   (dashboard-set-init-info t)
+   (dashboard-set-navigator t)
+   (dashboard-startup-banner 'logo))
+  :config
+  (dashboard-setup-startup-hook))
 
 (provide 'init-theme)
 

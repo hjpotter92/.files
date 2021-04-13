@@ -75,6 +75,11 @@
   :hook
   (emacs-lisp-mode . eros-mode))
 
+(use-package virtual-comment
+  :delight
+  :config
+  (add-hook 'find-file-hook 'virtual-comment-mode))
+
 (provide 'init-prog)
 
 ;;; init-prog.el ends here

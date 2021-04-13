@@ -83,6 +83,12 @@
    "misc"
    (("q" nil "quit hydra"))))
 
+(use-package pip-requirements)
+
+(use-package sphinx-doc
+  :hook
+  (python-mode . sphinx-doc-mode))
+
 (use-package pyvenv
   :disabled
   :pretty-hydra
@@ -93,6 +99,7 @@
      ("d" pyvenv-deactivate "deactivate")))))
 
 (use-package pyenv-mode
+  :disabled
   :hook
   (python-mode . pyenv-mode)
   :preface

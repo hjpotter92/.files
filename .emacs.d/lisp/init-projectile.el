@@ -43,8 +43,9 @@
    (projectile-completion-system 'ivy)
    (projectile-require-project-root nil)
    (projectile-create-missing-test-files t)
-   (projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
-   (projectile-tags-backend "ggtags"))
+   ;; (projectile-project-root-files-bottom-up (delete ".git" projectile-project-root-files-bottom-up))
+   ;; (projectile-tags-backend "ggtags")
+   )
   :init
   (progn
     (projectile-mode t))

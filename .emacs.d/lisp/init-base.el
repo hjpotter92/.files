@@ -39,7 +39,7 @@
 (use-package benchmark-init
   :hook
   (after-init . benchmark-init/deactivate)
-  :init
+  :config
   (benchmark-init/activate))
 
 (use-package exec-path-from-shell

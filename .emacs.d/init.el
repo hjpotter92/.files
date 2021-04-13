@@ -24,6 +24,7 @@
 (require 'init-ivy)
 (require 'init-docker)
 (require 'init-dired)
+(require 'init-yasnippet)
 (require 'init-company)
 (require 'init-lsp)
 (require 'init-buffer)
@@ -31,13 +32,15 @@
 (require 'init-vc)
 (require 'init-flycheck)
 (require 'init-flyspell)
-(require 'init-yasnippet)
 (require 'init-debug)
+(require 'init-woman)
 
 ;; Prgramming languages specific
 (require 'init-prog)
+(require 'init-emacs-lisp)
 (require 'init-web)
 (require 'init-python)
+(require 'init-elixir)
 ;; (require 'init-ruby)
 
 (setq-default auto-revert-mode t)
@@ -50,29 +53,20 @@
 ;; (when (file-exists-p custom-file)
 ;;   (load custom-file :noerror :nomessage))
 
-(setq highlight-blocks-mode t)
-
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(defun my/pretty-symbols-lisp ()
-  "Lisp symbols."
-  (my/pretty-symbols)
-  (push '("defun"    . ?ƒ) prettify-symbols-alist)
-  (push '("defmacro" . ?μ) prettify-symbols-alist)
-  (push '("defvar"   . ?ν) prettify-symbols-alist))
-
-(add-hook 'emacs-lisp-mode-hook 'my/pretty-symbols-lisp)
-
 (use-package markdown-mode
   :mode
   (("README\\.md\\'" . gfm-mode)
    ("\\.md\\'" . markdown-mode)
    ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :custom
+  ((markdown-add-footnotes-to-imenu t)
+   (markdown-command "multimarkdown")))
 
 (use-package ggtags
   :disabled
@@ -101,7 +95,6 @@
 (use-package emacs
   :bind
   (("C-c m" . menu-bar-mode)
-   ("C-c s" . scroll-bar-mode)
    ("C-x k" . kill-this-buffer)
    ([f5] . revert-buffer)
    ("RET" . newline-and-indent))

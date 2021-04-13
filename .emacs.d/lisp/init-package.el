@@ -5,6 +5,7 @@
 ;; Version: 0.0.1
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools internal convenience
+;; Package-Requires: ((emacs "26"))
 
 
 ;; This file is not part of GNU Emacs
@@ -67,7 +68,6 @@
 
 (use-package bind-key)
 (use-package delight :pin "gnu")
-(use-package diminish)
 
 (use-package paradox
   :commands

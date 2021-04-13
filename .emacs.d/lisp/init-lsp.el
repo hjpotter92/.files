@@ -45,28 +45,47 @@
   :custom
   ((lsp-auto-configure t)
    (lsp-auto-guess-root t)
-   (lsp-before-save-edits nil)
+   (lsp-before-save-edits t)
    (lsp-enable-completion-at-point t)
    (lsp-enable-file-watchers t)
+   (lsp-enable-folding t)
    (lsp-enable-indentation t)
    (lsp-enable-imenu t)
+   (lsp-enable-links t)
+   (lsp-enable-on-type-formatting t)
+   (lsp-enable-text-document-color t)
    (lsp-enable-semantic-highlighting t)
    (lsp-enable-snippet t)
    (lsp-enable-xref t)
-   (lsp-prefer-flymake nil))
+   (lsp-file-watch-threshold 512)
+   (lsp-headerline-breadcrumb-enable t)
+   (lsp-keep-workspace-alive nil)
+   (lsp-lens-enable t)
+   (lsp-prefer-capf t)
+   (lsp-prefer-flymake nil)
+   (lsp-signature-auto-activate t))
   :hook
-  ((web-mode js2-mode css-mode dockerfile-mode
-             python-mode ruby-mode c++-mode
-             c-mode go-mode yaml-mode) . lsp)
+  ((web-mode js-mode json-mode js2-mode css-mode dockerfile-mode
+             python-mode ruby-mode c++-mode c-mode go-mode
+             erlang-mode elixir-mode)
+   . lsp)
+  (yaml-mode . (lambda ()
+                 (when (eq major-mode 'yaml-mode)
+                   (lsp))))
   (lsp-mode . lsp-enable-which-key-integration))
 
-(use-package lsp-python-ms
+(use-package lsp-pyright
+  :if (executable-find "pyright")
   :custom
-  (lsp-python-ms-auto-install-server t)
+  ((lsp-pyright-auto-import-completions t)
+   (lsp-pyright-auto-search-paths t)
+   ;; (lsp-pyright-log-level "Trace")
+   (lsp-pyright-multi-root nil)
+   (lsp-pyright-venv-path "/home/hjpotter92/.pyenv/versions/"))
   :hook
   (python-mode . (lambda ()
-                   (require 'lsp-python-ms)
-                   (lsp))))
+                   (require 'lsp-pyright)
+                   (lsp))))  ; or lsp-deferred
 
 (use-package lsp-ui
   :commands lsp-ui-mode
@@ -74,29 +93,29 @@
   (([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
    ([remap xref-find-references] . lsp-ui-peek-find-references))
   :custom
-  ((lsp-ui-flycheck t)
+  ((lsp-ui-doc-delay 1)
+   (lsp-ui-doc-enable t)
    (lsp-ui-doc-include-signature t)
    (lsp-ui-doc-use-webkit t)
+   (lsp-ui-doc-position 'at-point)
+   (lsp-ui-flycheck t)
+   (lsp-ui-imenu-enable t)
+   (lsp-ui-peek-enable t)
+   (lsp-ui-sideline-enable t)
+   (lsp-ui-sideline-diagnostic-max-lines 5)
    (lsp-ui-sideline-ignore-duplicate t)
-   (lsp-ui-sideline-show-code-actions nil))
+   (lsp-ui-sideline-show-code-actions nil)
+   (lsp-ui-sideline-show-hover t))
   :hook
-  (lsp-mode . lsp-ui-mode)
-  :config
-  (progn
-    (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-      (setq mode-line-format nil))))
+  ((lsp-mode . lsp-lens-mode))
+  ;; :config
+  ;; (progn
+  ;;   (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+  ;;     (setq mode-line-format nil)))
+  )
 
 (use-package lsp-ivy
   :after lsp-mode)
-
-(use-package company-lsp
-  :config
-  (progn
-    (add-to-list 'company-backends 'company-lsp))
-  :custom
-  ((company-transformers nil)
-   (company-lsp-async t)
-   (company-lsp-cache-candidates nil)))
 
 (provide 'init-lsp)
 

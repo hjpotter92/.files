@@ -1,11 +1,12 @@
-;;; init-debug.el --- Attaching and defining debuggers.
+;;; init-elixir.el --- Programming global modes
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: internal
+;; Keywords: tools languages
+;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -26,32 +27,16 @@
 
 ;;; Commentary:
 
-;; Attaching and defining debuggers.
+;; General programming language settings
 
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-function))
 
-(use-package dap-mode
-  :commands dap-mode
-  :hook (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
-  :config
-  (progn
-    (dap-mode t)
-    (dap-ui-mode t)
-    (dap-tooltip-mode t)
-    (tooltip-mode t)
-    (dap-ui-controls-mode t)
-    (require 'dap-python)
-    (require 'dap-node)
-    (require 'dap-pwsh)))
+(use-package elixir-mode)
 
-(use-package realgud
-  :disabled
-  :init
-  (load-library "realgud"))
+(provide 'init-elixir)
 
-(provide 'init-debug)
-
-;;; init-debug.el ends here
+;;; init-elixir.el ends here
