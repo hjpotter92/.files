@@ -45,35 +45,11 @@
   :delight
   :hook (after-init . editorconfig-mode))
 
-(use-package emacs-lisp-mode
-  :ensure nil
-  :after (major-mode-hydra)
-  :mode-hydra
-  ("Eval"
-   (("b" eval-buffer "buffer")
-    ("e" eval-defun "defun")
-    ("r" eval-region "region"))
-   "REPL"
-   (("I" ielm "ielm"))
-   "Test"
-   (("t" ert "prompt")
-    ("T" (ert t) "all")
-    ("F" (ert :failed) "failed"))
-   "Doc"
-   (("d" describe-foo-at-point "thing-at-pt")
-    ("f" counsel-describe-function "function")
-    ("v" counsel-describe-variable "variable")
-    ("i" info-lookup-symbol "info lookup"))
-   "Tools"
-   (("!" flycheck-hydra/body "flycheck")
-    ("i" flyspell-hydra/body "flyspell")
-    ("y" yasnippet-hydra/body "yasnippet"))
-   "Quit"
-   (("q" nil "quit hydra"))))
-
-(use-package eros
+(use-package symbol-overlay
+  :bind-keymap
+  ("C-c s" . symbol-overlay-map)
   :hook
-  (emacs-lisp-mode . eros-mode))
+  (prog-mode . symbol-overlay-mode))
 
 (use-package virtual-comment
   :delight

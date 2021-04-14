@@ -6,7 +6,6 @@
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools languages
-;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -35,8 +34,9 @@
   (require 'init-const)
   (require 'init-function))
 
-(use-package emacs-lisp
+(use-package emacs-lisp-mode
   :ensure nil
+  :after (major-mode-hydra)
   :preface
   (defun my/pretty-symbols-lisp ()
     "Lisp symbols."
@@ -45,13 +45,33 @@
     (push '("defmacro" . ?μ) prettify-symbols-alist)
     (push '("defvar"   . ?ν) prettify-symbols-alist))
   :hook
-  (emacs-lisp . my/pretty-symbols-lisp))
+  (emacs-lisp . my/pretty-symbols-lisp)
+  :mode-hydra
+  ("Eval"
+   (("b" eval-buffer "buffer")
+    ("e" eval-defun "defun")
+    ("r" eval-region "region"))
+   "REPL"
+   (("I" ielm "ielm"))
+   "Test"
+   (("t" ert "prompt")
+    ("T" (ert t) "all")
+    ("F" (ert :failed) "failed"))
+   "Doc"
+   (("d" describe-foo-at-point "thing-at-pt")
+    ("f" counsel-describe-function "function")
+    ("v" counsel-describe-variable "variable")
+    ("i" info-lookup-symbol "info lookup"))
+   "Tools"
+   (("!" flycheck-hydra/body "flycheck")
+    ("i" flyspell-hydra/body "flyspell")
+    ("y" yasnippet-hydra/body "yasnippet"))
+   "Quit"
+   (("q" nil "quit hydra"))))
 
-(use-package symbol-overlay
-  :bind-keymap
-  ("C-c s" . symbol-overlay-map)
+(use-package eros
   :hook
-  (emacs-lisp-mode . symbol-overlay-mode))
+  (emacs-lisp-mode . eros-mode))
 
 (use-package highlight-defined
   :hook
