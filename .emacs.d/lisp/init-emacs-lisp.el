@@ -55,7 +55,7 @@
 
 (use-package highlight-defined
   :hook
-  (emacs-lisp . highlight-defined-mode))
+  (emacs-lisp-mode . highlight-defined-mode))
 
 (provide 'init-emacs-lisp)
 

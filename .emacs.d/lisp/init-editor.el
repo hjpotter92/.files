@@ -3,7 +3,7 @@
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "26"))
+;; Package-Requires: ((emacs "27.2"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: convenience tools internal
 
@@ -34,6 +34,7 @@
   (require 'init-const))
 
 (use-package abbrev
+  :delight
   :ensure nil
   :hook (after-init . abbrev-mode))
 
@@ -72,7 +73,16 @@
 (use-package format-all
   :bind
   (("<f8>" . format-all-buffer)
-   ("<f9>" . format-all-mode)))
+   ("<f9>" . format-all-mode))
+  :custom
+  ((format-all-formatters (
+                           ("Python" black)
+                           ("CSS" prettier)
+                           ("HTML" html-tidy))))
+  :delight
+  :hook
+  ((format-all-mode . format-all-ensure-formatter)
+   (prog-mode . format-all-mode)))
 
 (use-package helpful
   :delight
@@ -122,6 +132,49 @@
      ("p" (forward-line -1) "Previous line"))
     "Quit"
     (("q" nil "Quit hydra")))))
+
+(use-package indent-control
+  :init
+  (setq indent-control-records
+        '((actionscript-mode     . 4)
+          (c-mode                . 4)
+          (c++-mode              . 4)
+          (csharp-mode           . 4)
+          (css-mode              . 2)
+          (dockerfile-mode       . 4)
+          (elisp-mode            . 2)
+          (emacs-lisp-mode       . 2)
+          (go-mode               . 4)
+          (groovy-mode           . 4)
+          (java-mode             . 4)
+	  (javascript-mode       . 2)
+          (jayces-mode           . 4)
+          (js-mode               . 2)
+          (js2-mode              . 2)
+          (js3-mode              . 2)
+          (json-mode             . 2)
+          (kotlin-mode           . 4)
+          (less-css-mode         . 2)
+          (lisp-mode             . 2)
+          (lisp-interaction-mode . 2)
+          (lua-mode              . 2)
+          (nasm-mode             . 4)
+          (nix-mode              . 2)
+          (nxml-mode             . 2)
+          (objc-mode             . 4)
+          (python-mode           . 4)
+          (rjsx-mode             . 2)
+          (ruby-mode             . 2)
+          (rust-mode             . 4)
+          (scss-mode             . 2)
+          (shader-mode           . 4)
+          (ssass-mode            . 2)
+          (sql-mode              . 1)
+          (typescript-mode       . 4)
+          (web-mode              . 2)
+          (yaml-mode             . 2)))
+  :config
+  (indent-control-mode t))
 
 (use-package which-key
   :delight
@@ -225,6 +278,7 @@
   :bind
   (("C-c p" . smartparens-hydra/body)
    ("M-DEL" . sp-unwrap-sexp)
+   ("M-[" . sp-rewrap-sexp)
    ("M-<backspace>" . sp-backward-unwrap-sexp)))
 
 (use-package smart-window)

@@ -68,29 +68,9 @@
   ((markdown-add-footnotes-to-imenu t)
    (markdown-command "multimarkdown")))
 
-(use-package ggtags
-  :disabled
-  :diminish
-  :hook (prog-mode . ggtags-mode))
-
-(use-package counsel-gtags
-  :disabled
-  :delight counsel-gtags-mode
-  :hook (ggtags-mode . counsel-gtags-mode)
-  :custom
-  ((counsel-gtags-auto-update t)))
-
 (use-package lua-mode
   :custom
   (lua-indent-level 2))
-
-(use-package gxref
-  :init
-  (progn
-    (require 'xref))
-  :config
-  (progn
-    (add-to-list 'xref-backend-functions 'gxref-xref-backend)))
 
 (use-package emacs
   :bind
