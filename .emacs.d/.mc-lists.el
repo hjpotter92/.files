@@ -5,7 +5,9 @@
       '(
         beginning-of-visual-line
         c-electric-colon
+        comment-dwim
         delete-indentation
+        easy-kill
         electric-newline-and-maybe-indent
         elpy-nav-backward-indent
         elpy-nav-forward-indent
@@ -16,6 +18,7 @@
         multiple-cursors-hydra/nil
         sp-backward-unwrap-sexp
         tex-handle-newline
+        upcase-region
         yas-expand
         ))
 

@@ -73,7 +73,7 @@
   :hook
   ((web-mode js-mode json-mode js2-mode css-mode dockerfile-mode
              python-mode ruby-mode c++-mode c-mode go-mode
-             erlang-mode elixir-mode)
+             erlang-mode elixir-mode markdown-mode)
    . lsp)
   (yaml-mode . (lambda ()
                  (when (eq major-mode 'yaml-mode)

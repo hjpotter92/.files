@@ -35,6 +35,8 @@
   (require 'init-const)
   (require 'init-function))
 
+(use-package erlang)
+
 (use-package elixir-mode)
 
 (provide 'init-elixir)
