@@ -45,6 +45,10 @@
   :delight
   :hook (after-init . editorconfig-mode))
 
+(use-package hl-indent-scope
+  :disabled
+  :hook (prog-mode . hl-indent-scope-mode))
+
 (use-package symbol-overlay
   :bind-keymap
   ("C-c s" . symbol-overlay-map)

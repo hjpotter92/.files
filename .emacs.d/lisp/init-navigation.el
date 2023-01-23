@@ -38,6 +38,7 @@
    ([end] . home-end-end)))
 
 (use-package imenu-list
+  :disabled
   :custom
   ((imenu-list-auto-resize t))
   :preface

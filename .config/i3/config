@@ -215,8 +215,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 7 # decrease screen brightness
 # Keyboard brightness controls
-bindsym XF86KbdBrightnessUp exec --no-startup-id kbdlight up 10 # increase screen brightness
-bindsym XF86KbdBrightnessDown exec --no-startup-id kbdlight down 10 # decrease screen brightness
+bindsym XF86KbdBrightnessUp exec --no-startup-id light -s sysfs/leds/asus::kbd_backlight -A 1
+bindsym XF86KbdBrightnessDown exec --no-startup-id light -s sysfs/leds/asus::kbd_backlight -U 1
 
 # Media player controls
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
@@ -241,6 +241,7 @@ assign [class="(?i)discord"] $slack
 assign [class="(?i)vlc"] $media
 assign [class="^smplayer$"] $media
 assign [class="(?i)filebot"] $shit
+assign [class="Kodi"] $media
 
 # Specific application settings
 for_window [class=".*"] title_format "%title - %class"
@@ -269,6 +270,25 @@ for_window [title="Firefox Preferences"] floating enable
 
 # Set wallpaper
 exec --no-startup-id nitrogen --restore
+
+# Set alpha channel
+exec --no-startup-id picom -b
+
+# Start gesture support
+exec --no-startup-id pkill fusuma; fusuma -d
+
+# Setup greenclip manager
+exec --no-startup-id greenclip daemon>/dev/null
+bindsym $mod+Shift+V exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+
+# Setup bluetooth manager
+bindsym $mod+Shift+B exec --no-startup-id rofi-bluetooth
+
+# Setup github issues
+bindsym $mod+Shift+G exec --no-startup-id rofi -show GH:rofi-gh-issues
+
+# Setup nm applet
+exec --no-startup-id nm-applet &
 
 # Configure scratchpad
 # Make the currently focused window a scratchpad

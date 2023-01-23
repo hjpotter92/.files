@@ -37,7 +37,8 @@
   :ensure nil
   :hook (window-setup . size-indication-mode)
   :custom
-  ((display-line-numbers 'relative))
+  ((display-line-numbers-mode t)
+   (display-line-numbers t))
   :init
   (setq column-number-mode t
         line-number-mode t

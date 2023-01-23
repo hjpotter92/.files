@@ -47,7 +47,7 @@
 (use-package ruby-mode
   :hook
   (ruby-mode . (lambda ()
-             (init-ruby-pretty-symbols)))
+                 (init-ruby-pretty-symbols)))
   :init
   (progn
     (use-package ruby-tools)
@@ -57,6 +57,7 @@
   :config
   (progn
     (use-package rbenv
+      :disabled
       :hook
       (ruby-mode . rbenv-use-corresponding)
       :init

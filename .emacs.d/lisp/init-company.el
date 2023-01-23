@@ -37,18 +37,21 @@
 
 (use-package company
   :hook
-  (after-init . global-company-mode)
+  ((after-init . global-company-mode)
+   ;; (after-init . company-tng-mode)
+   )
   :delight
   :requires (company-statistics)
   :bind
-  (("<C-tab>" . company-complete)
+  (("<C-tab>" . company-complete-common)
    (:map company-mode-map
-         ([remap completion-at-point] . company-complete)
+         ([remap completion-at-point] . company-complete-common)
          ([remap indent-for-tab-command] . company-indent-or-complete-common))
    (:map company-active-map
          ("M-n" . nil)
          ("M-p" . nil)
          ("M-/" . company-other-backend)
+         ("M-." . company-show-location)
          ("C-d" . company-show-doc-buffer)
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)
@@ -56,19 +59,31 @@
          ("<backtab>" . company-select-previous)))
   :init
   (progn
-    (company-statistics-mode t))
+    (company-statistics-mode t)
+    (use-package company-fuzzy
+      :after (company)
+      :config
+      (company-fuzzy-mode t)
+      :delight))
   :custom
-  ((company-dabbrev-downcase nil)
-   (company-dabbrev-other-buffers 'all)
+  ((company-backends
+    '((company-capf :with company-yasnippet :with company-dabbrev-code :with company-dabbrev :with company-keywords)))
+   (company-dabbrev-code-modes t)
+   (company-dabbrev-downcase nil)
+   (company-dabbrev-minimum-length 3)
+   (company-dabbrev-other-buffers t)
    (company-eclim-autosave nil)
+   (company-files-exclusions '(".git/"))
    (company-format-margin-function 'company-detect-icons-margin)
+   (company-global-modes '(not erc-mode eshell-mode message-mode))
    (company-idle-delay 0)
    (company-minimum-prefix-length 1)
    (company-require-match nil)
    (company-selection-wrap-around t)
    (company-show-numbers t)
    (company-tooltip-align-annotations t)
-   (company-tooltip-limit 10)))
+   (company-tooltip-limit 10)
+   (company-tooltip-flip-when-above t)))
 
 (use-package company-lua
   :mode "\\.lua'")
@@ -81,6 +96,7 @@
   (company-mode . company-flx-mode))
 
 (use-package company-box
+  :disabled
   :delight
   :custom
   (company-box-icons-alist 'company-box-icons-all-the-icons)
@@ -99,14 +115,6 @@
   :unless (display-graphic-p)
   :hook
   (company-mode . company-quickhelp-terminal-mode))
-
-(use-package company-fuzzy
-  :after (company)
-  :config
-  (progn
-    (add-to-list 'company-backends 'company-capf)
-    (company-fuzzy-mode t))
-  :delight)
 
 (provide 'init-company)
 

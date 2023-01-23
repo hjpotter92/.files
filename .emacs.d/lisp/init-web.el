@@ -39,12 +39,6 @@
   :mode
   ("\\.css\\'"))
 
-(use-package js2-mode
-  :custom
-  ((js2-idle-timer-delay 0)
-   (js2-mode-show-parse-errors nil)
-   (js2-mode-show-strict-warnings nil)))
-
 (use-package web-mode
   :after company
   :mode

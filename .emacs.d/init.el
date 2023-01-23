@@ -38,16 +38,27 @@
 ;; Prgramming languages specific
 (require 'init-prog)
 (require 'init-emacs-lisp)
-(require 'init-web)
 (require 'init-python)
+(require 'init-javascript)
 (require 'init-elixir)
-;; (require 'init-ruby)
+(require 'init-web)
+(require 'init-tex)
+(require 'init-ruby)
+(require 'init-go)
+(require 'init-yaml)
 
 (setq-default auto-revert-mode t)
-(prefer-coding-system 'utf-8)
+
+;;; set up unicode
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq-default default-buffer-file-coding-system 'utf-8)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 (set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8-unix)
-(setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default buffer-file-coding-system 'utf-8)
+
 (setq-default custom-file "~/.emacs.d/custom.el")
 
 ;; (when (file-exists-p custom-file)
@@ -96,11 +107,12 @@
    (require-final-newline t)
    (uniquify-buffer-name-style 'forward))
   :custom-face
-  (default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 80 :width normal :foundry "unknown" :family "SauceCodePro Nerd Font"))))
+  (default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "unknown" :family "SauceCodePro Nerd Font"))))
   :init
   (progn
     (setq inhibit-compacting-font-caches t)
     (setq prettify-symbols-unprettify-at-point t)
+    (setq package-native-compile t)
     (setq-default inhibit-startup-screen t)
     (setq-default initial-scratch-message nil)
     (setq-default indent-tabs-mode nil))
@@ -109,8 +121,7 @@
     (put 'narrow-to-region 'disabled nil)
     (my/pretty-symbols)
     (global-prettify-symbols-mode t)
-    (display-battery-mode -1)
-    (display-line-numbers-mode t)
+    (display-battery-mode t)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)

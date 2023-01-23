@@ -6,10 +6,11 @@
 (setq package-check-signature nil)
 
 (setq package-archives
- '(("melpa" . "https://melpa.org/packages/")
-   ("gnu" . "https://elpa.gnu.org/packages/")
-   ("org" . "https://orgmode.org/elpa/")
-   ("gelpa" . "https://gelpa.gdritter.com/")))
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")
+        ("gnu-devel" . "https://elpa.gnu.org/devel/")
+        ("gelpa" . "https://gelpa.gdritter.com/")))
 
 (setq package-enable-at-startup nil)
 

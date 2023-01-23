@@ -58,7 +58,10 @@
   :hook (python-mode . python-docstring-mode))
 
 (use-package python-mode
-  :mode "\\.py"
+  :mode
+  (("\\.py\\'" . python-mode)
+   ("\\.star\\'" . python-mode))
+  :interpreter "python"
   :hook
   (python-mode . (lambda ()
                    (init-python-pretty-symbols)))
@@ -66,13 +69,13 @@
   ((py-split-window-on-execute nil)
    (python-indent-offset 4)
    (python-indent-guess-indent-offset nil))
-  :init
-  (progn
-    (add-hook 'hack-local-variables-hook
-              (lambda ()
-                (when (derived-mode-p 'python-mode)
-                  (require 'lsp-python-ms)
-                  (lsp-deferred)))))
+  ;; :init
+  ;; (progn
+  ;;   (add-hook 'hack-local-variables-hook
+  ;;             (lambda ()
+  ;;               (when (derived-mode-p 'python-mode)
+  ;;                 (require 'lsp-python-ms)
+  ;;                 (lsp-deferred)))))
   :mode-hydra
   ("imenu"
    (("m" imenu-list-smart-toggle "toggle imenu"))

@@ -61,7 +61,8 @@
     ;; we no longer need vc-git
     (delete 'Git vc-handled-backends))
   :custom
-  ((magit-repository-directories '(("~/Documents/src" . 3)
+  ((magit-repository-directories '(("~/Documents/src" . 4)
+                                   ("~/Documents/work/" . 3)
                                    ("~/Documents/projects/" . 2)
                                    ("~/Documents/" . 1)))
    (magit-completing-read-function 'ivy-completing-read)
@@ -75,15 +76,13 @@
 (use-package magit-patch-changelog
   :after (magit))
 
-(use-package git-gutter+
+(use-package git-gutter
   :delight
-  :init
+  :config
   (progn
-    (global-git-gutter+-mode t)))
+    (global-git-gutter-mode t)))
 
-(use-package gitattributes-mode)
-(use-package gitconfig-mode)
-(use-package gitignore-mode)
+(use-package git-modes)
 
 (provide 'init-vc)
 

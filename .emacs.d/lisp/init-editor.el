@@ -74,15 +74,45 @@
   :bind
   (("<f8>" . format-all-buffer)
    ("<f9>" . format-all-mode))
+  :init
+  (setq-default format-all-formatters '(("Ruby" rubocop)))
   :custom
-  ((format-all-formatters (
-                           ("Python" black)
+  ((format-all-formatters (("Python" black)
                            ("CSS" prettier)
-                           ("HTML" html-tidy))))
+                           ("HTML" html-tidy)
+                           ("Ruby" rubocop))))
   :delight
   :hook
   ((format-all-mode . format-all-ensure-formatter)
    (prog-mode . format-all-mode)))
+
+(use-package ligature
+  :config
+  (progn
+    ;; Enable the "www" ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+    ;; Enable traditional ligature support in eww-mode, if the
+    ;; `variable-pitch' face supports it
+    (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+    ;; Enable all Cascadia Code ligatures in programming modes
+    (ligature-set-ligatures
+     'prog-mode
+     '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+       "\\\\" "://"))
+    ;; Enables ligature checks globally in all buffers.  You can also do it
+    ;; per mode with `ligature-mode'.
+    (global-ligature-mode t)))
 
 (use-package helpful
   :delight
@@ -105,9 +135,23 @@
   ("C-h" . helpful-hydra/body))
 
 (use-package with-editor
+  :disabled
   :config (shell-command-with-editor-mode t))
 
+(use-package lin
+  :disabled
+  :custom-face
+  (lin-face '(lin-blue))
+  ;; :custom
+  ;; (lin-mode-hooks '(dashboard-mode-hook))
+  :config
+  (progn
+    (add-to-list 'lin-mode-hooks 'dashboard-mode-hook))
+  :config
+  (lin-global-mode t))
+
 (use-package hl-todo
+  :disabled
   :config
   (global-hl-todo-mode))
 
@@ -133,11 +177,15 @@
     "Quit"
     (("q" nil "Quit hydra")))))
 
+(use-package indent-guide
+  :init
+  (indent-guide-global-mode t))
+
 (use-package indent-control
   :init
   (setq indent-control-records
         '((actionscript-mode     . 4)
-          (c-mode                . 4)
+          (c-mode                . 2)
           (c++-mode              . 4)
           (csharp-mode           . 4)
           (css-mode              . 2)
@@ -147,11 +195,10 @@
           (go-mode               . 4)
           (groovy-mode           . 4)
           (java-mode             . 4)
-	  (javascript-mode       . 2)
+          (javascript-mode       . 2)
           (jayces-mode           . 4)
           (js-mode               . 2)
           (js2-mode              . 2)
-          (js3-mode              . 2)
           (json-mode             . 2)
           (kotlin-mode           . 4)
           (less-css-mode         . 2)
@@ -170,7 +217,7 @@
           (shader-mode           . 4)
           (ssass-mode            . 2)
           (sql-mode              . 1)
-          (typescript-mode       . 4)
+          (typescript-mode       . 2)
           (web-mode              . 2)
           (yaml-mode             . 2)))
   :config
@@ -227,10 +274,10 @@
   (progn
     (sp-with-modes '(web-mode)
       (sp-local-pair "%" "%" :unless '(sp-in-string-p)
-                     :post-handlers '(((lambda (&rest _ignored)
-                                         (just-one-space)
-                                         (save-excursion (insert " ")))
-                                       "SPC" "=" "#")))
+		     :post-handlers '(((lambda (&rest _ignored)
+					 (just-one-space)
+					 (save-excursion (insert " ")))
+				       "SPC" "=" "#")))
       (sp-local-tag "%" "<% "  " %>")
       (sp-local-tag "=" "<%= " " %>")
       (sp-local-tag "#" "<%# " " %>"))
@@ -346,6 +393,10 @@
 (use-package editorconfig
   :config
   (editorconfig-mode t))
+
+(use-package asdf-vm
+  :load-path (lambda() (format "%s/%s" package-user-dir "asdf-vm.el"))
+  :config (asdf-vm-init))
 
 (provide 'init-editor)
 

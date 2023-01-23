@@ -74,6 +74,7 @@
     (use-package go-errcheck)))
 
 (use-package go-eldoc
+  :disabled t
   :hook (go-mode . go-eldoc-setup))
 
 (provide 'init-go)

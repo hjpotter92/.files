@@ -44,11 +44,8 @@
   :hook
   (prog-mode . idle-highlight-in-visible-buffers-mode))
 
-(use-package pretty-mode
-  :config
-  (global-pretty-mode t))
-
 (use-package all-the-icons
+  :if (display-graphic-p)
   :custom
   ((all-the-icons-default-adjust 0)
    (all-the-icons-scale-factor 1)))
@@ -67,7 +64,10 @@
   (progn
     (use-package all-the-icons-ivy-rich
       :init
-      (all-the-icons-ivy-rich-mode t)))
+      (all-the-icons-ivy-rich-mode t))
+    (use-package all-the-icons-completion
+      :init
+      (all-the-icons-completion-mode t)))
   :config
   (progn
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
@@ -81,11 +81,11 @@
    (sml/name-width 64))
   :preface
   (setq-local h-mode-line-patterns
-    '(("^:Doc:.files/" . ":.f:")
-      ("^:Doc:work/\\([^/]+\\)/" . ":W:\\1:")
-      ("^:.f:.emacs.d/" . ":ED:")
-      ("^:Doc:przemek/app/" . ":PRZK:")
-      ("^:Doc:projects/\\([^/]+\\)/" . ":\\1:")))
+              '(("^:Doc:.files/" . ":.f:")
+                ("^:Doc:work/\\([^/]+\\)/" . ":W:\\1:")
+                ("^:W:livepeer-\\([^/]+\\):" . ":LP-\\1:")
+                ("^:.f:.emacs.d/" . ":ED:")
+                ("^:Doc:projects/\\([^/]+\\)/" . ":\\1:")))
   :init
   (sml/setup)
   :config
@@ -99,16 +99,17 @@
   (mode-icons-mode t))
 
 (use-package major-mode-icons
+  :commands (major-mode-icons-mode)
   :config
-  (major-mode-icons-mode t))
+  (major-mode-icons-mode 1))
 
 (use-package dashboard
   :custom
   ((dashboard-center-content nil)
    (dashboard-items '((projects . 20)
-                      (recents . 15)
-                      (registers . 5)
-                      (bookmarks . 5)))
+		      (recents . 15)
+		      (registers . 5)
+		      (bookmarks . 5)))
    (dashboard-projects-backend 'projectile)
    (dashboard-projects-switch-function 'counsel-projectile-switch-project-action)
    (dashboard-set-file-icons t)

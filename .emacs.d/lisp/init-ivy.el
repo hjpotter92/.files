@@ -76,7 +76,10 @@
   :custom
   ((counsel-find-file-at-point t)
    (counsel-yank-pop-separator "\n--------\n"))
-  :config (counsel-mode t)
+  :config
+  (progn
+    (use-package counsel-at-point)
+    (counsel-mode t))
   :bind
   (("C-x C-f" . counsel-find-file)
    ("C-x M-f" . counsel-recentf)
@@ -102,7 +105,7 @@
   :after (counsel projectile)
   :custom
   (counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-  :config
+  :init
   (counsel-projectile-mode t))
 
 (provide 'init-ivy)

@@ -48,6 +48,7 @@
    (lsp-before-save-edits t)
    (lsp-completion-show-detail t)
    (lsp-completion-show-kind t)
+   (lsp-diagnostic-provider :flycheck)
    (lsp-eldoc-enable-hover t)
    (lsp-enable-completion-at-point t)
    (lsp-enable-file-watchers t)
@@ -61,7 +62,7 @@
    (lsp-enable-snippet t)
    (lsp-enable-symbol-highlighting t)
    (lsp-enable-xref t)
-   (lsp-file-watch-threshold 512)
+   (lsp-file-watch-threshold 4096)
    (lsp-headerline-breadcrumb-enable t)
    (lsp-keep-workspace-alive nil)
    (lsp-lens-enable t)
@@ -69,11 +70,13 @@
    (lsp-modeline-diagnostics-enable t)
    (lsp-prefer-capf t)
    (lsp-prefer-flymake nil)
-   (lsp-signature-auto-activate t))
+   (lsp-semantic-tokens-enable t)
+   (lsp-signature-auto-activate t)
+   (lsp-signature-render-documentation t))
   :hook
   ((web-mode js-mode json-mode js2-mode css-mode dockerfile-mode
-             python-mode ruby-mode c++-mode c-mode go-mode
-             erlang-mode elixir-mode markdown-mode)
+             python-mode ruby-mode c++-mode c-mode go-mode LaTeX-mode
+             erlang-mode elixir-mode markdown-mode typescript-mode sbt-mode scala-mode)
    . lsp)
   (yaml-mode . (lambda ()
                  (when (eq major-mode 'yaml-mode)
@@ -102,7 +105,7 @@
   ((lsp-ui-doc-delay 1)
    (lsp-ui-doc-enable t)
    (lsp-ui-doc-include-signature t)
-   (lsp-ui-doc-use-webkit t)
+   (lsp-ui-doc-use-webkit nil)
    (lsp-ui-doc-position 'at-point)
    (lsp-ui-flycheck t)
    (lsp-ui-imenu-enable t)
