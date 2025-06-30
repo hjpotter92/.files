@@ -33,7 +33,8 @@
 (eval-when-compile
   (require 'init-const))
 
-(use-package company-statistics)
+(use-package company-statistics
+  :disabled t)
 
 (use-package company
   :hook
@@ -41,7 +42,6 @@
    ;; (after-init . company-tng-mode)
    )
   :delight
-  :requires (company-statistics)
   :bind
   (("<C-tab>" . company-complete-common)
    (:map company-mode-map
@@ -57,9 +57,6 @@
          ("C-p" . company-select-previous)
          ([tab] . company-complete-common-or-cycle)
          ("<backtab>" . company-select-previous)))
-  :config
-  (progn
-    (company-statistics-mode t))
   :custom
   ((company-backends
     '((company-capf :with company-yasnippet :with company-dabbrev-code :with company-dabbrev :with company-keywords)))
