@@ -1,4 +1,4 @@
-;;; init-web.el --- Web mode and related packages
+;;; init-web.el --- Web mode and related packages  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

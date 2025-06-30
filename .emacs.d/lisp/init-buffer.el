@@ -1,4 +1,4 @@
-;;; init-buffer.el --- Buffer handling setup
+;;; init-buffer.el --- Buffer handling setup  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -177,9 +177,9 @@
   :commands
   (ibuffer-do-sort-by-alphabetic)
   :hook (ibuffer-mode . (lambda ()
-      (ibuffer-vc-set-filter-groups-by-vc-root)
-      (unless (eq ibuffer-sorting-mode 'alphabetic)
-        (ibuffer-do-sort-by-alphabetic)))))
+                          (ibuffer-vc-set-filter-groups-by-vc-root)
+                          (unless (eq ibuffer-sorting-mode 'alphabetic)
+                            (ibuffer-do-sort-by-alphabetic)))))
 
 (provide 'init-buffer)
 

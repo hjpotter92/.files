@@ -1,4 +1,4 @@
-;;; init-elixir.el --- Programming global modes
+;;; init-elixir.el --- Programming global modes  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

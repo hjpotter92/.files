@@ -1,4 +1,4 @@
-;;; init-emacs-lisp.el --- Emacs lisp configuration
+;;; init-emacs-lisp.el --- Emacs lisp configuration  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

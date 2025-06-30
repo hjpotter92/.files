@@ -1,10 +1,11 @@
-;;; init-backup.el --- Backup configuration  -*- lexical-binding: t; -*-
+;;; init-yaml.el --- Programming setup for yaml  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: tools
+;; Keywords: tools languages
 
 
 ;; This file is not part of GNU Emacs
@@ -25,23 +26,17 @@
 
 ;;; Commentary:
 
-;; Backup rules for the whole environment.
+;; General programming language settings
 
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-function))
 
-(use-package files
-  :ensure nil
-  :custom
-  ((vc-make-backup-files t)
-   (version-control :make-numbered-backups)
-   (kept-new-versions 5)
-   (kept-old-versions 2)
-   (delete-old-versions t)
-   (backup-by-copying t)))
+(use-package yaml-pro
+  :hook (yaml-mode . yaml-pro-mode))
 
-(provide 'init-backup)
+(provide 'init-yaml)
 
-;;; init-backup.el ends here
+;;; init-yaml.el ends here

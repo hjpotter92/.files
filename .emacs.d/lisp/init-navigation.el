@@ -1,4 +1,4 @@
-;;; init-navigation.el --- Navigation related things
+;;; init-navigation.el --- Navigation related things  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

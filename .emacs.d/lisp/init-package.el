@@ -1,4 +1,4 @@
-;;; init-package.el --- Setting up packages
+;;; init-package.el --- Setting up packages  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -77,7 +77,7 @@
    (paradox-column-width-version 16)
    (paradox-lines-per-entry 2)
    (paradox-github-token t)
-   (paradox-execute-asynchronously t)
+   (paradox-execute-asynchronously nil)
    (paradox-automatically-star nil))
   :init
   (defalias 'upgrade-packages #'paradox-upgrade-packages)

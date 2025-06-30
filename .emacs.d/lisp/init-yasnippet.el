@@ -1,4 +1,4 @@
-;;; init-yasnippet.el --- Setup yasnippet package and its snippets
+;;; init-yasnippet.el --- Setup yasnippet package and its snippets  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92
 ;; Maintainer: hjpotter92

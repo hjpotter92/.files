@@ -1,4 +1,4 @@
-;;; init-const.el --- Constants across package definistion
+;;; init-const.el --- Constants across package definistion  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

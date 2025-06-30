@@ -1,4 +1,4 @@
-;;; init-vc.el --- Magit and other VC settings
+;;; init-vc.el --- Magit and other VC settings  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -73,7 +73,18 @@
     (mapc #'projectile-add-known-project
           (mapcar #'file-name-as-directory (magit-list-repos)))))
 
+(use-package magit-file-icons
+  :after magit
+  :init
+  (magit-file-icons-mode 1)
+  :custom
+  ;; These are the default values:
+  (magit-file-icons-enable-diff-file-section-icons t)
+  (magit-file-icons-enable-untracked-icons t)
+  (magit-file-icons-enable-diffstat-icons t))
+
 (use-package magit-patch-changelog
+  :disabled
   :after (magit))
 
 (use-package git-gutter
@@ -83,6 +94,9 @@
     (global-git-gutter-mode t)))
 
 (use-package git-modes)
+
+(use-package git-commit-ts-mode
+  :mode "\\COMMIT_EDITMSG\\'")
 
 (provide 'init-vc)
 

@@ -288,7 +288,9 @@ bindsym $mod+Shift+B exec --no-startup-id rofi-bluetooth
 bindsym $mod+Shift+G exec --no-startup-id rofi -show GH:rofi-gh-issues
 
 # Setup nm applet
-exec --no-startup-id nm-applet &
+exec --no-startup-id nm-applet --sm-disable
+exec --no-startup-id /usr/lib/xdg-desktop-portal-gtk -v -r
+exec --no-startup-id /usr/lib/xdg-desktop-portal -v -r
 
 # Configure scratchpad
 # Make the currently focused window a scratchpad

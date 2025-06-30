@@ -1,4 +1,4 @@
-;;; init-debug.el --- Attaching and defining debuggers.
+;;; init-debug.el --- Attaching and defining debuggers.  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

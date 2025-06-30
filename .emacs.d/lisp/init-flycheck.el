@@ -1,4 +1,4 @@
-;;; init-flycheck.el --- Flycheck initialisations
+;;; init-flycheck.el --- Flycheck initialisations  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -40,24 +40,24 @@
   :pretty-hydra
   ((:quit-key "q" :title " Flycheck")
    ("Move"
-   (("n" flycheck-next-error "next")
-    ("p" flycheck-previous-error "previous")
-    ("^" flycheck-first-error "first")
-    ("g" flycheck-error-goto-error "goto"))
-   "Actions"
-   (("l" flycheck-list-errors "list" :exit t)
-    ("h" flycheck-manual "manual" :exit t)
-    ("v" flycheck-verify-setup "verify setup")
-    ("c" flycheck-buffer "check buffer"))
-   "Checkers"
-   (("f" flycheck-verify-checker "verify checker")
-    ("?" flycheck-describe-checker "describe")
-    ("x" flycheck-disable-checker "disable")
-    ("s" flycheck-select-checker "select"))
-   "Miscellaneous"
-   (("C" flycheck-clear "clear")
-    ("V" flycheck-version "version")
-    ("q" nil "quit hydra"))))
+    (("n" flycheck-next-error "next")
+     ("p" flycheck-previous-error "previous")
+     ("^" flycheck-first-error "first")
+     ("g" flycheck-error-goto-error "goto"))
+    "Actions"
+    (("l" flycheck-list-errors "list" :exit t)
+     ("h" flycheck-manual "manual" :exit t)
+     ("v" flycheck-verify-setup "verify setup")
+     ("c" flycheck-buffer "check buffer"))
+    "Checkers"
+    (("f" flycheck-verify-checker "verify checker")
+     ("?" flycheck-describe-checker "describe")
+     ("x" flycheck-disable-checker "disable")
+     ("s" flycheck-select-checker "select"))
+    "Miscellaneous"
+    (("C" flycheck-clear "clear")
+     ("V" flycheck-version "version")
+     ("q" nil "quit hydra"))))
   :config
   (progn
     (flycheck-add-mode 'javascript-eslint 'web-mode)))
@@ -69,6 +69,7 @@
 
 (use-package flycheck-package
   :commands flycheck-package-setup
+  :disabled t
   :init (flycheck-package-setup))
 
 (use-package flycheck-popup-tip

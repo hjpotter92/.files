@@ -1,4 +1,4 @@
-;;; init --- Summary
+;;; init --- Summary  -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;;; Code:
@@ -86,7 +86,7 @@
 (use-package emacs
   :bind
   (("C-c m" . menu-bar-mode)
-   ("C-x k" . kill-this-buffer)
+   ("C-x k" . kill-current-buffer)
    ([f5] . revert-buffer)
    ("RET" . newline-and-indent))
   :custom

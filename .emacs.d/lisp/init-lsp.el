@@ -1,4 +1,4 @@
-;;; init-lsp.el --- LSP mode settings
+;;; init-lsp.el --- LSP mode settings  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -84,6 +84,7 @@
   (lsp-mode . lsp-enable-which-key-integration))
 
 (use-package lsp-pyright
+  :disabled
   :if (executable-find "pyright")
   :custom
   ((lsp-pyright-auto-import-completions t)

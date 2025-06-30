@@ -1,4 +1,4 @@
-;;; init-simple.el --- Simple mode configuration
+;;; init-simple.el --- Simple mode configuration  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92
 ;; Maintainer: hjpotter92

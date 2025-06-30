@@ -1,10 +1,11 @@
-;;; init-backup.el --- Backup configuration  -*- lexical-binding: t; -*-
+;;; init-tree-sitter.el --- Tree sitter configuration for emacs
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: tools
+;; Keywords: convenience tools internal
 
 
 ;; This file is not part of GNU Emacs
@@ -25,23 +26,19 @@
 
 ;;; Commentary:
 
-;; Backup rules for the whole environment.
+;; commentary
 
 ;;; Code:
 
 (eval-when-compile
   (require 'init-const))
 
-(use-package files
-  :ensure nil
-  :custom
-  ((vc-make-backup-files t)
-   (version-control :make-numbered-backups)
-   (kept-new-versions 5)
-   (kept-old-versions 2)
-   (delete-old-versions t)
-   (backup-by-copying t)))
+(use-package tree-sitter
+  :hook
+  (tree-sitter-after-on . tree-sitter-hl-mode)
+  :config
+  (global-tree-sitter-mode t))
 
-(provide 'init-backup)
+(provide 'init-tree-sitter)
 
-;;; init-backup.el ends here
+;;; init-tree-sitter.el ends here

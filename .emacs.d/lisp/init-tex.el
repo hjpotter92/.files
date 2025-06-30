@@ -1,4 +1,4 @@
-;;; init-ruby.el --- Programming setup for ruby  -*- lexical-binding: t; -*-
+;;; init-tex.el --- Programming global modes  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
@@ -6,6 +6,7 @@
 ;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: tools languages
+;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -34,38 +35,18 @@
   (require 'init-const)
   (require 'init-function))
 
-(defun init-ruby-pretty-symbols ()
-  "Python specific pretty symbols."
-  (my/pretty-symbols)
-  (push '("def"   . ?ƒ) prettify-symbols-alist)
-  (push '("->"    . ?→) prettify-symbols-alist)
-  (push '("=>"    . ?⟹) prettify-symbols-alist)
-  (push '("true"  . ?⥾) prettify-symbols-alist)
-  (push '("false" . ?⥿) prettify-symbols-alist)
-  (push '("nil"   . ?∅) prettify-symbols-alist))
+(use-package lsp-latex)
 
-(use-package ruby-mode
+(use-package tex
+  :ensure auctex
+  :custom
+  ((TeX-auto-save t)
+   (TeX-parse-self t)
+   (TeX-master nil))
   :hook
-  (ruby-mode . (lambda ()
-                 (init-ruby-pretty-symbols)))
-  :init
-  (progn
-    (use-package ruby-tools)
-    (use-package inf-ruby
-      :hook
-      (ruby-mode . inf-ruby-minor-mode)))
-  :config
-  (progn
-    (use-package rbenv
-      :disabled
-      :hook
-      (ruby-mode . rbenv-use-corresponding)
-      :init
-      (global-rbenv-mode t))
-    (use-package ruby-extra-highlight
-      :hook
-      (ruby-mode . ruby-extra-highlight-mode))))
+  ((LaTeX-mode-map . LaTeX-math-mode)
+   (LaTeX-mode-map . reftex-mode)))
 
-(provide 'init-ruby)
+(provide 'init-tex)
 
-;;; init-ruby.el ends here
+;;; init-tex.el ends here

@@ -1,4 +1,4 @@
-;;; init-dired.el --- Dired buffer configurations
+;;; init-dired.el --- Dired buffer configurations  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

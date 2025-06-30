@@ -1,9 +1,9 @@
-;;; init-company.el --- Initial setup for company mode
+;;; init-company.el --- Initial setup for company mode  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "26"))
+;; Package-Requires: ((emacs "29.1"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: internal
 
@@ -57,14 +57,9 @@
          ("C-p" . company-select-previous)
          ([tab] . company-complete-common-or-cycle)
          ("<backtab>" . company-select-previous)))
-  :init
+  :config
   (progn
-    (company-statistics-mode t)
-    (use-package company-fuzzy
-      :after (company)
-      :config
-      (company-fuzzy-mode t)
-      :delight))
+    (company-statistics-mode t))
   :custom
   ((company-backends
     '((company-capf :with company-yasnippet :with company-dabbrev-code :with company-dabbrev :with company-keywords)))
@@ -84,6 +79,13 @@
    (company-tooltip-align-annotations t)
    (company-tooltip-limit 10)
    (company-tooltip-flip-when-above t)))
+
+(use-package company-fuzzy
+  :after (company)
+  :disabled t
+  :config
+  (company-fuzzy-mode t)
+  :delight)
 
 (use-package company-lua
   :mode "\\.lua'")

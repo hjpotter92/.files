@@ -1,4 +1,4 @@
-;;; init-ivy.el --- Setup ivy, swiper and counsel
+;;; init-ivy.el --- Setup ivy, swiper and counsel  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

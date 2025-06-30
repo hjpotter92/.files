@@ -1,10 +1,13 @@
-;;; init-backup.el --- Backup configuration  -*- lexical-binding: t; -*-
+;;; init-javascript.el --- Programming global modes  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "26"))
 ;; Homepage: https://github.com/hjpotter92/.files
-;; Keywords: tools
+;; Keywords: tools languages
+;; Prefix: my/js
+;; Separator: /
 
 
 ;; This file is not part of GNU Emacs
@@ -25,23 +28,23 @@
 
 ;;; Commentary:
 
-;; Backup rules for the whole environment.
+;; General programming language settings
 
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-const))
+  (require 'init-const)
+  (require 'init-function))
 
-(use-package files
-  :ensure nil
+(use-package js2-mode
   :custom
-  ((vc-make-backup-files t)
-   (version-control :make-numbered-backups)
-   (kept-new-versions 5)
-   (kept-old-versions 2)
-   (delete-old-versions t)
-   (backup-by-copying t)))
+  ((js2-idle-timer-delay 0)
+   (js2-mode-show-parse-errors nil)
+   (js2-mode-show-strict-warnings nil)))
 
-(provide 'init-backup)
+(use-package typescript-mode
+  :mode "\\.tsx?")
 
-;;; init-backup.el ends here
+(provide 'init-javascript)
+
+;;; init-javascript.el ends here

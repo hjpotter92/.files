@@ -1,5 +1,5 @@
 configuration {
-	modi: "combi,run,calc,keys,clipboard:greenclip print";
+	modi: "combi,run,calc";
 	lines: 15;
 	columns: 2;
 	font: "SauceCodePro Nerd Font Mono 8";
@@ -11,5 +11,7 @@ configuration {
 	combi-modi: "window,drun,ssh";
 	matching: "fuzzy";
 	dpi: 180;
-	theme: "/usr/share/rofi/themes/arthur.rasi";
+        terminal: "/usr/bin/terminator";
 }
+
+@theme "/usr/share/rofi/themes/arthur.rasi"

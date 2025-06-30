@@ -1,4 +1,4 @@
-;;; init-woman.el --- wo (without) man page reader for emacs
+;;; init-woman.el --- wo (without) man page reader for emacs  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

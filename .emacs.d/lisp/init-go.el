@@ -1,4 +1,4 @@
-;;; init-go.el --- Programming global modes fo golang
+;;; init-go.el --- Programming global modes fo golang  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>

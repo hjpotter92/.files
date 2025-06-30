@@ -1,9 +1,9 @@
-;;; init-theme.el --- Set up theme and related UI items
+;;; init-theme.el --- Set up theme and related UI items  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "26"))
+;; Package-Requires: ((emacs "30.0"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: convenience faces
 
@@ -73,6 +73,12 @@
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
     (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
     (all-the-icons-ivy-setup)))
+
+(use-package all-the-icons-nerd-fonts
+  :after all-the-icons
+  :config
+  (progn
+    (all-the-icons-nerd-fonts-prefer)))
 
 (use-package smart-mode-line
   :custom

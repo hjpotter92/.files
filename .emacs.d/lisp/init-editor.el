@@ -1,9 +1,9 @@
-;;; init-editor.el --- Editor configuration
+;;; init-editor.el --- Editor configuration  -*- lexical-binding: t; -*-
 
 ;; Author: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Maintainer: hjpotter92 <hjpotter92+github@gmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "27.2"))
+;; Package-Requires: ((emacs "30.0"))
 ;; Homepage: https://github.com/hjpotter92/.files
 ;; Keywords: convenience tools internal
 
@@ -142,6 +142,8 @@
   :disabled
   :custom-face
   (lin-face '(lin-blue))
+  :hook
+  (magit-mode . lin-mode)
   ;; :custom
   ;; (lin-mode-hooks '(dashboard-mode-hook))
   :config
@@ -151,7 +153,6 @@
   (lin-global-mode t))
 
 (use-package hl-todo
-  :disabled
   :config
   (global-hl-todo-mode))
 
@@ -397,6 +398,10 @@
 (use-package asdf-vm
   :load-path (lambda() (format "%s/%s" package-user-dir "asdf-vm.el"))
   :config (asdf-vm-init))
+
+(use-package envrc
+  :config
+  (envrc-global-mode t))
 
 (provide 'init-editor)
 
